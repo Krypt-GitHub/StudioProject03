@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "../Source/Object.h"
+#include "../Core/Object.h"
 //#include "../Source/GameObject.h"
 
 class Component : public Object

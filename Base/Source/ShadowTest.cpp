@@ -202,50 +202,50 @@ Particle * ShadowTest::FetchPA()
 
 void ShadowTest::Update(double dt)
 {
-	if (Application::IsKeyPressed('1'))
+	if (Application::GetKeyDown('1'))
 		glEnable(GL_CULL_FACE);
-	if (Application::IsKeyPressed('2'))
+	if (Application::GetKeyDown('2'))
 		glDisable(GL_CULL_FACE);
-	if (Application::IsKeyPressed('3'))
+	if (Application::GetKeyDown('3'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	if (Application::IsKeyPressed('4'))
+	if (Application::GetKeyDown('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (Application::IsKeyPressed('5'))
+	if (Application::GetKeyDown('5'))
 	{
 		lights[1].type = Light::LIGHT_POINT;
 		glUniform1i(m_parameters[U_LIGHT1_TYPE], lights[1].type);
 	}
-	else if (Application::IsKeyPressed('6'))
+	else if (Application::GetKeyDown('6'))
 	{
 		lights[1].type = Light::LIGHT_DIRECTIONAL;
 		glUniform1i(m_parameters[U_LIGHT1_TYPE], lights[1].type);
 	}
-	else if (Application::IsKeyPressed('7'))
+	else if (Application::GetKeyDown('7'))
 	{
 		lights[1].type = Light::LIGHT_SPOT;
 		glUniform1i(m_parameters[U_LIGHT1_TYPE], lights[1].type);
 	}
-	else if (Application::IsKeyPressed('8'))
+	else if (Application::GetKeyDown('8'))
 	{
 		bLightEnabled = true;
 	}
-	else if (Application::IsKeyPressed('9'))
+	else if (Application::GetKeyDown('9'))
 	{
 		bLightEnabled = false;
 	}
 
-	if (Application::IsKeyPressed('I'))
+	if (Application::GetKeyDown('I'))
 		lights[0].position.z -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('K'))
+	if (Application::GetKeyDown('K'))
 		lights[0].position.z += (float)(10.f * dt);
-	if (Application::IsKeyPressed('J'))
+	if (Application::GetKeyDown('J'))
 		lights[0].position.x -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('L'))
+	if (Application::GetKeyDown('L'))
 		lights[0].position.x += (float)(10.f * dt);
-	if (Application::IsKeyPressed('O'))
+	if (Application::GetKeyDown('O'))
 		lights[0].position.y -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('P'))
+	if (Application::GetKeyDown('P'))
 		lights[0].position.y += (float)(10.f * dt);
 
 	camera.Update(dt);

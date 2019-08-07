@@ -41,7 +41,7 @@ void resize_callback(GLFWwindow* window, int w, int h)
 	glViewport(0, 0, w, h);
 }
 
-bool Application::IsKeyPressed(unsigned short key)
+bool Application::GetKeyDown(unsigned short key)
 {
     return ((GetAsyncKeyState(key) & 0x8001) != 0);
 }
@@ -154,7 +154,7 @@ void Application::Run()
 	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
-	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
+	while (!glfwWindowShouldClose(m_window) && !GetKeyDown(VK_ESCAPE))
 	{
 		GetMouseUpdate();
 		scene->Update(m_timer.getElapsedTime());

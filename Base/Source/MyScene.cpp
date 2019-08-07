@@ -194,25 +194,23 @@ void MyScene::Init()
 
 	// Environment
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 10, 1000, 5, 5);
+	meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
+	meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN", "Image//heightmap.raw", m_heightMap);
 	meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//grass.tga");
-	meshList[GEO_RAINDROP] = MeshBuilder::GenerateSphere("raindrop", Color(0.f, 0.f, 1.f), 10, 10, 5.f);
-	meshList[GEO_SNOW] = MeshBuilder::GenerateSphere("snow", Color(1.f, 1.f, 1.f), 10, 10, 5.f);
-	meshList[GEO_SMOKEPA] = MeshBuilder::GenerateQuad("smoke", Color(0.086f, 0.09f, 0.094f), 5.f);
-	meshList[GEO_SMOKEPA]->textureArray[0] = LoadTGA("Image//smoke.tga");
+	meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//grass.tga");
 
 
 	// Sprites
-	meshList[GEO_SPRITE_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("flame", 8, 8);
-	meshList[GEO_SPRITE_ANIMATION]->textureArray[0] = LoadTGA("Image//flame.tga");
+	//meshList[GEO_SPRITE_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("flame", 8, 8);
+	//meshList[GEO_SPRITE_ANIMATION]->textureArray[0] = LoadTGA("Image//flame.tga");
 
-	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_SPRITE_ANIMATION]);
-	if (sa)
-	{
-		sa->m_anim = new Animation();
-		sa->m_anim->Set(0, 8, 0, 1.f, true);
-	}
+	//SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_SPRITE_ANIMATION]);
+	//if (sa)
+	//{
+	//	sa->m_anim = new Animation();
+	//	sa->m_anim->Set(0, 8, 0, 1.f, true);
+	//}
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -244,6 +242,7 @@ void MyScene::Init()
 	m_parameters[U_ELAPSEDTIME] = glGetUniformLocation(m_programID, "myTime");
 	m_parameters[U_MTENABLED] = glGetUniformLocation(m_programID, "enableMT");
 	meshList[GEO_WATER] = MeshBuilder::GenerateQuad("water", Color(1, 1, 1), 1.f);
+	meshList[GEO_WATER]->textureArray[0] = LoadTGA("Image//sky.tga");
 	meshList[GEO_WATER]->textureArray[1] = LoadTGA("Image//water.tga");
 
 	eTime = 0;
@@ -274,83 +273,82 @@ void MyScene::Update(double dt)
 {
 	eTime += dt * 0.05;
 
-	cycleTime += dt * 50;
+	//cycleTime += dt * 50;
 
-	if (cycleTime <= 1200)
-	{
-		if (!doOnce01)
-		{
-			meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//nightsky.tga");
-			meshList[GEO_WATER]->textureArray[0] = LoadTGA("Image//nightsky.tga");
-			doOnce01 = true;
-		}
-	}
-	else if (cycleTime <= 2400)
-	{
-		if (!doOnce02)
-		{
-			meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
-			meshList[GEO_WATER]->textureArray[0] = LoadTGA("Image//sky.tga");
-			doOnce02 = true;
-		}
-	}
-	else
-	{
-		doOnce01 = false;
-		doOnce02 = false;
-		cycleTime = 0.f;
-	}
+	//if (cycleTime <= 1200)
+	//{
+	//	if (!doOnce01)
+	//	{
+	//		meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//nightsky.tga");
+	//		meshList[GEO_WATER]->textureArray[0] = LoadTGA("Image//nightsky.tga");
+	//		doOnce01 = true;
+	//	}
+	//}
+	//else if (cycleTime <= 2400)
+	//{
+	//	if (!doOnce02)
+	//	{
 
-	if (Application::IsKeyPressed('V'))
+	//		doOnce02 = true;
+	//	}
+	//}
+	//else
+	//{
+	//	doOnce01 = false;
+	//	doOnce02 = false;
+	//	cycleTime = 0.f;
+	//}
+
+	if (Application::GetKeyDown('V'))
 		cycleTime = 2390;
-	if (Application::IsKeyPressed('B'))
+	if (Application::GetKeyDown('B'))
 		cycleTime = 1200;
 
 
-	if (Application::IsKeyPressed('1'))
+	if (Application::GetKeyDown('1'))
 		glEnable(GL_CULL_FACE);
-	if (Application::IsKeyPressed('2'))
+	if (Application::GetKeyDown('2'))
 		glDisable(GL_CULL_FACE);
-	if (Application::IsKeyPressed('3'))
+	if (Application::GetKeyDown('3'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	if (Application::IsKeyPressed('4'))
+	if (Application::GetKeyDown('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (Application::IsKeyPressed('5'))
+	if (Application::GetKeyDown('5'))
 	{
 		lights[1].type = Light::LIGHT_POINT;
 		glUniform1i(m_parameters[U_LIGHT1_TYPE], lights[1].type);
 	}
-	else if (Application::IsKeyPressed('6'))
+	else if (Application::GetKeyDown('6'))
 	{
 		lights[1].type = Light::LIGHT_DIRECTIONAL;
 		glUniform1i(m_parameters[U_LIGHT1_TYPE], lights[1].type);
 	}
-	else if (Application::IsKeyPressed('7'))
+	else if (Application::GetKeyDown('7'))
 	{
 		lights[1].type = Light::LIGHT_SPOT;
 		glUniform1i(m_parameters[U_LIGHT1_TYPE], lights[1].type);
 	}
-	else if (Application::IsKeyPressed('8'))
+	else if (Application::GetKeyDown('8'))
 	{
 		bLightEnabled = true;
 	}
-	else if (Application::IsKeyPressed('9'))
+	else if (Application::GetKeyDown('9'))
 	{
 		bLightEnabled = false;
 	}
 
-	if (Application::IsKeyPressed('I'))
+	if (Application::GetKeyDown('I'))
 		lights[1].position.z -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('K'))
+	if (Application::GetKeyDown('K'))
 		lights[1].position.z += (float)(10.f * dt);
-	if (Application::IsKeyPressed('J'))
+	if (Application::GetKeyDown('J'))
 		lights[1].position.x -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('L'))
+	if (Application::GetKeyDown('L'))
 		lights[1].position.x += (float)(10.f * dt);
-	if (Application::IsKeyPressed('O'))
+	if (Application::GetKeyDown('O'))
 		lights[1].position.y -= (float)(10.f * dt);
-	if (Application::IsKeyPressed('P'))
+	if (Application::GetKeyDown('P'))
 		lights[1].position.y += (float)(10.f * dt);
 
 	if (camera.position.y > (350.f * ReadHeightMap(m_heightMap, camera.position.x / 4000, camera.position.z / 4000) + 2))
@@ -369,20 +367,20 @@ void MyScene::Update(double dt)
 	}
 
 	// Particle stuff
-	if (Application::IsKeyPressed('K'))
+	if (Application::GetKeyDown('K'))
 		toggleRainfall = false;
-	if (Application::IsKeyPressed('L'))
+	if (Application::GetKeyDown('L'))
 		toggleRainfall = true;
-	if (Application::IsKeyPressed('N'))
+	if (Application::GetKeyDown('N'))
 		toggleSmoke = false;
-	if (Application::IsKeyPressed('M'))
+	if (Application::GetKeyDown('M'))
 		toggleSmoke = true;
-	if (Application::IsKeyPressed('G'))
+	if (Application::GetKeyDown('G'))
 	{
 		toggleSnow = false;
 		meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//grass.tga");
 	}
-	if (Application::IsKeyPressed('H'))
+	if (Application::GetKeyDown('H'))
 	{
 		toggleSnow = true;
 		lights[1].color.Set(1.f, 1.f, 1.f);

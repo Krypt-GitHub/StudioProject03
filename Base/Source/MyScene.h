@@ -1,7 +1,7 @@
 #ifndef MY_SCENE_H
 #define MY_SCENE_H
 
-#include "Scene.h"
+#include "../Core/Scene.h"
 #include "Mtx44.h"
 #include "Camera3.h"
 #include "Mesh.h"
