@@ -11,8 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "MyScene.h"
-#include "ShadowTest.h"
+#include "../StudioProject/OurScene.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -150,7 +149,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene = new MyScene();
+	Scene *scene = new OurScene();
 	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
