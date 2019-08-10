@@ -16,7 +16,3 @@ void GameObject::SetActive(bool _active)
 {
 	isActive = _active;
 }
-
-void GameObject::AddComponent(Component _type)
-{
-}

@@ -1,14 +1,12 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "../Source/Object.h"
-//#include "../Source/GameObject.h"
+#include "../Core/Object.h"
 
 class Component : public Object
 {
 public:
 	// Member
-
 
 	Component();
 	~Component();

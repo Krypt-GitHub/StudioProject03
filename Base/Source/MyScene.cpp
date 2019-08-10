@@ -198,7 +198,6 @@ void MyScene::Init()
 	meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN", "Image//heightmap.raw", m_heightMap);
 	meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//grass.tga");
-	meshList[GEO_TERRAIN]->textureArray[0] = LoadTGA("Image//grass.tga");
 
 
 	// Sprites

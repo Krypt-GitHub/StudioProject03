@@ -10,9 +10,67 @@
 #include "../Core/GameObject.h"
 #include <vector>
 #include "../Source/DepthFBO.h"
+#include "../Source/Particle.h"
 
 class SceneBase : public Scene
 {
+public:
+
+	SceneBase();
+	~SceneBase();
+
+	virtual void Init();
+	virtual void Update(double dt);
+	void RenderMesh(Mesh * mesh, bool enableLight, bool enableMT, bool enableReflect);
+	void RenderText(Mesh * mesh, std::string text, Color color);
+	void RenderTextOnScreen(Mesh * mesh, std::string text, Color color, float size, float x, float y);
+	void RenderMeshIn2D(Mesh * mesh, bool enableLight, float size, float x, float y);
+	virtual void Render();
+	virtual void Exit();
+
+protected:
+	enum RENDER_PASS
+	{
+		RENDER_PASS_PRE,
+		RENDER_PASS_MAIN,
+	};
+	enum GEOMETRY_TYPE
+	{
+		GEO_AXES,
+		GEO_CROSSHAIR,
+		GEO_LIGHTBALL,
+		GEO_PALM,
+		GEO_TRUCK,
+		GEO_BARRIER,
+		GEO_FENCE,
+		GEO_DUMPSTER,
+		GEO_LAMP,
+		GEO_QUAD,
+		GEO_CUBE,
+		GEO_RING,
+		GEO_CONE,
+		GEO_LEFT,
+		GEO_RIGHT,
+		GEO_TOP,
+		GEO_BOTTOM,
+		GEO_FRONT,
+		GEO_BACK,
+		GEO_GRASS_DARKGREEN,
+		GEO_GRASS_LIGHTGREEN,
+		GEO_OBJECT,
+		GEO_TEXT,
+		GEO_RAINDROP,
+		GEO_SMOKEPA,
+		GEO_SNOW,
+		//TSL
+		GEO_SKYDOME,
+		GEO_TERRAIN,
+		GEO_WATER,
+		GEO_SPRITE_ANIMATION,
+		// Shadow 
+		GEO_LIGHT_DEPTH_QUAD,
+		NUM_GEOMETRY,
+	};
 	enum UNIFORM_TYPE
 	{
 		U_MVP = 0,
@@ -81,84 +139,6 @@ class SceneBase : public Scene
 		U_TOTAL,
 	};
 
-public:
-	enum GEOMETRY_TYPE
-	{
-		GEO_AXES,
-		GEO_CROSSHAIR,
-		GEO_LIGHTBALL,
-		GEO_PALM,
-		GEO_TRUCK,
-		GEO_BARRIER,
-		GEO_FENCE,
-		GEO_DUMPSTER,
-		GEO_LAMP,
-		GEO_QUAD,
-		GEO_CUBE,
-		GEO_RING,
-		GEO_CONE,
-		GEO_LEFT,
-		GEO_RIGHT,
-		GEO_TOP,
-		GEO_BOTTOM,
-		GEO_FRONT,
-		GEO_BACK,
-		GEO_GRASS_DARKGREEN,
-		GEO_GRASS_LIGHTGREEN,
-		GEO_OBJECT,
-		GEO_TEXT,
-		GEO_RAINDROP,
-		GEO_SMOKEPA,
-		GEO_SNOW,
-		//TSL
-		GEO_SKYDOME,
-		GEO_TERRAIN,
-		GEO_WATER,
-		GEO_SPRITE_ANIMATION,
-		// Shadow 
-		GEO_LIGHT_DEPTH_QUAD,
-		NUM_GEOMETRY,
-	};
-
-	enum RENDER_PASS
-	{
-		RENDER_PASS_PRE,
-		RENDER_PASS_MAIN,
-	};
-
-public:
-	SceneBase();
-	~SceneBase();
-
-	virtual void Init();
-	virtual void Update(double dt);
-	void RenderText(Mesh * mesh, std::string text, Color color);
-	void RenderTextOnScreen(Mesh * mesh, std::string text, Color color, float size, float x, float y);
-	void RenderMeshIn2D(Mesh * mesh, bool enableLight, float size, float x, float y);
-	void RenderMesh(Mesh * mesh, bool enableLight, bool enableMT, bool enableReflect);
-	virtual void Render();
-	virtual void Exit();
-
-protected:
-	unsigned m_vertexArrayID;
-	unsigned cubeVAO;
-	Mesh* meshList[NUM_GEOMETRY];
-
-	unsigned m_programID;
-	unsigned m_parameters[U_TOTAL];
-
-	FirstPersonCamera fpscamera;
-
-	MS modelStack;
-	MS viewStack;
-	MS projectionStack;
-
-	Light lights[1];
-
-	bool bLightEnabled;
-
-	float eTime;
-
 	// Shadow
 	unsigned m_gPassShaderID;
 	DepthFBO m_lightDepthFBO;
@@ -167,6 +147,30 @@ protected:
 	Mtx44 m_lightDepthView;
 
 	RENDER_PASS m_renderPass;
+
+	unsigned m_vertexArrayID;
+	unsigned cubeVAO;
+	Mesh* meshList[NUM_GEOMETRY];
+
+	unsigned m_programID;
+	unsigned m_parameters[U_TOTAL];
+
+	FirstPersonCamera camera;
+
+	MS modelStack;
+	MS viewStack;
+	MS projectionStack;
+
+	Light lights[2];
+
+	bool bLightEnabled;
+
+	float fps;
+
+	// Terrain  
+	std::vector<unsigned char> m_heightMap;
+
+	float m_fMTElapsedTime;
 };
 
 #endif

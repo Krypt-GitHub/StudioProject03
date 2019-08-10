@@ -60,9 +60,6 @@
     <ClCompile Include="Source\Particle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ShadowTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DepthFBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,9 +73,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Behaviour.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Component.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\GameObject.cpp">
@@ -95,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="StudioProject\FirstPersonCamera.cpp">
       <Filter>StudioProject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Component.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +140,6 @@
     <ClInclude Include="Source\Particle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ShadowTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DepthFBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -164,9 +158,6 @@
     <ClInclude Include="Core\Behaviour.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Component.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\GameObject.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -181,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="StudioProject\FirstPersonCamera.h">
       <Filter>StudioProject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Component.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

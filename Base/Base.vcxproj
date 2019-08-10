@@ -29,7 +29,6 @@
     <ClCompile Include="Source\MyScene.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\shader.cpp" />
-    <ClCompile Include="Source\ShadowTest.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="StudioProject\FirstPersonCamera.cpp" />
@@ -58,7 +57,6 @@
     <ClInclude Include="Source\MyScene.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\shader.hpp" />
-    <ClInclude Include="Source\ShadowTest.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />

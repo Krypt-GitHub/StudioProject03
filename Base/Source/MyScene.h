@@ -9,6 +9,7 @@
 #include <vector>
 #include "LoadHmap.h"
 #include "DepthFBO.h"
+#include "../StudioProject/FirstPersonCamera.h"
 
 class MyScene : public Scene
 {
@@ -165,7 +166,7 @@ private:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
-	Camera3 camera;
+	FirstPersonCamera camera;
 
 	MS modelStack;
 	MS viewStack;
