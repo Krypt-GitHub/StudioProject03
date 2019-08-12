@@ -1,6 +1,7 @@
 #include "Object.h"
 
 Object::Object()
+	: hidden(false)
 {
 }
 

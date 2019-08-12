@@ -36,32 +36,21 @@ protected:
 	};
 	enum GEOMETRY_TYPE
 	{
+		// Misc
 		GEO_AXES,
 		GEO_CROSSHAIR,
 		GEO_LIGHTBALL,
-		GEO_PALM,
-		GEO_TRUCK,
-		GEO_BARRIER,
-		GEO_FENCE,
-		GEO_DUMPSTER,
-		GEO_LAMP,
+		// Geometry
 		GEO_QUAD,
 		GEO_CUBE,
 		GEO_RING,
 		GEO_CONE,
-		GEO_LEFT,
-		GEO_RIGHT,
-		GEO_TOP,
-		GEO_BOTTOM,
-		GEO_FRONT,
-		GEO_BACK,
-		GEO_GRASS_DARKGREEN,
-		GEO_GRASS_LIGHTGREEN,
-		GEO_OBJECT,
 		GEO_TEXT,
-		GEO_RAINDROP,
-		GEO_SMOKEPA,
-		GEO_SNOW,
+		// Environment
+		GEO_FLOOR,
+		// GameObjects
+		GEO_PISTOL,
+		GEO_KARAMBIT,
 		//TSL
 		GEO_SKYDOME,
 		GEO_TERRAIN,
@@ -155,7 +144,8 @@ protected:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
-	FirstPersonCamera camera;
+	FirstPersonCamera camera[2] = {};
+	int cameraID;
 
 	MS modelStack;
 	MS viewStack;

@@ -3,17 +3,19 @@
 
 #include "Object.h"
 #include "../Core/Transform.h"
+#include "../Physics/Collider.h"
 
 class GameObject : public Object
 {
 private:
-	bool isActive;
+	bool m_bisActive;
 public:
 
 	enum GO_TYPE
 	{
 		GO_NONE = 0,
 		GO_PISTOL,
+		GO_BULLET,
 		GO_TOTAL,
 	};
 
@@ -22,15 +24,17 @@ public:
 	bool isStatic;
 	float mass;
 
-	Transform transform;
+	Vector3 dir;
 
+	Transform transform;
+	Collider obb;
 
 	// Functions
 	GameObject(GO_TYPE typeValue = GO_NONE);
 	~GameObject();
 
-
 	void SetActive(bool _active);
+	bool GetActive();
 };
 
 #endif

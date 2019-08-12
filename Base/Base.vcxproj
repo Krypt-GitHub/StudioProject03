@@ -18,6 +18,10 @@
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
+    <ClCompile Include="Physics\CharacterController.cpp" />
+    <ClCompile Include="Physics\Collider.cpp" />
+    <ClCompile Include="Physics\Rigidbody.cpp" />
+    <ClCompile Include="Physics\SphereCollider.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
@@ -32,8 +36,12 @@
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="StudioProject\FirstPersonCamera.cpp" />
-    <ClCompile Include="StudioProject\OurScene.cpp" />
+    <ClCompile Include="StudioProject\GameScene.cpp" />
+    <ClCompile Include="StudioProject\GOList.cpp" />
+    <ClCompile Include="StudioProject\MenuScene.cpp" />
+    <ClCompile Include="StudioProject\PlayerController.cpp" />
     <ClCompile Include="StudioProject\SceneBase.cpp" />
+    <ClCompile Include="StudioProject\WeaponClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseCamera.h" />
@@ -44,6 +52,10 @@
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
+    <ClInclude Include="Physics\CharacterController.h" />
+    <ClInclude Include="Physics\Collider.h" />
+    <ClInclude Include="Physics\Rigidbody.h" />
+    <ClInclude Include="Physics\SphereCollider.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\DepthFBO.h" />
     <ClInclude Include="Source\Geometry.h" />
@@ -61,8 +73,12 @@
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="StudioProject\FirstPersonCamera.h" />
-    <ClInclude Include="StudioProject\OurScene.h" />
+    <ClInclude Include="StudioProject\GameScene.h" />
+    <ClInclude Include="StudioProject\GOList.h" />
+    <ClInclude Include="StudioProject\MenuScene.h" />
+    <ClInclude Include="StudioProject\PlayerController.h" />
     <ClInclude Include="StudioProject\SceneBase.h" />
+    <ClInclude Include="StudioProject\WeaponClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\GPass.frag" />

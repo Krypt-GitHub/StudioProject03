@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../StudioProject/OurScene.h"
+#include "../StudioProject/GameScene.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -74,6 +74,11 @@ bool Application::GetMouseUpdate()
 	mouse_last_y = mouse_current_y;
 
     return false;
+}
+
+bool Application::GetMouseDown(unsigned short key) //0 - Left, 1 - Right, 2 - Middle
+{
+	return glfwGetMouseButton(m_window, key) != 0;
 }
 
 int Application::GetWindowHeight()
@@ -149,7 +154,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene = new OurScene();
+	Scene *scene = new GameScene();
 	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame

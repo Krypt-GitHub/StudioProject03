@@ -22,6 +22,18 @@
     <Filter Include="StudioProject\Camera">
       <UniqueIdentifier>{45c90400-555d-4b70-9037-bf4f3221e71a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{d5224ce9-a79f-4205-8643-3dcd0e8ad4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StudioProject\Player">
+      <UniqueIdentifier>{08461ee1-6ca2-4ee4-8786-e735bbc8e146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StudioProject\Scene">
+      <UniqueIdentifier>{3197703a-70ba-4f86-a8e2-a8e483c63d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StudioProject\Weapon">
+      <UniqueIdentifier>{9609c7d7-54b7-4240-b7dd-78796fa94479}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -63,12 +75,6 @@
     <ClCompile Include="Source\DepthFBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\OurScene.cpp">
-      <Filter>StudioProject</Filter>
-    </ClCompile>
-    <ClCompile Include="StudioProject\SceneBase.cpp">
-      <Filter>StudioProject</Filter>
-    </ClCompile>
     <ClCompile Include="Core\BaseCamera.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -92,6 +98,36 @@
     </ClCompile>
     <ClCompile Include="Core\Component.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CharacterController.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Collider.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Rigidbody.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\SphereCollider.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\SceneBase.cpp">
+      <Filter>StudioProject\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\GameScene.cpp">
+      <Filter>StudioProject\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\MenuScene.cpp">
+      <Filter>StudioProject\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\PlayerController.cpp">
+      <Filter>StudioProject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\WeaponClass.cpp">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\GOList.cpp">
+      <Filter>StudioProject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,12 +179,6 @@
     <ClInclude Include="Source\DepthFBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\OurScene.h">
-      <Filter>StudioProject</Filter>
-    </ClInclude>
-    <ClInclude Include="StudioProject\SceneBase.h">
-      <Filter>StudioProject</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Scene.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -164,9 +194,6 @@
     <ClInclude Include="Core\Object.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Transform.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Camera.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -174,6 +201,39 @@
       <Filter>StudioProject\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Core\Component.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CharacterController.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Collider.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Rigidbody.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\SphereCollider.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\SceneBase.h">
+      <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\GameScene.h">
+      <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\MenuScene.h">
+      <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PlayerController.h">
+      <Filter>StudioProject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\WeaponClass.h">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\GOList.h">
+      <Filter>StudioProject</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Transform.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
