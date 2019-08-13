@@ -16,6 +16,7 @@ public:
 	enum GO_TYPE
 	{
 		GO_NONE = 0,
+		GO_PLAYER,
 		GO_PISTOL,
 		GO_BULLET,
 		GO_TOTAL,

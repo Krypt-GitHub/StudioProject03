@@ -24,3 +24,8 @@ GameObject* GOList::FetchGO()
 		}
 	}
 }
+
+void GOList::Exit()
+{
+
+}

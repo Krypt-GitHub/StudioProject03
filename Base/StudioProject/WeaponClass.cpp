@@ -18,12 +18,12 @@ WeaponClass::~WeaponClass()
 	}
 }
 
-void WeaponClass::Init(const std::string _name, int _fireRate, float _reloadSpeed, int _maxClip)
+void WeaponClass::Init(const std::string _name, GameObject::GO_TYPE _type, int _fireRate, float _reloadSpeed, int _maxClip)
 {
 	weaponObject = new GameObject;
 
 	weaponObject->name = _name;
-	weaponObject->type = GameObject::GO_PISTOL;
+	weaponObject->type = _type;
 	weaponObject->transform.position.Set(0.f, 0.f, 0.f);
 	weaponObject->transform.scale.Set(1.f, 1.f, 1.f);
 

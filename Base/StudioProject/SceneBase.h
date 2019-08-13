@@ -51,6 +51,8 @@ protected:
 		// GameObjects
 		GEO_PISTOL,
 		GEO_KARAMBIT,
+		// Player
+		GEO_HANDS,
 		//TSL
 		GEO_SKYDOME,
 		GEO_TERRAIN,
@@ -157,6 +159,7 @@ protected:
 
 	float fps;
 
+	float m_fFOV;
 	// Terrain  
 	std::vector<unsigned char> m_heightMap;
 

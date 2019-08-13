@@ -1,16 +1,28 @@
-﻿  PlayerController.cpp
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(69): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  Application.cpp
+  GOList.cpp
+  GameScene.cpp
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\gamescene.cpp(14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\gamescene.cpp(130): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PhysicSystem.cpp
+  PlayerController.cpp
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(58): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(92): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(178): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(179): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(181): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(200): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(201): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(203): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(93): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(95): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(181): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(182): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(184): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(203): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(204): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\playercontroller.cpp(206): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  SceneBase.cpp
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\scenebase.cpp(173): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  WeaponClass.cpp
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\weaponclass.cpp(5): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\golist.cpp(26): warning C4715: 'GOList::FetchGO': not all control paths return a value
 BaseCamera.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Base.vcxproj -> D:\Users\Irwen Yap\Documents\GitHub\StudioProject03\Debug\Base.exe

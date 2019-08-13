@@ -3,6 +3,7 @@
 
 #include "../Core/GameObject.h"
 #include "../StudioProject/FirstPersonCamera.h"
+#include "GOList.h"
 //#include "../Source/SoundEngine.h"
 
 class PlayerController
@@ -17,6 +18,8 @@ class PlayerController
 	CURRENT_POSTURE theCurrentPosture;
 
 public:
+	GOList &gl = GOList::GetInstance();
+
 	GameObject *player;
 	FirstPersonCamera camera;
 

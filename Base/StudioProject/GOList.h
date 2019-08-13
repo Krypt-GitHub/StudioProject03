@@ -18,6 +18,8 @@ public:
 	GOList();
 	~GOList();
 	GameObject *FetchGO();
+
+	void Exit();
 };
 
 #endif

@@ -34,6 +34,12 @@
     <Filter Include="StudioProject\Weapon">
       <UniqueIdentifier>{9609c7d7-54b7-4240-b7dd-78796fa94479}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StudioProject\Core">
+      <UniqueIdentifier>{84ef459b-b0f2-4f0b-95e2-26a87cbc04d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StudioProject\AI">
+      <UniqueIdentifier>{78854a1f-c557-4890-a925-4103239e5ed7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -129,8 +135,17 @@
     <ClCompile Include="StudioProject\GOList.cpp">
       <Filter>StudioProject</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicSystem.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="StudioProject\PhysicSystem.cpp">
+      <Filter>StudioProject\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\EnemyAI.cpp">
+      <Filter>StudioProject\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\AIBehaviour.cpp">
+      <Filter>StudioProject\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\AIState.cpp">
+      <Filter>StudioProject\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,8 +254,17 @@
     <ClInclude Include="Core\Transform.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicSystem.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="StudioProject\PhysicSystem.h">
+      <Filter>StudioProject\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\EnemyAI.h">
+      <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\AIBehaviour.h">
+      <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\AIState.h">
+      <Filter>StudioProject\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

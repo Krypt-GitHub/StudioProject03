@@ -30,6 +30,7 @@ void PlayerController::Init()
 	player = new GameObject;
 	player->SetActive(true);
 	player->SetStatic(false);
+	player->type = GameObject::GO_PLAYER;
 	player->transform.position.Set(10, 30, 10);
 
 	isZDown = false;
@@ -38,6 +39,8 @@ void PlayerController::Init()
 
 	m_fPlayerHeight = 100.f;
 	camera.Init(Vector3(player->transform.position.x, player->transform.position.y, player->transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+	gl.m_goList.push_back(player);
 }
 
 void PlayerController::Update(double dt)

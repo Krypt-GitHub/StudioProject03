@@ -16,7 +16,7 @@ public:
 	WeaponClass();
 	~WeaponClass();
 
-	void Init(const std::string _name, int _fireRate, float _reloadSpeed, int _maxClip);
+	void Init(const std::string _name, GameObject::GO_TYPE _type, int _fireRate, float _reloadSpeed, int _maxClip);
 	void Update(double dt, Vector3 _dir);
 	void SetPickUp(bool _isPickUp);
 	bool GetPickUp();

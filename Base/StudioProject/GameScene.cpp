@@ -27,8 +27,7 @@ void GameScene::Init()
 	camera[1] = Player.camera;
 
 	// Weapon Init
-	Pistol.Init("Pistol", 10, 15.f, 12);
-	Pistol.weaponObject->type = GameObject::GO_PISTOL;
+	Pistol.Init("Pistol", GameObject::GO_PISTOL, 10, 15.f, 12);
 
 	// Init FOG
 	//Color fogColor(0.24f, 0.19f, 0.06f);
@@ -65,7 +64,7 @@ void GameScene::Init()
 	meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
 	meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
 
-	
+	meshList[GEO_HANDS] = MeshBuilder::GenerateOBJ("hands", "OBJ//hands.obj");
 
 	//meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN", "Image//heightmap.raw", m_heightMap);
 
@@ -130,7 +129,23 @@ void GameScene::Update(double dt)
 			{
 				go->transform.position += go->m_v3dir * 10 * dt;
 			}
+
+			if (go->type == GameObject::GO_PLAYER)
+			{
+				go->transform.position = Player.camera.position;
+			}
 		}
+	}
+	static bool m_bRBDown = false;
+	if (Application::GetMouseDown(1) && !m_bRBDown)
+	{
+		m_fFOV = 10.f;
+		m_bRBDown = true;
+	}
+	if (!Application::GetMouseDown(1) && m_bRBDown)
+	{
+		m_fFOV = 45.f;
+		m_bRBDown = false;
 	}
 }
 
@@ -202,7 +217,7 @@ void GameScene::RenderPassMain()
 	//projectionStack.LoadMatrix(ortho);
 
 	Mtx44 perspective;
-	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
+	perspective.SetToPerspective(m_fFOV, 4.0f / 3.0f, 0.1f, 10000.0f);
 	projectionStack.LoadMatrix(perspective);
 	// Camera matrix
 	viewStack.LoadIdentity();
@@ -338,6 +353,14 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 		RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);			
+		modelStack.PopMatrix();
+		break;
+	case GameObject::GO_PLAYER:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+		modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
+		modelStack.Scale(10, 10, 10);
+		RenderMesh(meshList[GEO_HANDS], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	}

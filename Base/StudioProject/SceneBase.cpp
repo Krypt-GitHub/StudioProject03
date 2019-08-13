@@ -164,6 +164,8 @@ void SceneBase::Init()
 	camera[cameraID].Init(Vector3(-420, 184, 178), Vector3(0, 185, 0), Vector3(0, 1, 0));
 
 	m_fMTElapsedTime = 0.f;
+
+	m_fFOV = 45.f;
 }
 
 void SceneBase::Update(double dt)

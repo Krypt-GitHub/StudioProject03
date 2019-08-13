@@ -18,7 +18,6 @@
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
-    <ClCompile Include="PhysicSystem.cpp" />
     <ClCompile Include="Physics\CharacterController.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
     <ClCompile Include="Physics\Rigidbody.cpp" />
@@ -36,10 +35,14 @@
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="StudioProject\AIBehaviour.cpp" />
+    <ClCompile Include="StudioProject\AIState.cpp" />
+    <ClCompile Include="StudioProject\EnemyAI.cpp" />
     <ClCompile Include="StudioProject\FirstPersonCamera.cpp" />
     <ClCompile Include="StudioProject\GameScene.cpp" />
     <ClCompile Include="StudioProject\GOList.cpp" />
     <ClCompile Include="StudioProject\MenuScene.cpp" />
+    <ClCompile Include="StudioProject\PhysicSystem.cpp" />
     <ClCompile Include="StudioProject\PlayerController.cpp" />
     <ClCompile Include="StudioProject\SceneBase.cpp" />
     <ClCompile Include="StudioProject\WeaponClass.cpp" />
@@ -53,7 +56,6 @@
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
-    <ClInclude Include="PhysicSystem.h" />
     <ClInclude Include="Physics\CharacterController.h" />
     <ClInclude Include="Physics\Collider.h" />
     <ClInclude Include="Physics\Rigidbody.h" />
@@ -74,10 +76,14 @@
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
+    <ClInclude Include="StudioProject\AIBehaviour.h" />
+    <ClInclude Include="StudioProject\AIState.h" />
+    <ClInclude Include="StudioProject\EnemyAI.h" />
     <ClInclude Include="StudioProject\FirstPersonCamera.h" />
     <ClInclude Include="StudioProject\GameScene.h" />
     <ClInclude Include="StudioProject\GOList.h" />
     <ClInclude Include="StudioProject\MenuScene.h" />
+    <ClInclude Include="StudioProject\PhysicSystem.h" />
     <ClInclude Include="StudioProject\PlayerController.h" />
     <ClInclude Include="StudioProject\SceneBase.h" />
     <ClInclude Include="StudioProject\WeaponClass.h" />
