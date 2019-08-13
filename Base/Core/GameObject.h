@@ -9,6 +9,8 @@ class GameObject : public Object
 {
 private:
 	bool m_bisActive;
+	bool m_bisStatic;
+	float m_fmass;
 public:
 
 	enum GO_TYPE
@@ -21,10 +23,8 @@ public:
 
 	// Members
 	GO_TYPE type;
-	bool isStatic;
-	float mass;
 
-	Vector3 dir;
+	Vector3 m_v3dir;
 
 	Transform transform;
 	Collider obb;
@@ -35,6 +35,10 @@ public:
 
 	void SetActive(bool _active);
 	bool GetActive();
+	void SetStatic(bool _static);
+	bool GetStatic();
+	void SetMass(float _mass);
+	float GetMass();
 };
 
 #endif

@@ -128,7 +128,7 @@ void GameScene::Update(double dt)
 		{
 			if (go->type == GameObject::GO_BULLET)
 			{
-				go->transform.position += go->dir * 10 * dt;
+				go->transform.position += go->m_v3dir * 10 * dt;
 			}
 		}
 	}

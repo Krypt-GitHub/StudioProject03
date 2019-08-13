@@ -6,7 +6,6 @@
 class SphereCollider : public Collider
 {
 private:
-	Vector3 center;
 	float radius;
 public:
 	SphereCollider();

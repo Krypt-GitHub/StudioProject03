@@ -129,6 +129,9 @@
     <ClCompile Include="StudioProject\GOList.cpp">
       <Filter>StudioProject</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="Core\Transform.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
+    <ClCompile Include="PhysicSystem.cpp" />
     <ClCompile Include="Physics\CharacterController.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
     <ClCompile Include="Physics\Rigidbody.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
+    <ClInclude Include="PhysicSystem.h" />
     <ClInclude Include="Physics\CharacterController.h" />
     <ClInclude Include="Physics\Collider.h" />
     <ClInclude Include="Physics\Rigidbody.h" />

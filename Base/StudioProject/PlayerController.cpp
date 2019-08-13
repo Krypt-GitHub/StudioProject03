@@ -29,7 +29,7 @@ void PlayerController::Init()
 {
 	player = new GameObject;
 	player->SetActive(true);
-	player->isStatic = false;
+	player->SetStatic(false);
 	player->transform.position.Set(10, 30, 10);
 
 	isZDown = false;

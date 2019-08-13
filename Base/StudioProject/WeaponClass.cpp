@@ -49,7 +49,7 @@ void WeaponClass::Update(double dt, Vector3 _dir)
 			GameObject *go = gl.FetchGO();
 			go->SetActive(true);
 			go->type = GameObject::GO_BULLET;
-			go->dir = _dir;
+			go->m_v3dir = _dir;
 			go->transform.position = weaponObject->transform.position;
 			go->transform.scale.Set(2, 2, 2);
 			gl.m_goList.push_back(go);
