@@ -34,9 +34,12 @@ public:
 	CheckPlayerInSightTask(AIBehaviour* status) : status(status) {}
 	virtual bool run() override
 	{
-		//if (status->m_bplayerInSight)
-		//	return status->m_bplayerInSight;
-		return true;
+		if (status->m_fdistanceToPlayer < 100)
+		{
+			std::cout << "Player in sight" << std::endl;
+			return true;
+		}
+		return false;
 	}
 };
 

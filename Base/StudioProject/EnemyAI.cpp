@@ -29,13 +29,6 @@ void EnemyAI::Init()
 	aiStatus = new AIBehaviour(false, 0);
 	checkSight = new CheckPlayerInSightTask(aiStatus);
 	approachPlayer = new ApproachPlayerTask(aiStatus, false);
-
-	root->addChild(selector1);
-
-	selector1->addChild(checkSight);
-	selector1->addChild(sequence1);
-
-	sequence1->addChild(approachPlayer);
 }
 
 void EnemyAI::Update(double dt)
@@ -65,7 +58,14 @@ void EnemyAI::Update(double dt)
 	}
 
 	aiStatus->m_fdistanceToPlayer = (enemy->transform.position - m_v3playerPos).Length();
-	std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
+	//std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
+
+	root->addChild(selector1);
+
+	selector1->addChild(checkSight);
+	selector1->addChild(sequence1);
+
+	sequence1->addChild(approachPlayer);
 
 	while (!root->run())
 		std::cout << "gay" << std::endl;

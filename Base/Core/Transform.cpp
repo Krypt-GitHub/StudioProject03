@@ -8,6 +8,13 @@ Transform::Transform()
 
 }
 
+void Transform::SetTransform(Vector3 _position, Vector3 _scale, float _rotation)
+{
+	position = _position;
+	scale = _scale;
+	rotation = _rotation;
+}
+
 
 Transform::~Transform()
 {

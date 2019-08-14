@@ -129,9 +129,6 @@
     <ClCompile Include="StudioProject\PlayerController.cpp">
       <Filter>StudioProject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\WeaponClass.cpp">
-      <Filter>StudioProject\Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="StudioProject\GOList.cpp">
       <Filter>StudioProject</Filter>
     </ClCompile>
@@ -146,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="StudioProject\Physics.cpp">
       <Filter>StudioProject\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\WeaponClass.cpp">
+      <Filter>StudioProject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +245,6 @@
     <ClInclude Include="StudioProject\PlayerController.h">
       <Filter>StudioProject\Player</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\WeaponClass.h">
-      <Filter>StudioProject\Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\GOList.h">
       <Filter>StudioProject</Filter>
     </ClInclude>
@@ -257,10 +254,16 @@
     <ClInclude Include="StudioProject\EnemyAI.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\AIBehaviour.h">
+    <ClInclude Include="StudioProject\AINode.h">
+      <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\AINode.h">
+    <ClInclude Include="StudioProject\WeaponClass.h">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\AIBehaviour.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
   </ItemGroup>

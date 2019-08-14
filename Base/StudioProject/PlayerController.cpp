@@ -27,20 +27,14 @@ PlayerController::~PlayerController()
 
 void PlayerController::Init()
 {
-	player = new GameObject;
-	player->SetActive(true);
-	player->SetStatic(false);
-	player->type = GameObject::GO_PLAYER;
-	player->transform.position.Set(10, 30, 10);
+	player = gl.CreateGO("Player", GameObject::GO_PLAYER, false, 0, Vector3(10, 30, 10), Vector3(0, 0, 0), 0);
 
 	isZDown = false;
 
 	theCurrentPosture = STAND;
 
-	m_fPlayerHeight = 100.f;
+	m_fPlayerHeight = 150.f;
 	camera.Init(Vector3(player->transform.position.x, player->transform.position.y, player->transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
-
-	gl.m_goList.push_back(player);
 }
 
 void PlayerController::Update(double dt)

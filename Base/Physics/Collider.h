@@ -14,9 +14,6 @@ private:
 	bool getSeparatingPlane(Vector3& RPos,Vector3& Plane,Collider& OtherBox);
 public:
 	// Members
-
-
-
 	Collider();
 	Collider(Vector3 Pos,Vector3 scale,Vector3 AxisX,Vector3 AxisZ);
 	~Collider();
@@ -27,8 +24,6 @@ public:
 	void upDatePos(Vector3 pos);
 	void rotateAxis(float degree, Vector3 rotateAxis);
 	void setScale(Vector3 scale);
-
-	
 };
 
 #endif

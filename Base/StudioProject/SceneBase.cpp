@@ -166,6 +166,44 @@ void SceneBase::Init()
 	m_fMTElapsedTime = 0.f;
 
 	m_fFOV = 45.f;
+
+	// Mesh Init
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
+	{
+		meshList[i] = NULL;
+	}
+
+	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 1), 1.f);
+
+	// UI
+	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
+	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
+	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
+	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
+	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
+
+	// Scene Objects
+	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
+	meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
+	meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
+
+	meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
+	meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
+
+	meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
+	meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
+
+	// Player
+	meshList[GEO_HANDS] = MeshBuilder::GenerateOBJ("hands", "OBJ//hands.obj");
+	
+	// Enemy
+	meshList[GEO_ENEMY_STAND] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_stand.obj");
+	meshList[GEO_ENEMY_WALK01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk01.obj");
+	meshList[GEO_ENEMY_WALK02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk02.obj");
+	meshList[GEO_ENEMY_SHOOT01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot01.obj");
+	meshList[GEO_ENEMY_SHOOT02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot02.obj");
+	meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
+
 }
 
 void SceneBase::Update(double dt)
@@ -421,5 +459,12 @@ void SceneBase::Render()
 
 void SceneBase::Exit()	
 {
-
+	// Cleanup VBO
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
+	{
+		if (meshList[i])
+			delete meshList[i];
+	}
+	glDeleteProgram(m_programID);
+	glDeleteVertexArrays(1, &m_vertexArrayID);
 }

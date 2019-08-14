@@ -31,50 +31,6 @@ void GameScene::Init()
 	// Weapon Init
 	Pistol.Init("Pistol", GameObject::GO_PISTOL, 10, 15.f, 12);
 
-	// Init FOG
-	//Color fogColor(0.24f, 0.19f, 0.06f);
-
-	//glUniform3fv(m_parameters[U_FOG_COLOR], 1, &fogColor.r);
-	//glUniform1f(m_parameters[U_FOG_START], 10);
-	//glUniform1f(m_parameters[U_FOG_END], 1000);
-	//glUniform1f(m_parameters[U_FOG_DENSITY], 0.005f);
-	//glUniform1i(m_parameters[U_FOG_TYPE], 0);
-	//glUniform1i(m_parameters[U_FOG_ENABLED], 1);
-
-	for (int i = 0; i < NUM_GEOMETRY; ++i)
-	{
-		meshList[i] = NULL;
-	}
-
-	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 1), 1.f);
-
-	// UI
-	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
-	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
-	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
-	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-
-	// Environment
-	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
-	meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
-
-	meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
-	meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
-
-	meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
-	meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
-
-	meshList[GEO_HANDS] = MeshBuilder::GenerateOBJ("hands", "OBJ//hands.obj");
-
-	meshList[GEO_ENEMY_STAND] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_stand.obj");
-	meshList[GEO_ENEMY_WALK01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk01.obj");
-	meshList[GEO_ENEMY_WALK02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk02.obj");
-	meshList[GEO_ENEMY_SHOOT01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot01.obj");
-	meshList[GEO_ENEMY_SHOOT02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot02.obj");
-	meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
-
 	floor = new GameObject;
 	floor->SetActive(true);
 	floor->type = GameObject::GO_FLOOR;
@@ -85,7 +41,6 @@ void GameScene::Init()
 	floor->obb.setScale(Vector3(1000, 1000, 5));
 	floor->obb.rotateAxis(90, Vector3(1, 0, 0));
 	gl.m_goList.push_back(floor);
-	//meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN", "Image//heightmap.raw", m_heightMap);
 
 	// Projection matrix : 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -115,8 +70,6 @@ void GameScene::Update(double dt)
 {
 	SceneBase::Update(dt);
 
-
-	Player.Update(dt);
 	Pistol.Update(dt, (Player.camera.target - Player.camera.position).Normalize());
 	Enemy.Update(dt);
 
@@ -297,22 +250,9 @@ void GameScene::RenderPassMain()
 
 	//RenderWater();
 
-	//modelStack.PushMatrix();
-	//modelStack.Translate(0, 800, 0);
-	//RenderMesh(meshList[GEO_SKYDOME], false, false, false);
-	//modelStack.PopMatrix();
 
 	RenderWorld();
 
-	//modelStack.PushMatrix();
-	//modelStack.Translate(lights[0].position.x, lights[0].position.y, lights[0].position.z);
-	//RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);
-	//modelStack.PopMatrix();
-
-	//modelStack.PushMatrix();
-	//modelStack.Translate(lights[1].position.x, lights[1].position.y, lights[1].position.z);
-	//RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);
-	//modelStack.PopMatrix();
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
@@ -352,7 +292,8 @@ void GameScene::RenderGO(GameObject* go)
 			modelStack.PushMatrix();
 			modelStack.Translate(Player.player->transform.position.x, Player.player->transform.position.y, Player.player->transform.position.z);
 			modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
-			modelStack.Translate(-1, -1.5, 3);
+			//modelStack.Rotate(Math::RadianToDegree(-atan2(Player.camera.target.y - Player.camera.position.y, Player.camera.target.x - Player.camera.position.x)), 1, 0, 0);
+			modelStack.Translate(-8, -10, 30);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
 			modelStack.PopMatrix();
@@ -380,7 +321,7 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
 		modelStack.Scale(10, 10, 10);
-		RenderMesh(meshList[GEO_HANDS], false, false, false);
+		//RenderMesh(meshList[GEO_HANDS], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_ENEMY:
@@ -444,13 +385,6 @@ void GameScene::Render()
 
 void GameScene::Exit()
 {
-	// Cleanup VBO
-	for (int i = 0; i < NUM_GEOMETRY; ++i)
-	{
-		if (meshList[i])
-			delete meshList[i];
-	}
-	glDeleteProgram(m_programID);
-	glDeleteProgram(m_gPassShaderID);
-	glDeleteVertexArrays(1, &m_vertexArrayID);
+	SceneBase::Exit();
+	gl.Exit();
 }

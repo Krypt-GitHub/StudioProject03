@@ -7,10 +7,11 @@ class Transform : public Component
 {
 public:
 	Vector3 position;
-	float rotation;
 	Vector3 scale;
+	float rotation;
 
 	Transform();
+	void SetTransform(Vector3 _position, Vector3 _scale, float _rotation);
 	~Transform();
 };
 
