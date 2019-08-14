@@ -11,7 +11,6 @@ public:
 	// Members
 	GameObject* weaponObject;
 
-
 	// Functions
 	WeaponClass();
 	~WeaponClass();

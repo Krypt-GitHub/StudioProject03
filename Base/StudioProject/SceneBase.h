@@ -53,6 +53,12 @@ protected:
 		GEO_KARAMBIT,
 		// Player
 		GEO_HANDS,
+		GEO_ENEMY_STAND,
+		GEO_ENEMY_WALK01,
+		GEO_ENEMY_WALK02,
+		GEO_ENEMY_SHOOT01,
+		GEO_ENEMY_SHOOT02,
+		GEO_ENEMY_BONUS,
 		//TSL
 		GEO_SKYDOME,
 		GEO_TERRAIN,
@@ -164,6 +170,9 @@ protected:
 	std::vector<unsigned char> m_heightMap;
 
 	float m_fMTElapsedTime;
+
+	// Scene Objects
+	GameObject *floor;
 };
 
 #endif

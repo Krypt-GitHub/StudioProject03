@@ -3,7 +3,7 @@
 #define APPLICATION_H
 
 #include "timer.h"
-
+#include "../StudioProject/Physics.h"
 class Application
 {
 public:
@@ -25,6 +25,9 @@ public:
 	static int GetWindowHeight();
 	static int GetWindowWidth();
 
+	static bool GetShouldUpdate();
+	static void SetShouldUpdate(bool update);
+
 private:
 	Application();
 	~Application();
@@ -33,8 +36,11 @@ private:
 	const static int m_window_deadzone = 100;
 	const static int m_window_width = 1920;
 	const static int m_window_height = 1080;
+
+	static bool m_bShouldUpdate;
 	//Declare a window object
 	StopWatch m_timer;
+	Physics PhysicsEngine;
 };
 
 #endif

@@ -3,8 +3,7 @@
 
 #include "Vector3.h"
 #include <string>
-
-class Object
+class Object 
 {
 private:
 public:

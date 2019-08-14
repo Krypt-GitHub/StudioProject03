@@ -18,6 +18,7 @@ public:
 	GOList();
 	~GOList();
 	GameObject *FetchGO();
+	GameObject* FetchGO(GameObject::GO_TYPE _type);
 
 	void Exit();
 };

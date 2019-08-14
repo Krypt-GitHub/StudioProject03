@@ -8,6 +8,7 @@
 #include "../Source/LoadTGA.h"
 #include <sstream>
 #include <time.h>
+#include "../Physics/Collider.h"
 
 GameScene::GameScene()
 {
@@ -24,6 +25,7 @@ void GameScene::Init()
 
 	// Player Init
 	Player.Init();
+	Enemy.Init();
 	camera[1] = Player.camera;
 
 	// Weapon Init
@@ -66,11 +68,26 @@ void GameScene::Init()
 
 	meshList[GEO_HANDS] = MeshBuilder::GenerateOBJ("hands", "OBJ//hands.obj");
 
+	meshList[GEO_ENEMY_STAND] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_stand.obj");
+	meshList[GEO_ENEMY_WALK01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk01.obj");
+	meshList[GEO_ENEMY_WALK02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk02.obj");
+	meshList[GEO_ENEMY_SHOOT01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot01.obj");
+	meshList[GEO_ENEMY_SHOOT02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot02.obj");
+	meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
+
+	floor = new GameObject;
+	floor->SetActive(true);
+	floor->type = GameObject::GO_FLOOR;
+	floor->transform.position = Vector3(0, -10, 0);
+	floor->transform.scale = Vector3(1000, 1000, 5);
+	floor->obb.upDateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+	floor->obb.upDatePos(Vector3(0, -15, 0));
+	floor->obb.setScale(Vector3(1000, 1000, 5));
+	floor->obb.rotateAxis(90, Vector3(1, 0, 0));
+	gl.m_goList.push_back(floor);
 	//meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN", "Image//heightmap.raw", m_heightMap);
 
-
-
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
+	// Projection matrix : 45ï¿½ Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
@@ -98,8 +115,11 @@ void GameScene::Update(double dt)
 {
 	SceneBase::Update(dt);
 
+
 	Player.Update(dt);
 	Pistol.Update(dt, (Player.camera.target - Player.camera.position).Normalize());
+	Enemy.Update(dt);
+
 
 	if (cameraID == 0)
 	{
@@ -111,14 +131,23 @@ void GameScene::Update(double dt)
 		Player.Update(dt);
 	}
 
+	if (Application::GetKeyDown('O'))
+	{
+		Enemy.behaviour.state = AIBehaviour::IDLE;
+	}
+	if (Application::GetKeyDown('P'))
+	{
+		Enemy.behaviour.state = AIBehaviour::WALK;
+		Enemy.m_bwalk01 = true;
+	}
+
 	if (Application::GetKeyDown('E'))
 	{
 		Pistol.SetPickUp(true);
+		Player.currentObject = Pistol.weaponObject;
 	}
 
 	fps = (float)(1.f / dt);
-
-	std::cout << Pistol.weaponObject->transform.position << std::endl;
 
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
 	{
@@ -137,12 +166,12 @@ void GameScene::Update(double dt)
 		}
 	}
 	static bool m_bRBDown = false;
-	if (Application::GetMouseDown(1) && !m_bRBDown)
+	if (Application::GetMouseDown(2) && !m_bRBDown)
 	{
 		m_fFOV = 10.f;
 		m_bRBDown = true;
 	}
-	if (!Application::GetMouseDown(1) && m_bRBDown)
+	if (!Application::GetMouseDown(2) && m_bRBDown)
 	{
 		m_fFOV = 45.f;
 		m_bRBDown = false;
@@ -208,7 +237,7 @@ void GameScene::RenderPassMain()
 	glCullFace(GL_BACK);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(m_programID);
-	//pass light depth texture        
+	//pass light depth texture
 	m_lightDepthFBO.BindForReading(GL_TEXTURE8);
 	glUniform1i(m_parameters[U_SHADOW_MAP], 8);
 
@@ -266,21 +295,12 @@ void GameScene::RenderPassMain()
 
 	RenderMesh(meshList[GEO_AXES], false, false, false);
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -10, 0);
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(1000, 1000, 0);
-	RenderMesh(meshList[GEO_FLOOR], false, false, false);
-	modelStack.PopMatrix();
-
 	//RenderWater();
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(0, 800, 0);
 	//RenderMesh(meshList[GEO_SKYDOME], false, false, false);
 	//modelStack.PopMatrix();
-
-	
 
 	RenderWorld();
 
@@ -297,14 +317,14 @@ void GameScene::RenderPassMain()
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
 	//modelStack.Scale(75, 75, 50);
-	//RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map       
+	//RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map
 	//modelStack.PopMatrix();
 }
 
 //void GameScene::RenderTerrain()
 //{
 //	modelStack.PushMatrix();
-//	modelStack.Scale(4000.0f, 350.f, 4000.0f); // values varies. 
+//	modelStack.Scale(4000.0f, 350.f, 4000.0f); // values varies.
 //	RenderMesh(meshList[GEO_TERRAIN], true, false, false);
 //	modelStack.PopMatrix();
 //}
@@ -352,7 +372,7 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.PushMatrix();
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-		RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);			
+		RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_PLAYER:
@@ -361,6 +381,45 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
 		modelStack.Scale(10, 10, 10);
 		RenderMesh(meshList[GEO_HANDS], false, false, false);
+		modelStack.PopMatrix();
+		break;
+	case GameObject::GO_ENEMY:
+		if (Enemy.behaviour.state == AIBehaviour::IDLE)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+			//modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
+			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+			RenderMesh(meshList[GEO_ENEMY_BONUS], false, false, false);
+			modelStack.PopMatrix();
+		}
+		else if (Enemy.behaviour.state == AIBehaviour::WALK)
+		{
+			if (Enemy.m_bwalk01)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+				modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
+				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+				RenderMesh(meshList[GEO_ENEMY_WALK01], false, false, false);
+				modelStack.PopMatrix();
+			}
+			if (Enemy.m_bwalk02)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+				modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
+				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+				RenderMesh(meshList[GEO_ENEMY_WALK02], false, false, false);
+				modelStack.PopMatrix();
+			}
+		}
+	case GameObject::GO_FLOOR:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+		RenderMesh(meshList[GEO_FLOOR], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	}

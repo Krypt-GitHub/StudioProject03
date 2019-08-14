@@ -1,1 +1,9 @@
 .vs/
+Debug/Base.exe
+Debug/Base.pdb
+Debug/Common.lib
+Debug/Common.pdb
+x64/
+x86/
+Common/Debug/
+Base/Debug/

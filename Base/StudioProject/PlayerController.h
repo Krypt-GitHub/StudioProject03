@@ -21,6 +21,7 @@ public:
 	GOList &gl = GOList::GetInstance();
 
 	GameObject *player;
+	GameObject *currentObject;
 	FirstPersonCamera camera;
 
 	bool m_bIsJumping;

@@ -135,17 +135,17 @@
     <ClCompile Include="StudioProject\GOList.cpp">
       <Filter>StudioProject</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\PhysicSystem.cpp">
-      <Filter>StudioProject\Core</Filter>
-    </ClCompile>
     <ClCompile Include="StudioProject\EnemyAI.cpp">
       <Filter>StudioProject\AI</Filter>
     </ClCompile>
     <ClCompile Include="StudioProject\AIBehaviour.cpp">
       <Filter>StudioProject\AI</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\AIState.cpp">
+    <ClCompile Include="StudioProject\AINode.cpp">
       <Filter>StudioProject\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\Physics.cpp">
+      <Filter>StudioProject\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,16 +254,13 @@
     <ClInclude Include="Core\Transform.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\PhysicSystem.h">
-      <Filter>StudioProject\Core</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\EnemyAI.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
     <ClInclude Include="StudioProject\AIBehaviour.h">
-      <Filter>StudioProject\AI</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\AIState.h">
+    <ClInclude Include="StudioProject\AINode.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
   </ItemGroup>

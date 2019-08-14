@@ -10,15 +10,17 @@ class GameObject : public Object
 private:
 	bool m_bisActive;
 	bool m_bisStatic;
-	float m_fmass;
+	float m_fmass; 
 public:
 
 	enum GO_TYPE
 	{
 		GO_NONE = 0,
 		GO_PLAYER,
+		GO_ENEMY,
 		GO_PISTOL,
 		GO_BULLET,
+		GO_FLOOR,
 		GO_TOTAL,
 	};
 
@@ -26,6 +28,7 @@ public:
 	GO_TYPE type;
 
 	Vector3 m_v3dir;
+	Vector3 m_v3vel;
 
 	Transform transform;
 	Collider obb;

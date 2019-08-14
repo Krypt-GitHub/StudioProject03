@@ -679,20 +679,7 @@ Mesh* MeshBuilder::GenerateTerrain(const std::string &meshName, const std::strin
 			v.color.Set(scaledHeight, scaledHeight, scaledHeight); //for rendering height map without texture
 			v.texCoord.Set((float)x / terrainSize * 8, 1.f - (float)z / terrainSize * 8);
 
-
-			//Vector3 p1 = Vector3(static_cast<float>(x - 1) / terrainSize - 0.5f, (float)heightMap[z * terrainSize + x] / SCALE_FACTOR, static_cast<float>(z) / terrainSize - 0.5f);
-			//Vector3 p2 = Vector3(static_cast<float>(x + 1) / terrainSize - 0.5f, (float)heightMap[z * terrainSize + x] / SCALE_FACTOR, static_cast<float>(z) / terrainSize - 0.5f);
-			//Vector3 p3 = Vector3(static_cast<float>(x) / terrainSize - 0.5f, (float)heightMap[z * terrainSize + x] / SCALE_FACTOR, static_cast<float>(z - 1) / terrainSize - 0.5f);
-			//Vector3 p4 = Vector3(static_cast<float>(x) / terrainSize - 0.5f, (float)heightMap[z * terrainSize + x] / SCALE_FACTOR, static_cast<float>(z + 1) / terrainSize - 0.5f);
-
-			//Vector3 tangent = (p2 - p1).Normalize();
-			//Vector3 binormal = (p4 - p3).Normalize();
-			//Vector3 normal;
-
-			//normal = tangent.Cross(binormal);
-			//v.normal.Set(normal.x, normal.y, normal.z);
 			v.normal.Set(0, (scaledHeight == 0.0f ? 1.0f : scaledHeight), 0);
-			//v.normal.Set(0, 1, 0);
 			vertex_buffer_data.push_back(v);
 		}
 	}

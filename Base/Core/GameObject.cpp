@@ -6,6 +6,7 @@ GameObject::GameObject(GO_TYPE typeValue)
 	, m_bisStatic(false)
 	, m_fmass(0)
 	, m_v3dir(Vector3(0, 0, 0))
+	, m_v3vel(Vector3(0, 0, 0))
 {
 }
 

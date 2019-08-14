@@ -25,6 +25,21 @@ GameObject* GOList::FetchGO()
 	}
 }
 
+GameObject* GOList::FetchGO(GameObject::GO_TYPE _type)
+{
+	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
+	{
+		GameObject *go = (GameObject *)*it;
+		if (go->GetActive())
+		{
+			if (go->type == _type)
+			{
+				return go;
+			}
+		}
+	}
+}
+
 void GOList::Exit()
 {
 

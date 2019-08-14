@@ -45,12 +45,17 @@ void PlayerController::Init()
 
 void PlayerController::Update(double dt)
 {
-	//m_fTerrainHeight = terrainHeight;
-	//std::cout << m_fTerrainHeight << std::endl;
+	player->m_v3dir = (camera.target - camera.position).Normalized();
+
 	if (Application::GetKeyDown(VK_SHIFT))
 		m_fPlayerSpeed = 40.f;
 	else
 		m_fPlayerSpeed = 20.f;
+
+	if (Application::GetKeyDown('W') || Application::GetKeyDown('A') || Application::GetKeyDown('S') || Application::GetKeyDown('D') || Application::GetKeyDown('Q'))
+		Application::SetShouldUpdate(true);
+	else
+		Application::SetShouldUpdate(false);
 
 	if (Application::GetKeyDown('W') && !m_bStopForward)
 	{

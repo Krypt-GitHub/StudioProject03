@@ -20,6 +20,7 @@ double Application::mouse_last_x = 0.0, Application::mouse_last_y = 0.0,
 	   Application::mouse_current_x = 0.0, Application::mouse_current_y = 0.0,
 	   Application::mouse_diff_x = 0.0, Application::mouse_diff_y = 0.0;
 double Application::camera_yaw = 0.0, Application::camera_pitch = 0.0;
+bool Application::m_bShouldUpdate = false;
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -89,6 +90,16 @@ int Application::GetWindowHeight()
 int Application::GetWindowWidth()
 {
 	return m_window_width;
+}
+
+bool Application::GetShouldUpdate()
+{
+	return m_bShouldUpdate;
+}
+
+void Application::SetShouldUpdate(bool update)
+{
+	m_bShouldUpdate = update;
 }
 
 Application::Application()
@@ -162,6 +173,7 @@ void Application::Run()
 	{
 		GetMouseUpdate();
 		scene->Update(m_timer.getElapsedTime());
+		PhysicsEngine.UpdateGO(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
