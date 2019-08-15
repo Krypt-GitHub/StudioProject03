@@ -27,10 +27,12 @@ public:
 
 	virtual void Init();
 	virtual void Update(double dt);
-	void RenderGO(GameObject * go);
 	virtual void Render();
 	virtual void Exit();
 
+	void InitGO(GameObject* go);
+	void UpdateGO(GameObject* go, double dt);
+	void RenderGO(GameObject* go);
 
 	void RenderWorld();
 	void RenderWater();

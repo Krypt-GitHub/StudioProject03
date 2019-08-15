@@ -28,8 +28,23 @@ void GameScene::Init()
 	//Enemy.Init();
 	camera[1] = Player.camera;
 
+
+
 	// GAME OBJECT CREATION
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-10, 0, -10), Vector3(2, 2, 2), 0);
+
+
+
+	// INIT GAME OBJECT
+	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
+	{
+		GameObject *go = (GameObject *)*it;
+		if (go->GetActive())
+		{
+			InitGO(go);
+		}
+	}
+
 
 	// Weapon Init
 	Pistol.Init("Pistol", GameObject::GO_PISTOL, 10, 15.f, 12);
@@ -73,9 +88,16 @@ void GameScene::Update(double dt)
 {
 	SceneBase::Update(dt);
 
+	// UPDATE GAME OBJECT
+	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
+	{
+		GameObject *go = (GameObject *)*it;
+		if (go->GetActive())
+		{
+			UpdateGO(go, dt);
+		}
+	}
 	Pistol.Update(dt, (Player.camera.target - Player.camera.position).Normalize());
-	//Enemy.Update(dt);
-
 
 	if (cameraID == 0)
 	{
@@ -85,15 +107,6 @@ void GameScene::Update(double dt)
 	{
 		camera[1] = Player.camera;
 		Player.Update(dt);
-	}
-
-	if (Application::GetKeyDown('O'))
-	{
-		Enemy.aiStatus->state = AIBehaviour::IDLE;
-	}
-	if (Application::GetKeyDown('P'))
-	{
-		Enemy.aiStatus->state = AIBehaviour::WALK;
 	}
 
 	if (Application::GetKeyDown('E'))
@@ -271,6 +284,30 @@ void GameScene::RenderPassMain()
 //	modelStack.PopMatrix();
 //}
 
+void GameScene::InitGO(GameObject * go)
+{
+	switch (go->type)
+	{
+	case GameObject::GO_ENEMY:
+		static_cast<EnemyGO*>(go)->Init();
+		break;
+	case GameObject::GO_PISTOL:
+		break;
+	}
+}
+
+void GameScene::UpdateGO(GameObject * go, double dt)
+{
+	switch (go->type)
+	{
+	case GameObject::GO_ENEMY:
+		static_cast<EnemyGO*>(go)->Update(dt);
+		break;
+	case GameObject::GO_PISTOL:
+		break;
+	}
+}
+
 void GameScene::RenderGO(GameObject* go)
 {
 	switch (go->type)
@@ -329,7 +366,7 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_ENEMY:
-		if (Enemy.aiStatus->state == AIBehaviour::IDLE)
+		if (static_cast<EnemyGO* >(go)->aiStatus->state == AIBehaviour::IDLE)
 		{
 			modelStack.PushMatrix();
 			modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
@@ -338,9 +375,9 @@ void GameScene::RenderGO(GameObject* go)
 			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
 			modelStack.PopMatrix();
 		}
-		else if (Enemy.aiStatus->state == AIBehaviour::WALK)
+		else if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::WALK)
 		{
-			if (Enemy.aiStatus->m_bstartWalk01)
+			if (static_cast<EnemyGO*>(go)->aiStatus->m_bstartWalk01)
 			{
 				modelStack.PushMatrix();
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
@@ -349,7 +386,7 @@ void GameScene::RenderGO(GameObject* go)
 				RenderMesh(meshList[GEO_ENEMY_WALK01], false, false, false);
 				modelStack.PopMatrix();
 			}
-			if (Enemy.aiStatus->m_bstartWalk02)
+			if (static_cast<EnemyGO*>(go)->aiStatus->m_bstartWalk02)
 			{
 				modelStack.PushMatrix();
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);

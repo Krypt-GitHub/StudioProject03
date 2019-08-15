@@ -6,7 +6,6 @@ GOFactory::GOFactory()
 {
 }
 
-
 GOFactory::~GOFactory()
 {
 }
@@ -18,7 +17,11 @@ void GOFactory::CreateGO(std::string _name, GameObject::GO_TYPE _type, bool _sta
 
 GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE _type, bool _static, float _mass, Vector3 _position, Vector3 _scale, float _rotation)
 {
-	if (_type == GameObject::GO_ENEMY)
+	if (_type == GameObject::GO_PLAYER)
+	{
+
+	}
+	else if (_type == GameObject::GO_ENEMY)
 	{
 		EnemyGO* goEnemy = new EnemyGO;
 		goEnemy->name = _name;
@@ -28,5 +31,9 @@ GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE 
 		goEnemy->SetMass(_mass);
 		goEnemy->transform.SetTransform(_position, _scale, _rotation);
 		return goEnemy;
+	}
+	else if (_type == GameObject::GO_PISTOL)
+	{
+
 	}
 }
