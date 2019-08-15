@@ -257,14 +257,14 @@
     <ClInclude Include="StudioProject\AINode.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\Physics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\WeaponClass.h">
       <Filter>StudioProject\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="StudioProject\AIBehaviour.h">
       <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\Physics.h">
+      <Filter>StudioProject\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

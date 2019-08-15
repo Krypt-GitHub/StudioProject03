@@ -36,7 +36,7 @@ public:
 	{
 		if (status->m_fdistanceToPlayer < 100)
 		{
-			std::cout << "Player in sight" << std::endl;
+			//std::cout << "Player in sight" << std::endl;
 			return true;
 		}
 		return false;
@@ -57,7 +57,7 @@ public:
 		if (status->m_fdistanceToPlayer < 50)
 		{
 			status->m_bplayerInSight = true;
-			std::cout << "Approaching Player" << std::endl;
+			//std::cout << "Approaching Player" << std::endl;
 
 		}
 		return true;

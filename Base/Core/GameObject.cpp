@@ -4,9 +4,11 @@ GameObject::GameObject(GO_TYPE typeValue)
 	: type(typeValue)
 	, m_bisActive(false)
 	, m_bisStatic(false)
+	, m_bisOnGround(false)
 	, m_fmass(0)
 	, m_v3dir(Vector3(0, 0, 0))
 	, m_v3vel(Vector3(0, 0, 0))
+	, m_v3acc(Vector3(0, 0, 0))
 {
 }
 

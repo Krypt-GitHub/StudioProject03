@@ -13,6 +13,7 @@ public:
 
 	void UpdateGO(double dt);
 	void CollisionResponse(GameObject *go1, GameObject *go2);
+	Vector3 apply_forces(GameObject* object) const;
 };
 
 #endif

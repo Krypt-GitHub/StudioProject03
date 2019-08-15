@@ -37,7 +37,7 @@ bool Collider::getSeparatingPlane(Vector3& RPos, Vector3& Plane,Collider& OtherB
 bool Collider::getCollision(Collider & box2)
 {
 	{
-		static Vector3 RPos;
+		Vector3 RPos;
 		RPos = box2.pos - this->pos;
 
 		return !(getSeparatingPlane(RPos, this->AxisX, box2) ||
@@ -62,7 +62,7 @@ void Collider::upDateAxis(Vector3 AxisX, Vector3 AxisZ)
 {
 	this->AxisX = AxisX;
 	this->AxisZ = AxisZ;
-	this->AxisY = AxisX.Cross(AxisZ);
+	this->AxisY = AxisZ.Cross(AxisX);
 }
 
 void Collider::upDatePos(Vector3 pos)
@@ -83,3 +83,4 @@ void Collider::setScale(Vector3 scale)
 {
 	Half_size = scale;
 }
+
