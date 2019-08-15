@@ -16,6 +16,8 @@
 #include "WeaponClass.h"
 #include "GOList.h"
 #include "EnemyAI.h"
+#include "EnemyGO.h"
+#include "GOFactory.h"
 
 class GameScene : public SceneBase
 {
@@ -39,10 +41,12 @@ public:
 private:
 	GOList &gl = GOList::GetInstance();
 
-	PlayerController Player;
-	EnemyAI Enemy;
-	WeaponClass Pistol;
+	GOFactory goFactory;
 
+	PlayerController Player;
+	//EnemyAI Enemy;
+	WeaponClass Pistol;
+	
 
 	float test01;
 	float test02;

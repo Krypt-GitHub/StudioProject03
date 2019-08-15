@@ -2,8 +2,7 @@
 
 EnemyAI::EnemyAI()
 	: m_fwalkTime(0.f)
-	, m_bwalk01(false)
-	, m_bwalk02(false)
+	, m_bdoOnce(false)
 {
 }
 
@@ -17,42 +16,63 @@ void EnemyAI::Init()
 	enemy->SetActive(true);
 	enemy->SetStatic(false);
 	enemy->type = GameObject::GO_ENEMY;
-	enemy->transform.position.Set(-10, 0, -10);
+	enemy->transform.SetTransform(Vector3(-10, 0, -10), Vector3(2, 2, 2), 0);
 
-	behaviour.state = AIBehaviour::IDLE;
 
 	gl.m_goList.push_back(enemy);
 
 	root = new AITree::Sequence;
 	sequence1 = new AITree::Sequence;
 	selector1 = new AITree::Selector;
+	sequence2 = new AITree::Sequence;
 	aiStatus = new AIBehaviour(false, 0);
+	aiStatus->state = AIBehaviour::IDLE;
 	checkSight = new CheckPlayerInSightTask(aiStatus);
 	approachPlayer = new ApproachPlayerTask(aiStatus, false);
+	idle = new IdleTask(aiStatus);
+
+	root->addChild(selector1);
+
+	selector1->addChild(sequence1);
+	selector1->addChild(sequence2);
+
+	sequence1->addChild(checkSight);
+	sequence1->addChild(approachPlayer);
+
+	sequence2->addChild(idle);
 }
 
 void EnemyAI::Update(double dt)
 {
 	m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
 
-	if (m_bwalk01)
+	if (aiStatus->state == AIBehaviour::WALK)
+	{
+		if (m_bdoOnce)
+			aiStatus->m_bstartWalk01 = true;
+		
+		enemy->m_v3dir = (m_v3playerPos - enemy->transform.position).Normalize();
+		enemy->transform.position += Vector3(enemy->m_v3dir.x, 0, enemy->m_v3dir.z) * 20 * dt;
+	}
+
+	if (aiStatus->m_bstartWalk01)
 	{
 		m_fwalkTime += dt;
 		if (m_fwalkTime >= 0.4f)
 		{
-			m_bwalk01 = false;
-			m_bwalk02 = true;
+			aiStatus->m_bstartWalk01 = false;
+			aiStatus->m_bstartWalk02 = true;
 			m_fwalkTime = 0.f;
 		}
 	}
 
-	if (m_bwalk02)
+	if (aiStatus->m_bstartWalk02)
 	{
 		m_fwalkTime += dt;
 		if (m_fwalkTime >= 0.4f)
 		{
-			m_bwalk02 = false;
-			m_bwalk01 = true;
+			aiStatus->m_bstartWalk02 = false;
+			aiStatus->m_bstartWalk01 = true;
 			m_fwalkTime = 0.f;
 		}
 	}
@@ -60,12 +80,7 @@ void EnemyAI::Update(double dt)
 	aiStatus->m_fdistanceToPlayer = (enemy->transform.position - m_v3playerPos).Length();
 	//std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
 
-	root->addChild(selector1);
 
-	selector1->addChild(checkSight);
-	selector1->addChild(sequence1);
-
-	sequence1->addChild(approachPlayer);
 
 	while (!root->run())
 		std::cout << "gay" << std::endl;

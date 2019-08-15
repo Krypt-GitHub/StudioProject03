@@ -1,25 +1,22 @@
-#ifndef ENEMY_AI_H
-#define ENEMY_AI_H
+#ifndef ENEMY_GO_H
+#define ENEMY_GO_H
 
 #include "../Core/GameObject.h"
 #include "GOList.h"
 #include "AIBehaviour.h"
 
-class EnemyAI
+class EnemyGO : public GameObject
 {
 private:
 	float m_fwalkTime;
 	bool m_bdoOnce;
 public:
-
-
-
-	Vector3 m_v3playerPos;
-
+	EnemyGO();
+	~EnemyGO();
 
 	GOList &gl = GOList::GetInstance();
 
-	GameObject* enemy;
+	Vector3 m_v3playerPos;
 
 	AITree::Sequence *root;
 	AITree::Sequence *sequence1;
@@ -30,12 +27,8 @@ public:
 	ApproachPlayerTask *approachPlayer;
 	IdleTask *idle;
 
-	EnemyAI();
-	~EnemyAI();
 	void Init();
 	void Update(double dt);
-	void CheckPlayerInSight(GameObject* _player);
-
 };
 
 #endif

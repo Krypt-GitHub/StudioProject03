@@ -147,6 +147,12 @@
     <ClCompile Include="StudioProject\WeaponClass.cpp">
       <Filter>StudioProject\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="StudioProject\EnemyGO.cpp">
+      <Filter>StudioProject\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\GOFactory.cpp">
+      <Filter>StudioProject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -257,14 +263,20 @@
     <ClInclude Include="StudioProject\AINode.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\Physics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\WeaponClass.h">
       <Filter>StudioProject\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="StudioProject\AIBehaviour.h">
       <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\Physics.h">
+      <Filter>StudioProject\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\EnemyGO.h">
+      <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\GOFactory.h">
+      <Filter>StudioProject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

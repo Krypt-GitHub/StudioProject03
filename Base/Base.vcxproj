@@ -38,8 +38,10 @@
     <ClCompile Include="StudioProject\AIBehaviour.cpp" />
     <ClCompile Include="StudioProject\AINode.cpp" />
     <ClCompile Include="StudioProject\EnemyAI.cpp" />
+    <ClCompile Include="StudioProject\EnemyGO.cpp" />
     <ClCompile Include="StudioProject\FirstPersonCamera.cpp" />
     <ClCompile Include="StudioProject\GameScene.cpp" />
+    <ClCompile Include="StudioProject\GOFactory.cpp" />
     <ClCompile Include="StudioProject\GOList.cpp" />
     <ClCompile Include="StudioProject\MenuScene.cpp" />
     <ClCompile Include="StudioProject\Physics.cpp" />
@@ -79,8 +81,10 @@
     <ClInclude Include="StudioProject\AIBehaviour.h" />
     <ClInclude Include="StudioProject\AINode.h" />
     <ClInclude Include="StudioProject\EnemyAI.h" />
+    <ClInclude Include="StudioProject\EnemyGO.h" />
     <ClInclude Include="StudioProject\FirstPersonCamera.h" />
     <ClInclude Include="StudioProject\GameScene.h" />
+    <ClInclude Include="StudioProject\GOFactory.h" />
     <ClInclude Include="StudioProject\GOList.h" />
     <ClInclude Include="StudioProject\MenuScene.h" />
     <ClInclude Include="StudioProject\Physics.h" />

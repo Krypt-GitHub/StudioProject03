@@ -24,6 +24,8 @@ public:
 	bool m_bplayerInSight;
 	bool m_bstartShooting;
 	float m_fdistanceToPlayer;
+	bool m_bstartWalk01;
+	bool m_bstartWalk02;
 };
 
 class CheckPlayerInSightTask : public AITree::Node
@@ -34,7 +36,7 @@ public:
 	CheckPlayerInSightTask(AIBehaviour* status) : status(status) {}
 	virtual bool run() override
 	{
-		if (status->m_fdistanceToPlayer < 100)
+		if (status->m_fdistanceToPlayer < 200)
 		{
 			std::cout << "Player in sight" << std::endl;
 			return true;
@@ -54,8 +56,9 @@ public:
 	{
 		if (obstructed)
 			return false;
-		if (status->m_fdistanceToPlayer < 50)
+		if (status->m_fdistanceToPlayer > 100)
 		{
+			status->state = AIBehaviour::WALK; 
 			status->m_bplayerInSight = true;
 			std::cout << "Approaching Player" << std::endl;
 
@@ -64,6 +67,22 @@ public:
 	}
 };
 
+class IdleTask : public AITree::Node
+{
+private:
+	AIBehaviour *status;
+public:
+	IdleTask(AIBehaviour* status) : status(status) {}
+	virtual bool run() override
+	{
+		if (status->m_fdistanceToPlayer > 100)
+		{
+			std::cout << "AI on idle" << std::endl;
+			return true;
+		}
+		return false;
+	}
+};
 //class ShootPlayerTask : public AITree::Node
 //{
 //private:
