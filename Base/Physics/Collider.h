@@ -6,7 +6,8 @@ class Collider
 {
 private:
 	bool isEnabled;
-	bool getSeparatingPlane(Vector3& RPos,Vector3& Plane,Collider& OtherBox);
+
+	bool GetSeparatingPlane(Vector3& RPos,Vector3& Plane,Collider& OtherBox);
 public:
 	// Members
 	Collider();
@@ -19,11 +20,11 @@ public:
 	Vector3 AxisY;
 	Vector3 AxisZ;
 	void Enable();
-	bool getCollision( Collider&box2);
-	void upDateAxis(Vector3 AxisX , Vector3 AxisZ);
-	void upDatePos(Vector3 pos);
-	void rotateAxis(float degree, Vector3 rotateAxis);
-	void setScale(Vector3 scale);
+	bool GetCollision( Collider&box2);
+	void UpdateAxis(Vector3 AxisX , Vector3 AxisZ);
+	void UpdatePos(Vector3 pos);
+	void RotateAxis(float degree, Vector3 rotateAxis);
+	void SetScale(Vector3 scale);
 	void Render();
 };
 

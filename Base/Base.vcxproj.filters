@@ -156,6 +156,12 @@
     <ClCompile Include="StudioProject\PlayerGO.cpp">
       <Filter>StudioProject\Player</Filter>
     </ClCompile>
+    <ClCompile Include="StudioProject\WeaponBase.cpp">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\PistolGO.cpp">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -283,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="StudioProject\PlayerGO.h">
       <Filter>StudioProject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\WeaponBase.h">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PistolGO.h">
+      <Filter>StudioProject\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

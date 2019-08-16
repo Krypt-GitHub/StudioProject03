@@ -28,9 +28,9 @@ void WeaponClass::Init(const std::string _name, GameObject::GO_TYPE _type, int _
 	weaponObject->transform.scale.Set(1.f, 1.f, 1.f);
 	weaponObject->SetMass(1);
 
-	weaponObject->obb.upDateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
-	weaponObject->obb.upDatePos(weaponObject->transform.position);
-	weaponObject->obb.setScale(Vector3(weaponObject->transform.scale.x * 1.5, weaponObject->transform.scale.y * 6.5, weaponObject->transform.scale.z * 10));
+	weaponObject->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+	weaponObject->obb.UpdatePos(weaponObject->transform.position);
+	weaponObject->obb.SetScale(Vector3(weaponObject->transform.scale.x * 1.5, weaponObject->transform.scale.y * 6.5, weaponObject->transform.scale.z * 10));
 
 	m_ifireRate = _fireRate;
 	m_freloadSpeed = _reloadSpeed;

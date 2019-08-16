@@ -41,7 +41,7 @@ void Physics::UpdateGO(double dt)
 					//Collision
 					for (auto go2 : gl.m_goList)
 					{
-						if (go1->obb.getCollision(go2->obb))
+						if (go1->obb.GetCollision(go2->obb))
 						{
 							CollisionResponse(go1, go2);
 						}
@@ -49,7 +49,7 @@ void Physics::UpdateGO(double dt)
 				}
 
 				//Updating OBB position
-				go1->obb.upDatePos(go1->transform.position);
+				go1->obb.UpdatePos(go1->transform.position);
 			}	
 		}
 	}

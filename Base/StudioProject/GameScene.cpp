@@ -24,19 +24,8 @@ void GameScene::Init()
 	SceneBase::Init();
 
 	// GAME OBJECT CREATION
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(10, 0, 10), Vector3(1, 1, 1), 0);
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-10, 0, -10), Vector3(2, 2, 2), 0);
-	
-	
-	
-	
-	// Player Init
-	//Player.Init();
-	//Enemy.Init();
-
-
-
-
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(10, 0, 10), Vector3(1, 1, 1), 0, Vector3(6, 19, 2));
+	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-10, 0, -10), Vector3(2, 2, 2), 0, Vector3(6, 19, 2));
 
 	// INIT GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -55,12 +44,6 @@ void GameScene::Init()
 
 	// Weapon Init
 	Pistol.Init("Pistol", GameObject::GO_PISTOL, 10, 15.f, 12);
-
-	//floor = gl.CreateGO("floor", GameObject::GO_FLOOR, true, 0, Vector3(0, 0, 0), Vector3(1000, 1000, 5), 0);
-	//floor->obb.upDateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
-	//floor->obb.upDatePos(Vector3(0, 0, 0));
-	//floor->obb.setScale(Vector3(500, 500, 2.5));
-	//floor->obb.rotateAxis(90, Vector3(1, 0, 0));
 
 	// Projection matrix : 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -376,6 +359,11 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Scale(10, 10, 10);
 		//RenderMesh(meshList[GEO_HANDS], false, false, false);
 		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+		modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+		RenderMesh(meshList[GEO_CUBE], false, false, false);
+		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_ENEMY:
 		if (static_cast<EnemyGO* >(go)->aiStatus->state == AIBehaviour::IDLE)
@@ -385,6 +373,11 @@ void GameScene::RenderGO(GameObject* go)
 			//modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
+			modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+			RenderMesh(meshList[GEO_CUBE], false, false, false);
 			modelStack.PopMatrix();
 		}
 		else if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::WALK)
