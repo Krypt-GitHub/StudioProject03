@@ -43,4 +43,15 @@ GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE 
 	{
 
 	}
+	else
+	{
+		GameObject* gameObject = new GameObject;
+		gameObject->name = _name;
+		gameObject->type = _type;
+		gameObject->SetActive(true);
+		gameObject->SetStatic(_static);
+		gameObject->SetMass(_mass);
+		gameObject->transform.SetTransform(_position, _scale, _rotation);
+		return gameObject;
+	}
 }

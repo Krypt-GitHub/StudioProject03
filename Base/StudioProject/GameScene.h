@@ -50,10 +50,6 @@ private:
 	//EnemyAI Enemy;
 	WeaponClass Pistol;
 	PlayerGO *Player;
-	
-
-	float test01;
-	float test02;
 };
 
 #endif
