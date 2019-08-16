@@ -1,6 +1,6 @@
 #include "GOFactory.h"
-
-
+#include "PlayerGO.h"
+#include "EnemyGO.h"
 
 GOFactory::GOFactory()
 {
@@ -19,7 +19,14 @@ GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE 
 {
 	if (_type == GameObject::GO_PLAYER)
 	{
-
+		PlayerGO* goPlayer = new PlayerGO;
+		goPlayer->name = _name;
+		goPlayer->type = _type;
+		goPlayer->SetActive(true);
+		goPlayer->SetStatic(_static);
+		goPlayer->SetMass(_mass);
+		goPlayer->transform.SetTransform(_position, _scale, _rotation);
+		return goPlayer;
 	}
 	else if (_type == GameObject::GO_ENEMY)
 	{

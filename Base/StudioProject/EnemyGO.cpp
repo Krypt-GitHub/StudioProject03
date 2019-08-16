@@ -1,5 +1,5 @@
 #include "EnemyGO.h"
-
+#include "PlayerGO.h"
 
 
 EnemyGO::EnemyGO()

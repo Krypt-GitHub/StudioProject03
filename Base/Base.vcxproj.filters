@@ -153,6 +153,9 @@
     <ClCompile Include="StudioProject\GOFactory.cpp">
       <Filter>StudioProject</Filter>
     </ClCompile>
+    <ClCompile Include="StudioProject\PlayerGO.cpp">
+      <Filter>StudioProject\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="StudioProject\GOFactory.h">
       <Filter>StudioProject</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PlayerGO.h">
+      <Filter>StudioProject\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

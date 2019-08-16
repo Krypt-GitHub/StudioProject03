@@ -18,6 +18,7 @@
 #include "EnemyAI.h"
 #include "EnemyGO.h"
 #include "GOFactory.h"
+#include "PlayerGO.h"
 
 class GameScene : public SceneBase
 {
@@ -45,9 +46,10 @@ private:
 
 	GOFactory goFactory;
 
-	PlayerController Player;
+	//PlayerController Player;
 	//EnemyAI Enemy;
 	WeaponClass Pistol;
+	PlayerGO *Player;
 	
 
 	float test01;
