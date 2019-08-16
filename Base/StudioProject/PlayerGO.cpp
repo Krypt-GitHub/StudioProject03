@@ -21,7 +21,7 @@ void PlayerGO::Init()
 
 void PlayerGO::Update(double dt)
 {
-m_v3dir = (camera.target - camera.position).Normalized();
+	m_v3dir = (camera.target - camera.position).Normalized();
 
 	if (Application::GetKeyDown(VK_SHIFT))
 		m_fplayerSpeed = 40.f;
@@ -99,4 +99,6 @@ m_v3dir = (camera.target - camera.position).Normalized();
 		view = rotation * view;
 		camera.target = camera.position + view;
 	}
+
+	camera.position.Set(transform.position.x, transform.position.y, transform.position.z);
 }

@@ -27,14 +27,12 @@ void GameScene::Init()
 	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(10, 0, 10), Vector3(1, 1, 1), 0);
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-10, 0, -10), Vector3(2, 2, 2), 0);
 	
-	Player = static_cast<PlayerGO*>(gl.FetchGO(GameObject::GO_PLAYER));
 	
 	
 	
 	// Player Init
 	//Player.Init();
 	//Enemy.Init();
-	camera[1] = Player->camera;
 
 
 
@@ -50,6 +48,10 @@ void GameScene::Init()
 		}
 	}
 
+	Player = static_cast<PlayerGO*>(gl.FetchGO(GameObject::GO_PLAYER));
+	Player->camera.target.Set(0, 0, 0);
+	Player->camera.up.Set(0, 1, 0);
+	camera[1] = Player->camera;
 
 	// Weapon Init
 	Pistol.Init("Pistol", GameObject::GO_PISTOL, 10, 15.f, 12);
@@ -298,6 +300,8 @@ void GameScene::UpdateGO(GameObject * go, double dt)
 {
 	switch (go->type)
 	{
+	//case GameObject::GO_PLAYER:
+	//	static_cast<PlayerGO*>(go)->Update(dt);
 	case GameObject::GO_ENEMY:
 		static_cast<EnemyGO*>(go)->Update(dt);
 		break;
