@@ -19,8 +19,6 @@ public:
 	~GOList();
 	GameObject* FetchGO();
 	GameObject* FetchGO(GameObject::GO_TYPE _type);
-	GameObject* CreateGO(std::string _name, GameObject::GO_TYPE _type, bool _static, float mass, Vector3 _position, Vector3 _scale, float rotation);
-
 
 	void Exit();
 };

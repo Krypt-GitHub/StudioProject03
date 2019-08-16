@@ -42,18 +42,6 @@ GameObject* GOList::FetchGO(GameObject::GO_TYPE _type)
 	}
 }
 
-GameObject* GOList::CreateGO(std::string _name, GameObject::GO_TYPE _type, bool _static, float mass, Vector3 _position, Vector3 _scale, float rotation)
-{
-	GameObject *go = FetchGO();
-	go->name = _name;
-	go->type = _type;
-	go->SetActive(true);
-	go->SetStatic(_static);
-	go->SetMass(mass);
-	go->transform.SetTransform(_position, _scale, rotation);
-	return go;
-}
-
 void GOList::Exit()
 {
 	while (m_goList.size() > 0)

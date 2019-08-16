@@ -276,14 +276,6 @@ void GameScene::RenderPassMain()
 	//modelStack.PopMatrix();
 }
 
-//void GameScene::RenderTerrain()
-//{
-//	modelStack.PushMatrix();
-//	modelStack.Scale(4000.0f, 350.f, 4000.0f); // values varies.
-//	RenderMesh(meshList[GEO_TERRAIN], true, false, false);
-//	modelStack.PopMatrix();
-//}
-
 void GameScene::InitGO(GameObject * go)
 {
 	switch (go->type)
