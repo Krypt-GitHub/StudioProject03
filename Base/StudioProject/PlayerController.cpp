@@ -28,6 +28,11 @@ PlayerController::~PlayerController()
 void PlayerController::Init()
 {
 	player = gl.CreateGO("Player", GameObject::GO_PLAYER, false, 0, Vector3(10, 30, 10), Vector3(0, 0, 0), 0);
+	player->m_bisOnGround = true;
+	player->obb.upDateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+	player->obb.upDatePos(Vector3(0, 0, 0));
+	player->obb.setScale(Vector3(10, 10, 10));
+	//player->SetStatic(true);
 
 	isZDown = false;
 

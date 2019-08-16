@@ -38,7 +38,7 @@ public:
 	{
 		if (status->m_fdistanceToPlayer < 200)
 		{
-			std::cout << "Player in sight" << std::endl;
+			//std::cout << "Player in sight" << std::endl;
 			return true;
 		}
 		return false;
@@ -60,7 +60,7 @@ public:
 		{
 			status->state = AIBehaviour::WALK; 
 			status->m_bplayerInSight = true;
-			std::cout << "Approaching Player" << std::endl;
+			//std::cout << "Approaching Player" << std::endl;
 
 		}
 		return true;

@@ -26,11 +26,11 @@ void WeaponClass::Init(const std::string _name, GameObject::GO_TYPE _type, int _
 	weaponObject->type = _type;
 	weaponObject->transform.position.Set(0.f, 1000.f, 0.f);
 	weaponObject->transform.scale.Set(1.f, 1.f, 1.f);
-	weaponObject->SetMass(1100);
+	weaponObject->SetMass(1);
 
 	weaponObject->obb.upDateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 	weaponObject->obb.upDatePos(weaponObject->transform.position);
-	weaponObject->obb.setScale(weaponObject->transform.scale);
+	weaponObject->obb.setScale(Vector3(weaponObject->transform.scale.x * 1.5, weaponObject->transform.scale.y * 6.5, weaponObject->transform.scale.z * 10));
 
 	m_ifireRate = _fireRate;
 	m_freloadSpeed = _reloadSpeed;
@@ -69,8 +69,19 @@ void WeaponClass::Update(double dt, Vector3 _dir)
 		if (Application::GetMouseDown(1) && !m_bRBDown)
 		{
 			GameObject *player = gl.FetchGO(GameObject::GO_PLAYER);
-			weaponObject->m_v3vel = player->m_v3dir * 150000.f * dt;
 			m_bisPickUp = false;
+
+			//Throwing physics
+			//weaponObject->m_v3vel = player->m_v3dir * 150000.f * dt;
+			//float vel = 1000.f;
+			//float horiVel = vel * cos(Math::DegreeToRadian(45.f));
+			//float vertVel = vel * sin(Math::DegreeToRadian(45.f));
+			//weaponObject->m_v3vel = Vector3(horiVel, vertVel);
+
+			weaponObject->m_v3vel.SetZero();
+			std::cout << weaponObject->m_v3vel << std::endl;
+			//Changing it back to a dynamic object
+			weaponObject->SetStatic(false);
 
 			m_bLBDown = true;
 		}
@@ -79,6 +90,7 @@ void WeaponClass::Update(double dt, Vector3 _dir)
 			m_bLBDown = false;
 		}
 	}
+	std::cout << weaponObject->transform.position << std::endl;
 }
 
 void WeaponClass::SetPickUp(bool _isPickUp)

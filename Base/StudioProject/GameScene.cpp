@@ -49,16 +49,11 @@ void GameScene::Init()
 	// Weapon Init
 	Pistol.Init("Pistol", GameObject::GO_PISTOL, 10, 15.f, 12);
 
-	floor = new GameObject;
-	floor->SetActive(true);
-	floor->type = GameObject::GO_FLOOR;
-	floor->transform.position = Vector3(0, -10, 0);
-	floor->transform.scale = Vector3(1000, 1000, 5);
+	floor = gl.CreateGO("floor", GameObject::GO_FLOOR, true, 0, Vector3(0, 0, 0), Vector3(1000, 1000, 5), 0);
 	floor->obb.upDateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
-	floor->obb.upDatePos(Vector3(0, -15, 0));
-	floor->obb.setScale(Vector3(1000, 1000, 5));
+	floor->obb.upDatePos(Vector3(0, 0, 0));
+	floor->obb.setScale(Vector3(500, 500, 2.5));
 	floor->obb.rotateAxis(90, Vector3(1, 0, 0));
-	gl.m_goList.push_back(floor);
 
 	// Projection matrix : 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -113,6 +108,10 @@ void GameScene::Update(double dt)
 	{
 		Pistol.SetPickUp(true);
 		Player.currentObject = Pistol.weaponObject;
+
+		//Changing it to a static object
+		Pistol.weaponObject->SetStatic(true);
+		Pistol.weaponObject->obb.upDatePos(Pistol.weaponObject->transform.position);
 	}
 
 	fps = (float)(1.f / dt);
@@ -330,6 +329,11 @@ void GameScene::RenderGO(GameObject* go)
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
 			//modelStack.PopMatrix();
 			modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			modelStack.Scale(go->obb.Half_size.x, go->obb.Half_size.y, go->obb.Half_size.z);
+			RenderMesh(meshList[GEO_CUBE], false, false, false);
+			modelStack.PopMatrix();
 			//}
 		}
 		else
@@ -339,6 +343,11 @@ void GameScene::RenderGO(GameObject* go)
 			modelStack.Rotate(go->transform.rotation, 0, 1, 0);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
+			modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			modelStack.Scale(go->obb.Half_size.x*2, go->obb.Half_size.y*2, go->obb.Half_size.z*2);
+			RenderMesh(meshList[GEO_CUBE], false, false, false);
 			modelStack.PopMatrix();
 		}
 		break;
@@ -395,6 +404,12 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Rotate(-90, 1, 0, 0);
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 		RenderMesh(meshList[GEO_FLOOR], false, false, false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+		modelStack.Rotate(90, 1, 0, 0);
+		modelStack.Scale(go->obb.Half_size.x*2, go->obb.Half_size.y*2, go->obb.Half_size.z*2);
+		RenderMesh(meshList[GEO_CUBE], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	}

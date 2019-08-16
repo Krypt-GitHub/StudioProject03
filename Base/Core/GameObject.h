@@ -29,9 +29,12 @@ public:
 
 	Vector3 m_v3dir;
 	Vector3 m_v3vel;
+	Vector3 m_v3acc;
 
 	Transform transform;
 	Collider obb;
+
+	bool m_bisOnGround;
 
 	// Functions
 	GameObject(GO_TYPE typeValue = GO_NONE);

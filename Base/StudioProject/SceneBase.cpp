@@ -174,7 +174,7 @@ void SceneBase::Init()
 	}
 
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 1), 1.f);
-
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0, 1, 0), 1.f);
 	// UI
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
@@ -187,8 +187,9 @@ void SceneBase::Init()
 	meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
 	meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
 
-	meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
-	meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
+	meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
+	//meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
+	//meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
 
 	meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
 	meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
