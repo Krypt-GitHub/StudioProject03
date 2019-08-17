@@ -3,6 +3,16 @@
 
 
 PlayerGO::PlayerGO()
+	: m_bIsJumping(false)
+	, m_bIsFalling(false)
+	, m_bStopForward(false)
+	, m_dElapsedTime(0.f)
+	, m_fFallAcceleration(-10.f)
+	, m_fFallSpeed(0.f)
+	, m_fJumpSpeed(30.f)
+	, m_fJumpAcceleration(-10.f)
+	, m_fHealth(100.f)
+	, m_fStrength(0.f)
 {
 }
 
@@ -38,9 +48,6 @@ void PlayerGO::Update(double dt)
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 move = view * m_fplayerSpeed * dt;
 		transform.position += Vector3(move.x, 0, move.z);
-		//player->SimpleMove(Vector3(move.x, 0, move.z));
-		//controller.transform.position.y = terrainHeight + m_fPlayerHeight;
-		//camera.target.y += move.y;//controller.transform.position.y + (camera.target.y - controller.transform.position.y);
 		camera.target += Vector3(move.x, 0, move.z);
 	}
 
@@ -100,5 +107,108 @@ void PlayerGO::Update(double dt)
 		camera.target = camera.position + view;
 	}
 
+	if (Application::GetKeyDown(VK_SPACE) && IsGrounded())
+	{
+		//soundEngine.PlayASound("Jump");
+		SetToJump(true);
+	}
+
+	UpdateJump(dt);
+	UpdateFall(dt);
+
 	camera.position.Set(transform.position.x, transform.position.y, transform.position.z);
+}
+
+void PlayerGO::UpdateJump(double dt)
+{
+	if (m_bIsJumping == false)
+		return;
+
+	m_dElapsedTime += dt;
+
+	transform.position.y += m_fJumpSpeed * m_dElapsedTime + 0.5 * m_fJumpAcceleration * m_dElapsedTime * m_dElapsedTime;
+	camera.target.y += m_fJumpSpeed * m_dElapsedTime + 0.5 * m_fJumpAcceleration * m_dElapsedTime * m_dElapsedTime;
+
+	m_fJumpSpeed = m_fJumpSpeed + m_fFallAcceleration * m_dElapsedTime;
+
+	if (m_fJumpSpeed < 0.f)
+	{
+		m_fJumpSpeed = 0.f;
+		m_bIsJumping = false;
+		m_fFallSpeed = 0.f;
+		m_bIsFalling = true;
+		m_dElapsedTime = 0.f;
+	}
+}
+
+void PlayerGO::UpdateFall(double dt)
+{
+	if (m_bIsFalling == false)
+		return;
+
+	m_dElapsedTime += dt;
+
+	transform.position.y += m_fFallSpeed * m_dElapsedTime + 0.5 * m_fFallAcceleration * m_dElapsedTime * m_dElapsedTime;
+	camera.target.y += m_fFallSpeed * m_dElapsedTime + 0.5 * m_fFallAcceleration * m_dElapsedTime * m_dElapsedTime;
+
+	m_fFallSpeed = m_fFallSpeed + m_fFallAcceleration * m_dElapsedTime;
+
+	if (transform.position.y < 0)
+	{
+		Vector3 viewDir = camera.target - transform.position;
+		transform.position.y = m_fplayerHeight;
+		camera.target = transform.position + viewDir;
+		m_fFallSpeed = 0.f;
+		m_bIsFalling = false;
+		m_dElapsedTime = 0.f;
+	}
+}
+
+bool PlayerGO::IsGrounded()
+{
+	if (!m_bIsJumping && !m_bIsFalling)
+		return true;
+	else
+		return false;
+}
+
+bool PlayerGO::IsJumping()
+{
+	if (m_bIsJumping && !m_bIsFalling)
+		return true;
+	else
+		return false;
+}
+
+bool PlayerGO::IsFalling()
+{
+	if (!m_bIsJumping && m_bIsFalling)
+		return true;
+	else
+		return false;
+}
+
+void PlayerGO::SetToFall(bool _isFalling)
+{
+	if (_isFalling)
+	{
+		m_bIsJumping = false;
+		m_bIsFalling = true;
+	}
+}
+
+void PlayerGO::SetToJump(bool _isJumping)
+{
+	if (_isJumping)
+	{
+		m_bIsJumping = true;
+		m_bIsFalling = false;
+		m_fJumpSpeed = 10.f;
+	}
+}
+
+void PlayerGO::StopVertMove()
+{
+	m_bIsJumping = false;
+	m_bIsFalling = false;
 }

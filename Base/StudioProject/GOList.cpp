@@ -1,4 +1,5 @@
 #include "GOList.h"
+#include "EnemyGO.h"
 
 GOList::GOList()
 {
@@ -40,7 +41,12 @@ void GOList::Exit()
 	while (m_goList.size() > 0)
 	{
 		GameObject *go = m_goList.back();
-		delete go;
+		if (go->type == GameObject::GO_ENEMY)
+		{
+			delete static_cast<EnemyGO*>(go);
+		}
+		else
+			delete go;
 		m_goList.pop_back();
 	}
 }

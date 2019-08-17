@@ -9,6 +9,46 @@ EnemyGO::EnemyGO()
 
 EnemyGO::~EnemyGO()
 {
+	if (root != NULL)
+	{
+		delete root;
+		root == NULL;
+	}
+	if (sequence1 != NULL)
+	{
+		delete sequence1;
+		sequence1 == NULL;
+	}
+	if (sequence2 != NULL)
+	{
+		delete sequence2;
+		sequence2 == NULL;
+	}
+	if (selector1 != NULL)
+	{
+		delete selector1;
+		selector1 == NULL;
+	}
+	if (aiStatus != NULL)
+	{
+		delete aiStatus;
+		aiStatus == NULL;
+	}
+	if (checkSight != NULL)
+	{
+		delete checkSight;
+		checkSight == NULL;
+	}
+	if (approachPlayer != NULL)
+	{
+		delete approachPlayer;
+		approachPlayer == NULL;
+	}
+	if (idle != NULL)
+	{
+		delete idle;
+		idle == NULL;
+	}
 }
 
 void EnemyGO::Init()

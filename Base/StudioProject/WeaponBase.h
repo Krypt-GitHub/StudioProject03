@@ -2,13 +2,11 @@
 #define WEAPON_BASE_H
 
 #include "Vector3.h"
-#include "GOList.h"
+#include "../Core/GameObject.h"
 
 class WeaponBase
 {
 protected:
-	GOList &gl = GOList::GetInstance();
-
 	bool m_bisPickUp;
 	int m_imaxClip;
 	int m_icurClip;

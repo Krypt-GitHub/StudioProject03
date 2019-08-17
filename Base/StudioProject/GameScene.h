@@ -17,7 +17,7 @@
 
 #include "EnemyGO.h"
 #include "PlayerGO.h"
-//#include "PistolGO.h"
+#include "PistolGO.h"
 
 class GameScene : public SceneBase
 {
@@ -40,8 +40,8 @@ public:
 	void RenderPassMain();
 	//void RenderTerrain();
 
-private:
 	GOList &gl = GOList::GetInstance();
+private:
 
 	GOFactory goFactory;
 	PlayerGO *Player;

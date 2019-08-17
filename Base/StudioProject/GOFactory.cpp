@@ -50,7 +50,7 @@ GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE 
 	}
 	else if (_type == GameObject::GO_PISTOL)
 	{
-		EnemyGO* goPistol = new EnemyGO;
+		PistolGO* goPistol = new PistolGO;
 		goPistol->name = _name;
 		goPistol->type = _type;
 		goPistol->SetActive(true);

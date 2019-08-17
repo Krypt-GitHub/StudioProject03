@@ -14,8 +14,8 @@ void Physics::UpdateGO(double dt)
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
 	{
 		GameObject *go1 = (GameObject *)*it;
-		if (Application::GetShouldUpdate())
-		{
+		//if (Application::GetShouldUpdate())
+		//{
 			if (go1->GetActive())
 			{
 				//Resetting their velocity if they are static
@@ -31,14 +31,17 @@ void Physics::UpdateGO(double dt)
 					if (go1->m_bisOnGround)
 						go1->m_v3vel.y = 0;
 					//else
-					//	go1->m_v3vel = Vector3(0, -9.8, 0);
+					//{
+					//	go1->m_v3vel = Vector3(0, -9810, 0);
+					//	go1->transform.position += go1->m_v3vel * dt;
+					//}
 					//Updating position
-					Vector3 new_pos = go1->transform.position + go1->m_v3vel * dt + go1->m_v3acc * (dt * dt * 0.5);
-					Vector3 new_acc = apply_forces(go1);
-					Vector3 new_vel = go1->m_v3vel + (go1->m_v3acc + new_acc) * (dt * 0.5);
-					go1->transform.position = new_pos;
-					go1->m_v3vel = new_vel;
-					go1->m_v3acc = new_acc;
+					//Vector3 new_pos = go1->transform.position + go1->m_v3vel * dt + go1->m_v3acc * (dt * dt * 0.5);
+					//Vector3 new_acc = apply_forces(go1);
+					//Vector3 new_vel = go1->m_v3vel + (go1->m_v3acc + new_acc) * (dt * 0.5);
+					//go1->transform.position = new_pos;
+					//go1->m_v3vel = new_vel;
+					//go1->m_v3acc = new_acc;
 					
 					//Collision
 					for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != gl.m_goList.end(); ++it2)
@@ -54,7 +57,7 @@ void Physics::UpdateGO(double dt)
 				//Updating OBB position
 				go1->obb.UpdatePos(go1->transform.position);
 			}	
-		}
+		//}
 	}
 }
 
@@ -83,8 +86,8 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 		switch (go2->type)
 		{
 		case GameObject::GO_FLOOR:
-			//go1->m_bisOnGround = true;
-			go1->m_v3vel.y *= -1;
+			go1->m_bisOnGround = true;
+			//go1->m_v3vel.y *= -1;
 			break;
 		}
 		break;

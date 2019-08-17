@@ -18,18 +18,40 @@ class PlayerGO : public GameObject
 public:
 	GOList &gl = GOList::GetInstance();
 
-
 	FirstPersonCamera camera;
 
+	bool m_bIsJumping;
+	float m_fJumpSpeed;
+	bool m_bIsFalling;
+	float m_fFallSpeed;
+	float m_fFallAcceleration;
+	float m_fJumpAcceleration;
+	double m_dElapsedTime;
+
 	float m_fplayerSpeed;
+
 	float m_fplayerHeight;
+
+	float m_fHealth;
+	float m_fStrength;
 	bool m_bStopForward;
+
+	bool isZDown;
 
 	PlayerGO();
 	~PlayerGO();
 
 	void Init();
 	void Update(double dt);
+	void UpdateJump(double dt);
+	void UpdateFall(double dt);
+
+	bool IsGrounded();
+	bool IsJumping();
+	bool IsFalling();
+	void SetToFall(bool _isFalling);
+	void SetToJump(bool _isJumping);
+	void StopVertMove();
 };
 
 #endif
