@@ -3,13 +3,25 @@
 
 
 WeaponBase::WeaponBase()
-	: m_ifireRate(10.f),
-	m_freloadSpeed(5.f),
-	m_imaxClip(10)
+	: m_bisPickUp(false)
+	, m_ifireRate(10.f)
+	, m_freloadSpeed(5.f)
+	, m_imaxClip(10)
+	, m_goStorePlayer(gl.FetchGO(GameObject::GO_PLAYER))
 {
 }
 
 
 WeaponBase::~WeaponBase()
 {
+}
+
+void WeaponBase::SetPickUp(bool _isPickUp)
+{
+	m_bisPickUp = _isPickUp;
+}
+
+bool WeaponBase::GetPickUp()
+{
+	return m_bisPickUp;
 }

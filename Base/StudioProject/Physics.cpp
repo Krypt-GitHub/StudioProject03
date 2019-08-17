@@ -11,8 +11,9 @@ Physics::~Physics()
 
 void Physics::UpdateGO(double dt)
 {
-	for (auto go1 : gl.m_goList)
+	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
 	{
+		GameObject *go1 = (GameObject *)*it;
 		if (Application::GetShouldUpdate())
 		{
 			if (go1->GetActive())
@@ -29,7 +30,8 @@ void Physics::UpdateGO(double dt)
 					//Gravity
 					if (go1->m_bisOnGround)
 						go1->m_v3vel.y = 0;
-
+					//else
+					//	go1->m_v3vel = Vector3(0, -9.8, 0);
 					//Updating position
 					Vector3 new_pos = go1->transform.position + go1->m_v3vel * dt + go1->m_v3acc * (dt * dt * 0.5);
 					Vector3 new_acc = apply_forces(go1);
@@ -39,8 +41,9 @@ void Physics::UpdateGO(double dt)
 					go1->m_v3acc = new_acc;
 					
 					//Collision
-					for (auto go2 : gl.m_goList)
+					for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != gl.m_goList.end(); ++it2)
 					{
+						GameObject *go2 = (GameObject *)*it2;
 						if (go1->obb.GetCollision(go2->obb))
 						{
 							CollisionResponse(go1, go2);
@@ -101,16 +104,16 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 Vector3 Physics::apply_forces(GameObject* object) const
 {
 	//Gravity
-	Vector3 grav_acc(0, -9810, 0);
+	Vector3 grav_acc;
 
-	//if (object->m_bisOnGround)
-	//{
-	//	grav_acc = Vector3(0, 0, 0);
-	//}
-	//else
-	//{
-	//	grav_acc = Vector3(0, -9810, 0);
-	//}
+	if (object->m_bisOnGround)
+	{
+		grav_acc = Vector3(0, 0, 0);
+	}
+	else
+	{
+		grav_acc = Vector3(0, -9810, 0);
+	}
 	
 	return grav_acc;
 } 

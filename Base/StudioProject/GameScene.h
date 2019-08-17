@@ -12,13 +12,12 @@
 #include "../Source/LoadHmap.h"
 #include "../Source/DepthFBO.h"
 
-#include "PlayerController.h"
-#include "WeaponClass.h"
 #include "GOList.h"
-#include "EnemyAI.h"
-#include "EnemyGO.h"
 #include "GOFactory.h"
+
+#include "EnemyGO.h"
 #include "PlayerGO.h"
+//#include "PistolGO.h"
 
 class GameScene : public SceneBase
 {
@@ -45,10 +44,6 @@ private:
 	GOList &gl = GOList::GetInstance();
 
 	GOFactory goFactory;
-
-	//PlayerController Player;
-	//EnemyAI Enemy;
-	WeaponClass Pistol;
 	PlayerGO *Player;
 };
 

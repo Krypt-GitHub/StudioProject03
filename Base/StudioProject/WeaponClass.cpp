@@ -20,17 +20,17 @@ WeaponClass::~WeaponClass()
 
 void WeaponClass::Init(const std::string _name, GameObject::GO_TYPE _type, int _fireRate, float _reloadSpeed, int _maxClip)
 {
-	weaponObject = new GameObject;
+	//weaponObject = new GameObject;
 
-	weaponObject->name = _name;
-	weaponObject->type = _type;
-	weaponObject->transform.position.Set(0.f, 1000.f, 0.f);
-	weaponObject->transform.scale.Set(1.f, 1.f, 1.f);
-	weaponObject->SetMass(1);
+	//weaponObject->name = _name;
+	//weaponObject->type = _type;
+	//weaponObject->transform.position.Set(0.f, 1000.f, 0.f);
+	//weaponObject->transform.scale.Set(1.f, 1.f, 1.f);
+	//weaponObject->SetMass(1);
 
-	weaponObject->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
-	weaponObject->obb.UpdatePos(weaponObject->transform.position);
-	weaponObject->obb.SetScale(Vector3(weaponObject->transform.scale.x * 1.5, weaponObject->transform.scale.y * 6.5, weaponObject->transform.scale.z * 10));
+	//weaponObject->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+	//weaponObject->obb.UpdatePos(weaponObject->transform.position);
+	//weaponObject->obb.SetScale(Vector3(weaponObject->transform.scale.x * 1.5, weaponObject->transform.scale.y * 6.5, weaponObject->transform.scale.z * 10));
 
 	m_ifireRate = _fireRate;
 	m_freloadSpeed = _reloadSpeed;
@@ -38,9 +38,9 @@ void WeaponClass::Init(const std::string _name, GameObject::GO_TYPE _type, int _
 	m_icurClip = _maxClip;
 	m_bisPickUp = false;
 	
-	weaponObject->SetActive(true);
+	//weaponObject->SetActive(true);
 
-	gl.m_goList.push_back(weaponObject);
+	//gl.m_goList.push_back(weaponObject);
 }
 
 void WeaponClass::Update(double dt, Vector3 _dir)

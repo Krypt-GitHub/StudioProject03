@@ -11,12 +11,12 @@ GOFactory::~GOFactory()
 {
 }
 
-void GOFactory::CreateGO(std::string _name, GameObject::GO_TYPE _type, bool _static, float _mass, Vector3 _position, Vector3 _scale, float _rotation, Vector3 _obbScale)
+void GOFactory::CreateGO(std::string _name, GameObject::GO_TYPE _type, bool _static, float _mass, Vector3 _position, Vector3 _scale, float _rotation, Vector3 _obbScale, float _obbRotation, Vector3 _obbRotateAxis)
 {
-	gl.m_goList.push_back(GameObjectFactory(_name, _type, _static, _mass, _position, _scale, _rotation, _obbScale));
+	gl.m_goList.push_back(GameObjectFactory(_name, _type, _static, _mass, _position, _scale, _rotation, _obbScale, _obbRotation,_obbRotateAxis));
 }
 
-GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE _type, bool _static, float _mass, Vector3 _position, Vector3 _scale, float _rotation, Vector3 _obbScale)
+GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE _type, bool _static, float _mass, Vector3 _position, Vector3 _scale, float _rotation, Vector3 _obbScale, float _obbRotation, Vector3 _obbRotateAxis)
 {
 	if (_type == GameObject::GO_PLAYER)
 	{
@@ -50,7 +50,18 @@ GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE 
 	}
 	else if (_type == GameObject::GO_PISTOL)
 	{
-
+		EnemyGO* goPistol = new EnemyGO;
+		goPistol->name = _name;
+		goPistol->type = _type;
+		goPistol->SetActive(true);
+		goPistol->SetStatic(_static);
+		goPistol->SetMass(_mass);
+		goPistol->transform.SetTransform(_position, _scale, _rotation);
+		goPistol->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+		goPistol->obb.UpdatePos(Vector3(_position.x, _position.y + 18, _position.z));
+		goPistol->obb.SetScale(_obbScale);
+		goPistol->obb.RotateAxis(0, Vector3(0, 1, 0));
+		return goPistol;
 	}
 	else
 	{
@@ -61,6 +72,10 @@ GameObject* GOFactory::GameObjectFactory(std::string _name, GameObject::GO_TYPE 
 		gameObject->SetStatic(_static);
 		gameObject->SetMass(_mass);
 		gameObject->transform.SetTransform(_position, _scale, _rotation);
+		gameObject->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+		gameObject->obb.UpdatePos(Vector3(_position.x, _position.y, _position.z));
+		gameObject->obb.SetScale(_obbScale);
+		gameObject->obb.RotateAxis(0, Vector3(0, 1, 0));
 		return gameObject;
 	}
 }

@@ -2,10 +2,6 @@
 
 GOList::GOList()
 {
-	for (int i = 0; i < 100; i++)
-	{
-		m_goList.push_back(new GameObject(GameObject::GO_NONE));
-	}
 }
 
 
@@ -32,12 +28,9 @@ GameObject* GOList::FetchGO(GameObject::GO_TYPE _type)
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{
 		GameObject *go = (GameObject *)*it;
-		if (go->GetActive())
+		if (go->type == _type)
 		{
-			if (go->type == _type)
-			{
-				return go;
-			}
+			return go;
 		}
 	}
 }

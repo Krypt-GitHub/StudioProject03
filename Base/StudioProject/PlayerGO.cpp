@@ -16,7 +16,7 @@ void PlayerGO::Init()
 	theCurrentPosture = STAND;
 
 	m_fplayerHeight = 150.f;
-	camera.Init(Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(transform.position.x, transform.position.y + 170, transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 void PlayerGO::Update(double dt)

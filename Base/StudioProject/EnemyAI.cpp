@@ -12,34 +12,34 @@ EnemyAI::~EnemyAI()
 
 void EnemyAI::Init()
 {
-	enemy = new GameObject;
-	enemy->SetActive(true);
-	enemy->SetStatic(false);
-	enemy->type = GameObject::GO_ENEMY;
-	enemy->transform.SetTransform(Vector3(-10, 0, -10), Vector3(2, 2, 2), 0);
+	//enemy = new GameObject;
+	//enemy->SetActive(true);
+	//enemy->SetStatic(false);
+	//enemy->type = GameObject::GO_ENEMY;
+	//enemy->transform.SetTransform(Vector3(-10, 0, -10), Vector3(2, 2, 2), 0);
 
 
-	gl.m_goList.push_back(enemy);
+	//gl.m_goList.push_back(enemy);
 
-	root = new AITree::Sequence;
-	sequence1 = new AITree::Sequence;
-	selector1 = new AITree::Selector;
-	sequence2 = new AITree::Sequence;
-	aiStatus = new AIBehaviour(false, 0);
-	aiStatus->state = AIBehaviour::IDLE;
-	checkSight = new CheckPlayerInSightTask(aiStatus);
-	approachPlayer = new ApproachPlayerTask(aiStatus, false);
-	idle = new IdleTask(aiStatus);
+	//root = new AITree::Sequence;
+	//sequence1 = new AITree::Sequence;
+	//selector1 = new AITree::Selector;
+	//sequence2 = new AITree::Sequence;
+	//aiStatus = new AIBehaviour(false, 0);
+	//aiStatus->state = AIBehaviour::IDLE;
+	//checkSight = new CheckPlayerInSightTask(aiStatus);
+	//approachPlayer = new ApproachPlayerTask(aiStatus, false);
+	//idle = new IdleTask(aiStatus);
 
-	root->addChild(selector1);
+	//root->addChild(selector1);
 
-	selector1->addChild(sequence1);
-	selector1->addChild(sequence2);
+	//selector1->addChild(sequence1);
+	//selector1->addChild(sequence2);
 
-	sequence1->addChild(checkSight);
-	sequence1->addChild(approachPlayer);
+	//sequence1->addChild(checkSight);
+	//sequence1->addChild(approachPlayer);
 
-	sequence2->addChild(idle);
+	//sequence2->addChild(idle);
 }
 
 void EnemyAI::Update(double dt)
