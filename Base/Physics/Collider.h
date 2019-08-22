@@ -6,24 +6,27 @@ class Collider
 {
 private:
 	bool isEnabled;
-	Vector3 pos;
-	Vector3 AxisX;
-	Vector3 AxisY;
-	Vector3 AxisZ;
-	Vector3 Half_size;
-	bool getSeparatingPlane(Vector3& RPos,Vector3& Plane,Collider& OtherBox);
+
+
+	bool GetSeparatingPlane(Vector3& RPos,Vector3& Plane,Collider& OtherBox);
 public:
 	// Members
 	Collider();
 	Collider(Vector3 Pos,Vector3 scale,Vector3 AxisX,Vector3 AxisZ);
 	~Collider();
 
+	Vector3 AxisX;
+	Vector3 AxisY;
+	Vector3 AxisZ;
+	Vector3 pos;
+	Vector3 Half_size;
 	void Enable();
-	bool getCollision( Collider&box2);
-	void upDateAxis(Vector3 AxisX , Vector3 AxisZ);
-	void upDatePos(Vector3 pos);
-	void rotateAxis(float degree, Vector3 rotateAxis);
-	void setScale(Vector3 scale);
+	bool GetCollision( Collider&box2);
+	void UpdateAxis(Vector3 AxisX , Vector3 AxisZ);
+	void UpdatePos(Vector3 pos);
+	void RotateAxis(float degree, Vector3 rotateAxis);
+	void SetScale(Vector3 scale);
+	void Render();
 };
 
 #endif

@@ -15,7 +15,7 @@ public:
 	Vector3 defaultUp;
 
 	FirstPersonCamera();
-	~FirstPersonCamera();
+	virtual ~FirstPersonCamera();
 
 	virtual Mtx44 GetViewMatrix();
 

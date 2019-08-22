@@ -7,6 +7,7 @@
 #include "../Source/Utility.h"
 #include "../Source/LoadTGA.h"
 #include <sstream>
+#include "SceneManager.h"
 
 SceneBase::SceneBase()
 {
@@ -112,18 +113,6 @@ void SceneBase::Init()
 	// Use our shader
 	glUseProgram(m_programID);
 
-	lights[0].type = Light::LIGHT_POINT;
-	lights[0].position.Set(13, 160, 90);
-	lights[0].color.Set(0.217f, 0.094f, 0.028f);
-	lights[0].power = 20.f;
-	lights[0].kC = 1.f;
-	lights[0].kL = 0.01f;
-	lights[0].kQ = 0.001f;
-	lights[0].cosCutoff = cos(Math::DegreeToRadian(45));
-	lights[0].cosInner = cos(Math::DegreeToRadian(30));
-	lights[0].exponent = 3.f;
-	lights[0].spotDirection.Set(0.f, 1.f, 0.f);
-
 	lights[1].type = Light::LIGHT_DIRECTIONAL;
 	lights[1].position.Set(465, 255, 375);
 	lights[1].color.Set(0.24f, 0.19f, 0.06f);
@@ -159,9 +148,9 @@ void SceneBase::Init()
 	glUniform1f(m_parameters[U_LIGHT1_COSINNER], lights[1].cosInner);
 	glUniform1f(m_parameters[U_LIGHT1_EXPONENT], lights[1].exponent);
 
-	cameraID = 0;
+	m_fchRotate = 0;
 
-	camera[cameraID].Init(Vector3(-420, 184, 178), Vector3(0, 185, 0), Vector3(0, 1, 0));
+	cameraID = 0;
 
 	m_fMTElapsedTime = 0.f;
 
@@ -174,36 +163,58 @@ void SceneBase::Init()
 	}
 
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 1), 1.f);
-
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0, 1, 0), 1.f);
+	meshList[GEO_CUBE]->textureArray[0] = LoadTGA("Image//obb.tga");
 	// UI
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
-	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
+	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateQuad("crosshair", Color(1, 1, 1), 1.f);
+	meshList[GEO_CROSSHAIR]->textureArray[0] = LoadTGA("Image//crosshair.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
+
+	meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
+	meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.45, 0.45, 0.45), 1.f);
 	// Scene Objects
-	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
-	meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
+	if (SceneManager::GetSceneID() == 0)
+	{
+		meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
+		meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
+		meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
+	//meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
+	//meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
+		meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(0.93, 0.93, 0.93), 1.f);
+		meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.94, 0.94, 0.94), 1.f);
 
-	meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
-	meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
+		//meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
+		//meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
 
-	meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
-	meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
+		meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
+		meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
 
-	// Player
-	meshList[GEO_HANDS] = MeshBuilder::GenerateOBJ("hands", "OBJ//hands.obj");
-	
-	// Enemy
-	meshList[GEO_ENEMY_STAND] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_stand.obj");
-	meshList[GEO_ENEMY_WALK01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk01.obj");
-	meshList[GEO_ENEMY_WALK02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk02.obj");
-	meshList[GEO_ENEMY_SHOOT01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot01.obj");
-	meshList[GEO_ENEMY_SHOOT02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot02.obj");
-	meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
+		// Player
+		meshList[GEO_HANDS] = MeshBuilder::GenerateOBJ("hands", "OBJ//hands.obj");
 
+		// Enemy
+		meshList[GEO_ENEMY_STAND] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_stand.obj");
+		meshList[GEO_ENEMY_STAND]->textureArray[0] = LoadTGA("Image//enemy.tga");
+		meshList[GEO_ENEMY_WALK01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk01.obj");
+		meshList[GEO_ENEMY_WALK01]->textureArray[0] = LoadTGA("Image//enemy.tga");
+		meshList[GEO_ENEMY_WALK02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk02.obj");
+		meshList[GEO_ENEMY_WALK02]->textureArray[0] = LoadTGA("Image//enemy.tga");
+		meshList[GEO_ENEMY_SHOOT01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot01.obj");
+		meshList[GEO_ENEMY_SHOOT01]->textureArray[0] = LoadTGA("Image//enemy.tga");
+		meshList[GEO_ENEMY_SHOOT02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot02.obj");
+		meshList[GEO_ENEMY_SHOOT02]->textureArray[0] = LoadTGA("Image//enemy.tga");
+		meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
+	}
+	else if (SceneManager::GetSceneID() == 1)
+	{
+		meshList[GEO_PLAY] = MeshBuilder::GenerateOBJ("menu_play", "OBJ//menu_play.obj");
+		meshList[GEO_LOGO] = MeshBuilder::GenerateQuad("menu logo", Color(1, 1, 1), 1.f);
+		meshList[GEO_LOGO]->textureArray[0] = LoadTGA("Image//logo.tga");
+	}
 }
 
 void SceneBase::Update(double dt)
@@ -237,7 +248,7 @@ void SceneBase::Update(double dt)
 void SceneBase::RenderMesh(Mesh *mesh, bool enableLight, bool enableMT, bool enableReflect)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
-	if (m_renderPass == RENDER_PASS_PRE) // Pass 1  - geometry pass        
+	if (m_renderPass == RENDER_PASS_PRE) // Pass 1  - geometry pass
 	{
 		Mtx44 lightDepthMVP = m_lightDepthProj * m_lightDepthView * modelStack.Top();
 		//Mtx44 lightDepthMVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -406,7 +417,7 @@ void SceneBase::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	glEnable(GL_DEPTH_TEST);
 }
 
-void SceneBase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float size, float x, float y)
+void SceneBase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float sizeX, float sizeY, float x, float y, float rotation, Vector3 rotateAxis)
 {
 	Mtx44 ortho;
 	ortho.SetToOrtho(-80, 80, -60, 60, -10, 10);
@@ -416,7 +427,8 @@ void SceneBase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float size, float x
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
-	modelStack.Scale(size, size, size);
+	modelStack.Scale(sizeX, sizeY, 0);
+	modelStack.Rotate(rotation, rotateAxis.x, rotateAxis.y, rotateAxis.z);
 	modelStack.Translate(x, y, 0);
 
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
@@ -427,14 +439,14 @@ void SceneBase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float size, float x
 	{
 		if (mesh->textureArray[i] > 0)
 		{
-			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 1);
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, mesh->textureArray[i]);
-			glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+			glUniform1i(m_parameters[U_COLOR_TEXTURE + i], 0);
 		}
 		else
 		{
-			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 0);
+			glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED + i], 0);
 		}
 	}
 	mesh->Render();
@@ -457,7 +469,7 @@ void SceneBase::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void SceneBase::Exit()	
+void SceneBase::Exit()
 {
 	// Cleanup VBO
 	for (int i = 0; i < NUM_GEOMETRY; ++i)

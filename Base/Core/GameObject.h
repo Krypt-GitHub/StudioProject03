@@ -16,11 +16,14 @@ public:
 	enum GO_TYPE
 	{
 		GO_NONE = 0,
+		GO_PLAY,
+		GO_LOGO,
 		GO_PLAYER,
 		GO_ENEMY,
 		GO_PISTOL,
 		GO_BULLET,
 		GO_FLOOR,
+		GO_WALL,
 		GO_TOTAL,
 	};
 
@@ -33,9 +36,11 @@ public:
 	Transform transform;
 	Collider obb;
 
+	bool m_bGravity;
+
 	// Functions
 	GameObject(GO_TYPE typeValue = GO_NONE);
-	~GameObject();
+	virtual ~GameObject();
 
 	void SetActive(bool _active);
 	bool GetActive();

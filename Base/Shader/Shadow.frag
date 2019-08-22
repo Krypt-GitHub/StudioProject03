@@ -258,6 +258,10 @@ void main()
 					else
 					{
 						color += texture2D( colorTexture[i], texCoord);
+						if (color.a < 0.1)
+						{
+							discard;
+						}
 					}
 					++texCount;
 				}

@@ -3,7 +3,6 @@
 #define APPLICATION_H
 
 #include "timer.h"
-#include "../StudioProject/Physics.h"
 class Application
 {
 public:
@@ -15,8 +14,11 @@ public:
 	void Init();
 	void Run();
 	void Exit();
+
 	static bool GetKeyDown(unsigned short key);
 	static bool GetMouseUpdate();
+	static float GetMousePosX();
+	static float GetMousePosY();
 	static bool GetMouseDown(unsigned short key);
 	//Declare variables to store the last and current mouse position
 	static double mouse_last_x, mouse_last_y, mouse_current_x, mouse_current_y, mouse_diff_x, mouse_diff_y;
@@ -40,7 +42,6 @@ private:
 	static bool m_bShouldUpdate;
 	//Declare a window object
 	StopWatch m_timer;
-	Physics PhysicsEngine;
 };
 
 #endif

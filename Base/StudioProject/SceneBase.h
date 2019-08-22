@@ -24,7 +24,7 @@ public:
 	void RenderMesh(Mesh * mesh, bool enableLight, bool enableMT, bool enableReflect);
 	void RenderText(Mesh * mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh * mesh, std::string text, Color color, float size, float x, float y);
-	void RenderMeshIn2D(Mesh * mesh, bool enableLight, float size, float x, float y);
+	void RenderMeshIn2D(Mesh * mesh, bool enableLight, float sizeX, float sizeY, float x, float y, float rotation, Vector3 rotateAxis);
 	virtual void Render();
 	virtual void Exit();
 
@@ -36,6 +36,9 @@ protected:
 	};
 	enum GEOMETRY_TYPE
 	{
+		// Menu
+		GEO_PLAY,
+		GEO_LOGO,
 		// Misc
 		GEO_AXES,
 		GEO_CROSSHAIR,
@@ -48,6 +51,7 @@ protected:
 		GEO_TEXT,
 		// Environment
 		GEO_FLOOR,
+		GEO_WALL,
 		// GameObjects
 		GEO_PISTOL,
 		GEO_KARAMBIT,
@@ -172,7 +176,8 @@ protected:
 	float m_fMTElapsedTime;
 
 	// Scene Objects
-	GameObject *floor;
+
+	float m_fchRotate;
 };
 
 #endif

@@ -12,10 +12,13 @@
 #include "../Source/LoadHmap.h"
 #include "../Source/DepthFBO.h"
 
-#include "PlayerController.h"
-#include "WeaponClass.h"
 #include "GOList.h"
-#include "EnemyAI.h"
+#include "GOFactory.h"
+#include "Physics.h"
+
+#include "EnemyGO.h"
+#include "PlayerGO.h"
+#include "PistolGO.h"
 
 class GameScene : public SceneBase
 {
@@ -25,10 +28,12 @@ public:
 
 	virtual void Init();
 	virtual void Update(double dt);
-	void RenderGO(GameObject * go);
 	virtual void Render();
 	virtual void Exit();
 
+	void InitGO(GameObject* go);
+	void UpdateGO(GameObject* go, double dt);
+	void RenderGO(GameObject* go);
 
 	void RenderWorld();
 	void RenderWater();
@@ -36,16 +41,11 @@ public:
 	void RenderPassMain();
 	//void RenderTerrain();
 
-private:
 	GOList &gl = GOList::GetInstance();
-
-	PlayerController Player;
-	EnemyAI Enemy;
-	WeaponClass Pistol;
-
-
-	float test01;
-	float test02;
+private:
+	GOFactory goFactory;
+	PlayerGO *Player;
+	Physics PhysicsEngine;
 };
 
 #endif

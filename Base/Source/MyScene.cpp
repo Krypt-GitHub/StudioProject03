@@ -631,7 +631,7 @@ void MyScene::RenderPassMain()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 800, 0);
-	RenderMesh(meshList[GEO_SKYDOME], false, false, false);
+	RenderMesh(meshList[GEO_SKYDOME], false, true, false);
 	modelStack.PopMatrix();
 
 	RenderWorld();

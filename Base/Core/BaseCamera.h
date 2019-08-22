@@ -7,7 +7,7 @@ class BaseCamera
 {
 public:
 	BaseCamera();
-	~BaseCamera();
+	virtual ~BaseCamera();
 
 	virtual Mtx44 GetViewMatrix() = 0;
 };

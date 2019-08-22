@@ -126,26 +126,41 @@
     <ClCompile Include="StudioProject\MenuScene.cpp">
       <Filter>StudioProject\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\PlayerController.cpp">
-      <Filter>StudioProject\Player</Filter>
-    </ClCompile>
     <ClCompile Include="StudioProject\GOList.cpp">
       <Filter>StudioProject</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\EnemyAI.cpp">
-      <Filter>StudioProject\AI</Filter>
-    </ClCompile>
     <ClCompile Include="StudioProject\AIBehaviour.cpp">
-      <Filter>StudioProject\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="StudioProject\AINode.cpp">
       <Filter>StudioProject\AI</Filter>
     </ClCompile>
     <ClCompile Include="StudioProject\Physics.cpp">
       <Filter>StudioProject\Core</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\WeaponClass.cpp">
+    <ClCompile Include="StudioProject\EnemyGO.cpp">
+      <Filter>StudioProject\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\GOFactory.cpp">
+      <Filter>StudioProject</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\PlayerGO.cpp">
+      <Filter>StudioProject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\WeaponBase.cpp">
       <Filter>StudioProject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\PistolGO.cpp">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\SceneManager.cpp">
+      <Filter>StudioProject\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\MouseRayCast.cpp">
+      <Filter>StudioProject</Filter>
+    </ClCompile>
+    <ClCompile Include="StudioProject\Level1Scene.cpp">
+      <Filter>StudioProject\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,29 +257,47 @@
     <ClInclude Include="StudioProject\MenuScene.h">
       <Filter>StudioProject\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\PlayerController.h">
-      <Filter>StudioProject\Player</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\GOList.h">
       <Filter>StudioProject</Filter>
     </ClInclude>
     <ClInclude Include="Core\Transform.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\EnemyAI.h">
-      <Filter>StudioProject\AI</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\AINode.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\Physics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StudioProject\WeaponClass.h">
-      <Filter>StudioProject\Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\AIBehaviour.h">
       <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\Physics.h">
+      <Filter>StudioProject\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\EnemyGO.h">
+      <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\GOFactory.h">
+      <Filter>StudioProject</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PlayerGO.h">
+      <Filter>StudioProject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\WeaponBase.h">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PistolGO.h">
+      <Filter>StudioProject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\SceneManager.h">
+      <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\MouseRayCast.h">
+      <Filter>StudioProject</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\Level1Scene.h">
+      <Filter>StudioProject\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

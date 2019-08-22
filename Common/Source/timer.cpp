@@ -37,7 +37,7 @@ double StopWatch::getElapsedTime()
     QueryPerformanceCounter(&currTime) ;
     time.QuadPart = currTime.QuadPart - prevTime.QuadPart;
     prevTime = currTime;
-    return LIToSecs( time) ;
+    return LIToSecs(time);
 }
 
 void StopWatch::waitUntil(long long time)
