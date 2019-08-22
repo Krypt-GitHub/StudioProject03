@@ -28,13 +28,14 @@ void PlayerGO::Init()
 {
 	theCurrentPosture = STAND;
 
-	m_fplayerHeight = 40.f;
+	m_fplayerHeight = 20.f;
 	camera.Init(Vector3(transform.position.x, transform.position.y + m_fplayerHeight, transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 void PlayerGO::Update(double dt)
 {
 	static bool m_bRBDown = false;
+	static bool m_bLBDown = false;
 	m_v3dir = (camera.target - camera.position).Normalized();
 
 	if (Application::GetKeyDown(VK_SHIFT))
@@ -117,6 +118,9 @@ void PlayerGO::Update(double dt)
 		//soundEngine.PlayASound("Jump");
 		SetToJump(true);
 	}
+	if (gun != nullptr)
+	{
+
 	if (Application::GetMouseDown(1) && !m_bRBDown)
 	{
 		GameObject* pistol = gun;
@@ -129,6 +133,33 @@ void PlayerGO::Update(double dt)
 	else if (!Application::GetMouseDown(1) && m_bRBDown)
 	{
 		m_bRBDown = false;
+	}
+	}
+	else
+	{
+		if (Application::GetMouseDown(0) && !m_bLBDown)
+		{
+			Collider MeleeCheck;
+			MeleeCheck.UpdatePos(transform.position);
+			MeleeCheck.UpdateAxis(m_v3dir, m_v3dir.Cross(Vector3(0, 1, 0)));
+			MeleeCheck.SetScale(Vector3(50, 0, 0));
+			for (auto go : gl.m_goList)
+			{
+				if (go->type != GameObject::GO_ENEMY)
+					continue;
+				if (MeleeCheck.GetCollision(go->obb))
+				{
+					go->SetActive(false);
+				}
+			}
+
+
+			m_bLBDown = true;
+		}
+		else if (!Application::GetMouseDown(0) && m_bLBDown)
+		{
+			m_bLBDown = false;
+		}
 	}
 	UpdateJump(dt);
 	UpdateFall(dt);
@@ -177,8 +208,8 @@ void PlayerGO::UpdateFall(double dt)
 
 	if (transform.position.y < 0)
 	{
-		transform.position.y = m_fplayerHeight;
-		camera.position.y = transform.position.y + m_fplayerHeight;
+		transform.position.y = 0;
+		camera.position.y = transform.position.y +m_fplayerHeight;
 		camera.target = camera.position + m_v3dir;
 		m_fFallSpeed = 0.f;
 		m_bIsFalling = false;
