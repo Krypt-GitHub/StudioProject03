@@ -38,7 +38,7 @@ public:
 	{
 		if (status->m_fdistanceToPlayer < 200)
 		{
-			std::cout << "Player in range" << std::endl;
+		//	std::cout << "Player in range" << std::endl;
 			return true;
 		}
 		return false;
@@ -56,7 +56,7 @@ public:
 	{
 		if (status->m_fdistanceToPlayer >= 50)
 		{
-			std::cout << "Approaching Player" << std::endl;
+		//	std::cout << "Approaching Player" << std::endl;
 			m_bapproachPlayer = true;
 			return true;
 		}
@@ -84,7 +84,7 @@ public:
 		if (status->m_fdistanceToPlayer <= 50)
 		{
 			m_bstartShooting = true;
-			std::cout << "Shooting Player" << std::endl;
+			//std::cout << "Shooting Player" << std::endl;
 			return true;
 		}
 		else
@@ -105,7 +105,7 @@ public:
 	{
 		if (status->m_fdistanceToPlayer > 200)
 		{
-			std::cout << "AI on idle" << std::endl;
+			//std::cout << "AI on idle" << std::endl;
 			return true;
 		}
 		return false;

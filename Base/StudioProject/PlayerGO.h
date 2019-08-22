@@ -55,6 +55,7 @@ public:
 	void SetToFall(bool _isFalling);
 	void SetToJump(bool _isJumping);
 	void StopVertMove();
+	bool contrain(Vector3 futurePos ,Collider box);
 };
 
 #endif

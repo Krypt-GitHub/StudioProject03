@@ -33,7 +33,7 @@ void GameScene::Init()
 	}
 
 	// GAME OBJECT CREATION
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 0, 140), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0,19, 140), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, true, 1.1, Vector3(0, 23, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-15, 19, -60), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(15, 19, -60), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
