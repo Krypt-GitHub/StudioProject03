@@ -145,7 +145,6 @@ void Application::Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
 
-	//Stop fullscreen irwen dumb
 	//glfwWindowHint(GLFW_DECORATED, false);
 
 	//Create a window and create its OpenGL context

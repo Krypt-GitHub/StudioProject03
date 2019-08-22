@@ -28,14 +28,18 @@ void PlayerGO::Init()
 {
 	theCurrentPosture = STAND;
 
-	m_fplayerHeight = 35.f;
+	m_fplayerHeight = 15.f;
 	camera.Init(Vector3(transform.position.x, transform.position.y + m_fplayerHeight, transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 void PlayerGO::Update(double dt)
 {
+
 	static bool m_bRBDown = false;
+	static bool m_bLBDown = false;
+	bool once = false;
 	m_v3dir = (camera.target - camera.position).Normalized();
+	Collider obbcheck = this->obb;
 
 	if (Application::GetKeyDown(VK_SHIFT))
 		m_fplayerSpeed = 40.f;
@@ -47,44 +51,83 @@ void PlayerGO::Update(double dt)
 	else
 		Application::SetShouldUpdate(false);
 
-	if (Application::GetKeyDown('W') && !m_bStopForward)
+	if (Application::GetKeyDown('W') && !m_bStopForward && !once)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 move = view * m_fplayerSpeed * dt;
-		transform.position += Vector3(move.x, 0, move.z);
-		camera.position += Vector3(move.x, 0, move.z);;
-		camera.target += Vector3(move.x, 0, move.z);
+		if (!contrain(transform.position + Vector3(move.x+2, 0, move.z + 2), obbcheck))
+		{
+
+			transform.position += Vector3(move.x, 0, move.z);
+			camera.position += Vector3(move.x, 0, move.z);;
+			camera.target += Vector3(move.x, 0, move.z);
+		}
+		else
+		{
+
+			transform.position -= Vector3(move.x, 0, move.z);
+			camera.position -= Vector3(move.x, 0, move.z);;
+			camera.target -= Vector3(move.x, 0, move.z);
+		}
 	}
 
-	if (Application::GetKeyDown('A'))
-	{
-		Vector3 view = (camera.target - camera.position).Normalized();
-		Vector3 right = view.Cross(camera.up);
-		right.y = 0;
-		right.Normalize();
-		transform.position += -right * m_fplayerSpeed * dt;
-		camera.position += -right * m_fplayerSpeed * dt;
-		camera.target += -right * m_fplayerSpeed * dt;
-	}
-
-	if (Application::GetKeyDown('S'))
+	 if (Application::GetKeyDown('S') && !once)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 move = -view * m_fplayerSpeed * dt;
+		if (!contrain(transform.position + Vector3(move.x + 2, 0, move.z + 2), obbcheck))
+		{
+
 		transform.position += Vector3(move.x, 0, move.z);
 		camera.position += Vector3(move.x, 0, move.z);
 		camera.target += Vector3(move.x, 0, move.z);
+		}
+		else
+		{
+			transform.position -= Vector3(move.x, 0, move.z);
+			camera.position -= Vector3(move.x, 0, move.z);
+			camera.target -= Vector3(move.x, 0, move.z);
+		}
 	}
-
-	if (Application::GetKeyDown('D'))
+	if (Application::GetKeyDown('A') && !once)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 right = view.Cross(camera.up);
 		right.y = 0;
 		right.Normalize();
+		if (!contrain(transform.position + -right * m_fplayerSpeed * dt, obbcheck))
+		{
+
+			transform.position += -right * m_fplayerSpeed * dt;
+			camera.position += -right * m_fplayerSpeed * dt;
+			camera.target += -right * m_fplayerSpeed * dt;
+		}
+		else
+		{
+			transform.position -= -right * m_fplayerSpeed * dt;
+			camera.position -= -right * m_fplayerSpeed * dt;
+			camera.target -= -right * m_fplayerSpeed * dt;
+		}
+	}
+	 if (Application::GetKeyDown('D') && !once)
+	{
+		Vector3 view = (camera.target - camera.position).Normalized();
+		Vector3 right = view.Cross(camera.up);
+		right.y = 0;
+		right.Normalize();
+		if (!contrain(transform.position + right * m_fplayerSpeed * dt, obbcheck))
+		{
+
 		transform.position += right * m_fplayerSpeed * dt;
 		camera.position += right * m_fplayerSpeed * dt;
 		camera.target += right * m_fplayerSpeed * dt;
+		}
+		else
+		{
+			transform.position -= right * m_fplayerSpeed * dt;
+			camera.position -= right * m_fplayerSpeed * dt;
+			camera.target -= right * m_fplayerSpeed * dt;
+		}
 	}
 
 	{
@@ -135,9 +178,34 @@ void PlayerGO::Update(double dt)
 			m_bRBDown = false;
 		}
 	}
-
+	else
+	{
+		if (Application::GetMouseDown(0) && !m_bLBDown)
+		{
+			Collider MeleeCheck;
+			MeleeCheck.UpdatePos(transform.position);
+			MeleeCheck.UpdateAxis(m_v3dir, m_v3dir.Cross(Vector3(0, 1, 0)));
+			MeleeCheck.SetScale(Vector3(50, 0, 0));
+			for (auto go : gl.m_goList)
+			{
+				if (go->type != GameObject::GO_ENEMY)
+					continue;
+				if (MeleeCheck.GetCollision(go->obb))
+				{
+					go->SetActive(false);
+				}
+			}
+			m_bLBDown = true;
+		}
+		else if (!Application::GetMouseDown(0) && m_bLBDown)
+		{
+			m_bLBDown = false;
+		}
+	}
 	UpdateJump(dt);
 	UpdateFall(dt);
+
+	obb.UpdateAxis(m_v3dir, m_v3dir.Cross(Vector3(0, 1, 0)));
 }
 
 void PlayerGO::UpdateJump(double dt)
@@ -178,8 +246,8 @@ void PlayerGO::UpdateFall(double dt)
 
 	if (transform.position.y < 0)
 	{
-		transform.position.y = m_fplayerHeight;
-		camera.position.y = transform.position.y + m_fplayerHeight;
+		transform.position.y = 19;
+		camera.position.y = transform.position.y +m_fplayerHeight;
 		camera.target = camera.position + m_v3dir;
 		m_fFallSpeed = 0.f;
 		m_bIsFalling = false;
@@ -234,4 +302,25 @@ void PlayerGO::StopVertMove()
 {
 	m_bIsJumping = false;
 	m_bIsFalling = false;
+}
+
+bool PlayerGO::contrain(Vector3 futurePos, Collider box)
+{
+	box.UpdatePos(futurePos);
+	for (auto go : gl.m_goList)
+	{
+		if (go->type != GameObject::GO_WALL)
+			continue;
+		if (box.GetCollision(go->obb))
+		{
+			std::cout << "collidered" << std::endl;
+			return true;
+		}
+		else
+		{
+			std::cout << "not collidered" << std::endl;
+
+		}
+	}
+	return false;
 }

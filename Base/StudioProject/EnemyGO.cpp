@@ -133,7 +133,7 @@ void EnemyGO::Update(double dt)
 
 	aiStatus->m_fdistanceToPlayer = (transform.position - m_v3playerPos).Length();
 
-	std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
+	//std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
 
 	while (!root->run())
 		std::cout << "======Break======" << std::endl;
