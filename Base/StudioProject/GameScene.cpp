@@ -307,9 +307,6 @@ void GameScene::UpdateGO(GameObject * go, double dt)
 		if (cameraID == 1)
 			static_cast<PlayerGO*>(go)->Update(dt);
 		break;
-	case GameObject::GO_ENEMY:
-		static_cast<EnemyGO*>(go)->Update(dt);
-		break;
 	case GameObject::GO_PISTOL:
 		static_cast<PistolGO*>(go)->Update(dt);
 		break;

@@ -54,7 +54,7 @@ public:
 	ApproachPlayerTask(AIBehaviour *status) : status(status), m_bapproachPlayer(false) {}
 	virtual bool run() override
 	{
-		if (status->m_fdistanceToPlayer >= 50)
+		if (status->m_fdistanceToPlayer >= 700)
 		{
 		//	std::cout << "Approaching Player" << std::endl;
 			m_bapproachPlayer = true;
@@ -72,6 +72,21 @@ public:
 	}
 };
 
+//class CheckIfGunHeldTask : public AITree::Node
+//{
+//private:
+//	AIBehaviour* status;
+//	bool gunHeld;
+//public:
+//	CheckIfGunHeldTask(AIBehaviour *status, bool _gunHeld) : status(status), gunHeld(false) {}
+//	{
+//		if (gunHeld)
+//			return true;
+//		else
+//			return false;
+//	}
+//};
+
 class ShootPlayerTask : public AITree::Node
 {
 private:
@@ -81,7 +96,7 @@ public:
 	ShootPlayerTask(AIBehaviour *status) : status(status), m_bstartShooting(false) {}
 	virtual bool run() override
 	{
-		if (status->m_fdistanceToPlayer <= 50)
+		if (status->m_fdistanceToPlayer <= 700)
 		{
 			m_bstartShooting = true;
 			//std::cout << "Shooting Player" << std::endl;
@@ -92,6 +107,10 @@ public:
 			m_bstartShooting = false;
 			return false;
 		}
+	}
+	bool GetShootStatus()
+	{
+		return m_bstartShooting;
 	}
 };
 

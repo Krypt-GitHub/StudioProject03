@@ -83,10 +83,12 @@ void EnemyGO::Init()
 	sequence2->addChild(idle);
 
 	m_bdoOnce = false;
+	m_fROF = 0;
 }
 
 void EnemyGO::Update(double dt)
 {
+	m_fROF += dt;
 	m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
 
 	if (approachPlayer->GetApproachBool())
@@ -129,11 +131,27 @@ void EnemyGO::Update(double dt)
 		}
 	}
 
+	if (shootPlayer->GetShootStatus() && m_fROF >= 10)
+	{
+		GameObject *go = gl.FetchGO();
+		go->type = GameObject::GO_BULLET;
+		go->SetActive(true);
+		go->m_bGravity = false;
+		go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z);
+		go->transform.scale.Set(0.3, 0.3, 0.3);
+		go->m_v3vel = (m_v3playerPos - transform.position).Normalize() * 200.f;
+
+		go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
+		go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+		go->obb.pos = transform.position;
+		go->obb.RotateAxis(0, Vector3(0, 1, 0));
+		m_fROF = 0;
+	}
 
 
 	aiStatus->m_fdistanceToPlayer = (transform.position - m_v3playerPos).Length();
 
-	//std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
+	std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
 
 	while (!root->run())
 		std::cout << "======Break======" << std::endl;

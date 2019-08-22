@@ -1,6 +1,7 @@
 #include "Physics.h"
 #include "../Source/Application.h"
 #include "PlayerGO.h"
+#include "EnemyGO.h"
 
 Physics::Physics()
 {
@@ -24,6 +25,11 @@ void Physics::UpdateGO(double dt)
 		GameObject *go1 = (GameObject *)*it;
 		if (go1->GetActive())
 		{
+			if (go1->type == GameObject::GO_ENEMY)
+			{
+				static_cast<EnemyGO*>(go1)->Update(delta);
+			}
+
 			//Resetting their velocity if they are static
 			if (go1->GetStatic())
 			{

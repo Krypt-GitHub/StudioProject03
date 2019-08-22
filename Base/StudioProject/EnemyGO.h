@@ -4,12 +4,14 @@
 #include "../Core/GameObject.h"
 #include "GOList.h"
 #include "AIBehaviour.h"
+#include "PistolGO.h"
 
 class EnemyGO : public GameObject
 {
 private:
 	float m_fwalkTime;
 	bool m_bdoOnce;
+	float m_fROF;
 public:
 	EnemyGO();
 	virtual ~EnemyGO();
@@ -29,6 +31,8 @@ public:
 	ApproachPlayerTask *approachPlayer;
 	ShootPlayerTask *shootPlayer;
 	IdleTask *idle;
+
+	PistolGO *gunHeld;
 
 	void Init();
 	void Update(double dt);
