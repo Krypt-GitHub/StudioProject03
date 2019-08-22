@@ -55,7 +55,7 @@ void PlayerGO::Update(double dt)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 move = view * m_fplayerSpeed * dt;
-		if (!contrain(transform.position + Vector3(move.x+2, 0, move.z + 2), obbcheck))
+		if (!contrain(transform.position + Vector3(move.x+.5f, 0, move.z + 3.5f), obbcheck))
 		{
 
 			transform.position += Vector3(move.x, 0, move.z);
@@ -74,19 +74,19 @@ void PlayerGO::Update(double dt)
 	 if (Application::GetKeyDown('S') && !once)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
-		Vector3 move = -view * m_fplayerSpeed * dt;
-		if (!contrain(transform.position + Vector3(move.x + 2, 0, move.z + 2), obbcheck))
+		Vector3 move = view * m_fplayerSpeed * dt;
+		if (!contrain(transform.position - Vector3(move.x - 3.5f, 0, move.z - 3.5f), obbcheck))
 		{
 
-		transform.position += Vector3(move.x, 0, move.z);
-		camera.position += Vector3(move.x, 0, move.z);
-		camera.target += Vector3(move.x, 0, move.z);
+		transform.position -= Vector3(move.x, 0, move.z);
+		camera.position -= Vector3(move.x, 0, move.z);
+		camera.target -= Vector3(move.x, 0, move.z);
 		}
 		else
 		{
-			transform.position -= Vector3(move.x, 0, move.z);
-			camera.position -= Vector3(move.x, 0, move.z);
-			camera.target -= Vector3(move.x, 0, move.z);
+			transform.position += Vector3(move.x, 0, move.z);
+			camera.position += Vector3(move.x, 0, move.z);
+			camera.target += Vector3(move.x, 0, move.z);
 		}
 	}
 	if (Application::GetKeyDown('A') && !once)
@@ -95,7 +95,7 @@ void PlayerGO::Update(double dt)
 		Vector3 right = view.Cross(camera.up);
 		right.y = 0;
 		right.Normalize();
-		if (!contrain(transform.position + -right * m_fplayerSpeed * dt, obbcheck))
+		if (!contrain(transform.position + (-right * m_fplayerSpeed * dt) +Vector3(-3.5,0,-3.5) , obbcheck))
 		{
 
 			transform.position += -right * m_fplayerSpeed * dt;
@@ -115,7 +115,7 @@ void PlayerGO::Update(double dt)
 		Vector3 right = view.Cross(camera.up);
 		right.y = 0;
 		right.Normalize();
-		if (!contrain(transform.position + right * m_fplayerSpeed * dt, obbcheck))
+		if (!contrain(transform.position + right * m_fplayerSpeed * dt + Vector3(3.5, 0, 3.5), obbcheck))
 		{
 
 		transform.position += right * m_fplayerSpeed * dt;
@@ -307,6 +307,7 @@ void PlayerGO::StopVertMove()
 bool PlayerGO::contrain(Vector3 futurePos, Collider box)
 {
 	box.UpdatePos(futurePos);
+	box.SetScale(Vector3(0, 0,0));
 	for (auto go : gl.m_goList)
 	{
 		if (go->type != GameObject::GO_WALL)
