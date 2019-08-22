@@ -55,7 +55,7 @@ void PlayerGO::Update(double dt)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 move = view * m_fplayerSpeed * dt;
-		if (!contrain(transform.position + Vector3(move.x+.5f, 0, move.z + 3.5f), obbcheck))
+		if (!contrain(transform.position + Vector3(move.x, 0, move.z)*1.15, obbcheck))
 		{
 
 			transform.position += Vector3(move.x, 0, move.z);
@@ -75,7 +75,7 @@ void PlayerGO::Update(double dt)
 	{
 		Vector3 view = (camera.target - camera.position).Normalized();
 		Vector3 move = view * m_fplayerSpeed * dt;
-		if (!contrain(transform.position - Vector3(move.x - 3.5f, 0, move.z - 3.5f), obbcheck))
+		if (!contrain(transform.position - Vector3(move.x, 0, move.z)*1.15, obbcheck))
 		{
 
 		transform.position -= Vector3(move.x, 0, move.z);
@@ -95,7 +95,7 @@ void PlayerGO::Update(double dt)
 		Vector3 right = view.Cross(camera.up);
 		right.y = 0;
 		right.Normalize();
-		if (!contrain(transform.position + (-right * m_fplayerSpeed * dt) +Vector3(-3.5,0,-3.5) , obbcheck))
+		if (!contrain(transform.position + (-right * m_fplayerSpeed * dt)*1.15 , obbcheck))
 		{
 
 			transform.position += -right * m_fplayerSpeed * dt;
@@ -115,7 +115,7 @@ void PlayerGO::Update(double dt)
 		Vector3 right = view.Cross(camera.up);
 		right.y = 0;
 		right.Normalize();
-		if (!contrain(transform.position + right * m_fplayerSpeed * dt + Vector3(3.5, 0, 3.5), obbcheck))
+		if (!contrain(transform.position + (right * m_fplayerSpeed * dt)*1.15, obbcheck))
 		{
 
 		transform.position += right * m_fplayerSpeed * dt;
