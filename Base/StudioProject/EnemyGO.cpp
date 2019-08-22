@@ -83,13 +83,14 @@ void EnemyGO::Init()
 	sequence2->addChild(idle);
 
 	m_bdoOnce = false;
-	m_fROF = 0;
+	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
 }
 
 void EnemyGO::Update(double dt)
 {
 	m_fROF += dt;
 	m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
+	m_v3dir = (m_v3playerPos - transform.position).Normalize();
 
 	if (approachPlayer->GetApproachBool())
 	{
@@ -101,7 +102,6 @@ void EnemyGO::Update(double dt)
 			m_bdoOnce = true;
 		}
 
-		m_v3dir = (m_v3playerPos - transform.position).Normalize();
 		transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
 	}
 	else
@@ -131,21 +131,22 @@ void EnemyGO::Update(double dt)
 		}
 	}
 
-	if (shootPlayer->GetShootStatus() && m_fROF >= 10)
+	if (shootPlayer->GetShootStatus() && m_fROF >= 2)
 	{
 		GameObject *go = gl.FetchGO();
 		go->type = GameObject::GO_BULLET;
 		go->SetActive(true);
 		go->m_bGravity = false;
-		go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z);
+		go->transform.position = Vector3(transform.position.x, transform.position.y + 10, transform.position.z + 20);
 		go->transform.scale.Set(0.3, 0.3, 0.3);
-		go->m_v3vel = (m_v3playerPos - transform.position).Normalize() * 200.f;
+		go->m_v3dir = m_v3dir;
+		go->m_v3vel = go->m_v3dir * 200.f;
 
 		go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
 		go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 		go->obb.pos = transform.position;
 		go->obb.RotateAxis(0, Vector3(0, 1, 0));
-		m_fROF = 0;
+		m_fROF = Math::RandFloatMinMax(0.f, 1.f);
 	}
 
 

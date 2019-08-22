@@ -365,7 +365,7 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.PushMatrix();
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-		RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);
+		RenderMesh(meshList[GEO_BULLET], false, false, false);
 		modelStack.PopMatrix();
 		modelStack.PushMatrix();
 		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);

@@ -145,8 +145,8 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			go2->SetActive(false);
 			break;
 		case GameObject::GO_ENEMY:
-			go1->SetActive(false);
-			go2->SetActive(false);
+			//go1->SetActive(false);
+			//go2->SetActive(false);
 			break;
 		case GameObject::GO_WALL:
 			go1->SetActive(false);

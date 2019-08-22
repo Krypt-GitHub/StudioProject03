@@ -176,6 +176,10 @@ void SceneBase::Init()
 
 	meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
 	meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.45, 0.45, 0.45), 1.f);
+	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("bullet", "OBJ//bullet.obj");
+	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//black.tga");
+	meshList[GEO_TRACER] = MeshBuilder::GenerateCylinder("tracer", Color(1, 0, 0), 10, 10, 1, 1);
+
 	// Scene Objects
 	if (SceneManager::GetSceneID() == 0 || SceneManager::GetSceneID() == 2)
 	{
@@ -214,6 +218,16 @@ void SceneBase::Init()
 		meshList[GEO_PLAY] = MeshBuilder::GenerateOBJ("menu_play", "OBJ//menu_play.obj");
 		meshList[GEO_LOGO] = MeshBuilder::GenerateQuad("menu logo", Color(1, 1, 1), 1.f);
 		meshList[GEO_LOGO]->textureArray[0] = LoadTGA("Image//logo.tga");
+	}
+	
+	if (SceneManager::GetSceneID() == 2)
+	{
+		for (int x = 1; x <= 20; x++)
+		{
+			std::string stringName = "glass_" + std::to_string(x);
+			std::string filePath = "OBJ//glass_" + std::to_string(x) + ".obj";
+			meshList[x] = MeshBuilder::GenerateOBJ(stringName, filePath);
+		}
 	}
 }
 

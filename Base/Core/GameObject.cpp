@@ -44,3 +44,4 @@ float GameObject::GetMass()
 {
 	return m_fmass;
 }
+
