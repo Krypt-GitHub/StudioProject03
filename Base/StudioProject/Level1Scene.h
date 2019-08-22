@@ -14,6 +14,7 @@
 
 #include "GOList.h"
 #include "GOFactory.h"
+#include "Physics.h"
 
 #include "EnemyGO.h"
 #include "PlayerGO.h"
@@ -42,9 +43,9 @@ public:
 
 	GOList &gl = GOList::GetInstance();
 private:
-
 	GOFactory goFactory;
 	PlayerGO *Player;
+	Physics PhysicsEngine;
 };
 
 #endif

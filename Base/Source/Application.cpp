@@ -14,6 +14,7 @@
 #include "../StudioProject/SceneManager.h"
 #include "../StudioProject/MenuScene.h"
 #include "../StudioProject/GameScene.h"
+#include "../StudioProject/Level1Scene.h"
 
 
 
@@ -144,7 +145,8 @@ void Application::Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
 
-	glfwWindowHint(GLFW_DECORATED, false);
+	//Stop fullscreen irwen dumb
+	//glfwWindowHint(GLFW_DECORATED, false);
 
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "SUPERCOOL", NULL, NULL);
@@ -178,6 +180,7 @@ void Application::Init()
 
 void Application::Run()
 {
+	SceneManager::SetSceneID(2); // temp to set to level1scene
 	//Main Loop
 	while (SceneManager::GetSceneID() != 10)
 	{
@@ -213,6 +216,28 @@ void Application::Run()
 			while (SceneManager::GetSceneID() == 1)
 			{
 				//GetMouseUpdate();
+				scene->Update(m_timer.getElapsedTime());
+				scene->Render();
+				//Swap buffers
+				glfwSwapBuffers(m_window);
+				//Get and organize events, like keyboard and mouse input, window resizing, etc...
+				glfwPollEvents();
+				m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.
+
+			} //Check if the ESC key had been pressed or if the window had been closed
+			scene->Exit();
+			delete scene;
+		}
+		else if (SceneManager::GetSceneID() == 2)
+		{
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			Scene *scene = new Level1Scene();
+			scene->Init();
+
+			m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
+			while (SceneManager::GetSceneID() == 2)
+			{
+				GetMouseUpdate();
 				scene->Update(m_timer.getElapsedTime());
 				scene->Render();
 				//Swap buffers

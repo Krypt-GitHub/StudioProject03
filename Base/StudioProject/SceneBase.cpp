@@ -177,7 +177,7 @@ void SceneBase::Init()
 	meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
 	meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.45, 0.45, 0.45), 1.f);
 	// Scene Objects
-	if (SceneManager::GetSceneID() == 0)
+	if (SceneManager::GetSceneID() == 0 || SceneManager::GetSceneID() == 2)
 	{
 		meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
 		meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);

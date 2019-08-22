@@ -118,7 +118,7 @@ bool Ray::IntersectionOBB(Collider& box)
 	return true;
 }
 
-bool Ray::IntersectionOBB(Collider & box, Vector3 output)
+bool Ray::IntersectionOBB(Collider & box, Vector3 &output)
 {
 	float tMin = 0;
 	float tMax = 1000000000000000000.f;
@@ -144,7 +144,7 @@ bool Ray::IntersectionOBB(Collider & box, Vector3 output)
 			if (interection1 > tMin)
 				tMin = interection1;
 
-			if (tMax < tMin)
+			if (tMax <= tMin)
 				return false;
 		}
 		else
@@ -172,7 +172,7 @@ bool Ray::IntersectionOBB(Collider & box, Vector3 output)
 			if (interection1 > tMin)
 				tMin = interection1;
 
-			if (tMax < tMin)
+			if (tMax <= tMin)
 				return false;
 		}
 		else
@@ -200,7 +200,7 @@ bool Ray::IntersectionOBB(Collider & box, Vector3 output)
 			if (interection1 > tMin)
 				tMin = interection1;
 
-			if (tMax < tMin)
+			if (tMax <= tMin)
 				return false;
 		}
 		else

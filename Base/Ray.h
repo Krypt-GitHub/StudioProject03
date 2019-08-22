@@ -11,7 +11,7 @@ public:
 	~Ray();
 
 	bool IntersectionOBB(Collider& box);
-	bool IntersectionOBB(Collider& box , Vector3 output);
+	bool IntersectionOBB(Collider & box, Vector3 & output);
 
 };
 

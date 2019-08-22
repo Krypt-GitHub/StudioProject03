@@ -27,25 +27,23 @@ void Level1Scene::Init()
 	SceneBase::Init();
 
 	//Bullet initialisation
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		gl.m_goList.push_back(new GameObject(GameObject::GO_NONE));
 	}
 
 	// GAME OBJECT CREATION
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 70), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, true, 1.1, Vector3(0, 23, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-15, 19, -60), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(15, 19, -60), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(100, 5, 300), 0, Vector3(50, 2.5, 150), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -165), Vector3(100, 80, 30), 0, Vector3(50, 40, 15), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 165), Vector3(100, 80, 30), 180, Vector3(50, 40, 15), 180, Vector3(0, 1, 0));
-	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(65, 40, 0), Vector3(300, 80, 30), 90, Vector3(150, 40, 15), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-65, 40, 0), Vector3(300, 80, 30), -90, Vector3(150, 40, 15), -90, Vector3(0, 1, 0));
-
-	Player = static_cast<PlayerGO*>(gl.FetchGO(GameObject::GO_PLAYER));
-
-	camera[1] = Player->camera;
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 350), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(120, 5, 800), 0, Vector3(60, 2.5, 400), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -407.5), Vector3(120, 80, 15), 0, Vector3(60, 40, 7.5), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 407.5), Vector3(120, 80, 15), 180, Vector3(60, 40, 7.5), 180, Vector3(0, 1, 0));
+	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(52.5, 40, 0), Vector3(800, 80, 15), 90, Vector3(400, 40, 7.5), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-52.5, 40, 0), Vector3(800, 80, 15), -90, Vector3(400, 40, 7.5), -90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 87.5, 0), Vector3(120, 800, 15), 90, Vector3(60, 400, 7.5), 90, Vector3(1, 0, 0));
 
 	// INIT GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -72,7 +70,7 @@ void Level1Scene::Init()
 	camera[0].Init(Vector3(-420, 184, 178), Vector3(0, 185, 0), Vector3(0, 1, 0));
 
 	Player = static_cast<PlayerGO*>(gl.FetchGO(GameObject::GO_PLAYER));
-	Player->camera.target.Set(0, 0, 0);
+	Player->camera.target.Set(0, 10, 10);
 	Player->camera.up.Set(0, 1, 0);
 	camera[1] = Player->camera;
 
@@ -103,6 +101,7 @@ void Level1Scene::Init()
 void Level1Scene::Update(double dt)
 {
 	SceneBase::Update(dt);
+	PhysicsEngine.UpdateGO(dt);
 
 	if (cameraID == 0)
 	{
@@ -112,7 +111,6 @@ void Level1Scene::Update(double dt)
 	{
 		camera[1] = Player->camera;
 		Player->Update(dt);
-
 	}
 
 	//RayCast
@@ -122,22 +120,13 @@ void Level1Scene::Update(double dt)
 		if (go->type != GameObject::GO_PISTOL)
 			continue;
 
-		if (
-			(ray->IntersectionOBB(go->obb) && Application::GetKeyDown('E') && !static_cast<PistolGO*>(go)->GetPickUp() && Player->gun == nullptr)
-			||
-			(Player->obb.GetCollision(go->obb) && !static_cast<PistolGO*>(go)->GetPickUp() && Player->gun == nullptr)
-			)
+		if (ray->IntersectionOBB(go->obb) && Application::GetKeyDown('E') && !static_cast<PistolGO*>(go)->GetPickUp() && Player->gun == nullptr)
 		{
-
 			static_cast<PistolGO*>(go)->SetPickUp(true);
 			Player->gun = static_cast<PistolGO*>(go);
 
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
-
 		}
-
-
-
 	}
 
 	// UPDATE GAME OBJECT
@@ -152,27 +141,6 @@ void Level1Scene::Update(double dt)
 
 
 	fps = (float)(1.f / dt);
-
-	//for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
-	//{
-	//	GameObject *go = (GameObject *)*it;
-	//	if (go->GetActive())
-	//	{
-	//		if (go->type == GameObject::GO_BULLET)
-	//		{
-	//			go->transform.position += go->m_v3dir * 10 * dt;
-	//			go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
-	//			go->obb.UpdatePos(go->transform.position);
-	//			go->obb.SetScale(go->transform.scale * (1 / 2));
-	//			go->obb.RotateAxis(0, Vector3(0, 1, 0));
-	//		}
-
-	//		if (go->type == GameObject::GO_PLAYER)
-	//		{
-	//			go->transform.position = Player->camera.position;
-	//		}
-	//	}
-	//}
 
 	static bool m_bRBDown = false;
 	if (Application::GetMouseDown(2) && !m_bRBDown)
@@ -356,29 +324,14 @@ void Level1Scene::RenderGO(GameObject* go)
 	case GameObject::GO_PISTOL:
 		if (static_cast<PistolGO*>(go)->GetPickUp())
 		{
-			//if (isRBDown)
-			//{
-			//	modelStack.PushMatrix();
-			//	modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
-			//	modelStack.Rotate(Math::RadianToDegree(atan2(player.camera.target.x - player.camera.position.x, player.camera.target.z - player.camera.position.z)), 0, 1, 0);
-			//	modelStack.Translate(0, -2, 4);
-			//	//modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-			//	RenderMesh(meshList[GEO_PISTOL], false, false, false);
-			//	modelStack.PopMatrix();
-			//}
-			//else
-			//{
 			modelStack.PushMatrix();
-			modelStack.Translate(Player->transform.position.x, Player->transform.position.y, Player->transform.position.z);
+			modelStack.Translate(Player->camera.position.x, Player->camera.position.y, Player->camera.position.z);
 			//modelStack.PushMatrix();
 
 			Vector3 check = Vector3(Player->camera.target.z - Player->camera.position.z);
 			if (Application::GetKeyDown('Z'))
 				int i = 0;
 			modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.target.x - Player->camera.position.x, Player->camera.target.z - Player->camera.position.z)), 0, 1, 0);
-
-
-			//if(check.x >0 )
 			modelStack.Rotate(Math::RadianToDegree(-atan2(Player->camera.target.y - Player->camera.position.y, Vector3(Player->camera.target.x - Player->camera.position.x, 0, Player->camera.target.z - Player->camera.position.z).Length())), 1, 0, 0);
 
 			//else
@@ -388,15 +341,13 @@ void Level1Scene::RenderGO(GameObject* go)
 			Player->gun->transform.position = Vector3(modelStack.Top().a[12], modelStack.Top().a[13], modelStack.Top().a[14]);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
+			modelStack.PopMatrix();
+			//modelStack.PushMatrix();
+			//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			//modelStack.Rotate(Math::RadianToDegree( acosf((go->obb.AxisZ.Dot(Vector3(0, 0, 1)) / go->obb.AxisZ.Length() * Vector3(0, 0, 1).Length()))), 0, 1, 0);
+			//modelStack.Scale(go->obb.Half_size.x, go->obb.Half_size.y, go->obb.Half_size.z);
+			//RenderMesh(meshList[GEO_CUBE], false, false, false);
 			//modelStack.PopMatrix();
-			modelStack.PopMatrix();
-			modelStack.PushMatrix();
-			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-			modelStack.Rotate(Math::RadianToDegree(acosf((go->obb.AxisZ.Dot(Vector3(0, 0, 1)) / go->obb.AxisZ.Length() * Vector3(0, 0, 1).Length()))), 0, 1, 0);
-			modelStack.Scale(go->obb.Half_size.x, go->obb.Half_size.y, go->obb.Half_size.z);
-			RenderMesh(meshList[GEO_CUBE], false, false, false);
-			modelStack.PopMatrix();
-			//}
 		}
 		else
 		{
@@ -448,11 +399,11 @@ void Level1Scene::RenderGO(GameObject* go)
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
 			modelStack.PopMatrix();
-			modelStack.PushMatrix();
-			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-			modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-			RenderMesh(meshList[GEO_CUBE], false, false, false);
-			modelStack.PopMatrix();
+			//modelStack.PushMatrix();
+			//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			//modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+			//RenderMesh(meshList[GEO_CUBE], false, false, false);
+			//modelStack.PopMatrix();
 		}
 		else if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::WALK)
 		{
@@ -460,7 +411,7 @@ void Level1Scene::RenderGO(GameObject* go)
 			{
 				modelStack.PushMatrix();
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
-				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.target.x - Player->camera.position.x, Player->camera.target.z - Player->camera.position.z)), 0, 1, 0);
+				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 				RenderMesh(meshList[GEO_ENEMY_WALK01], false, false, false);
 				modelStack.PopMatrix();
@@ -469,7 +420,7 @@ void Level1Scene::RenderGO(GameObject* go)
 			{
 				modelStack.PushMatrix();
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
-				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.target.x - Player->camera.position.x, Player->camera.target.z - Player->camera.position.z)), 0, 1, 0);
+				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 				RenderMesh(meshList[GEO_ENEMY_WALK02], false, false, false);
 				modelStack.PopMatrix();
@@ -502,6 +453,14 @@ void Level1Scene::RenderGO(GameObject* go)
 		RenderMesh(meshList[GEO_WALL], false, false, false);
 		modelStack.PopMatrix();
 		break;
+	case GameObject::GO_CEILING:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+		modelStack.Rotate(go->transform.rotation, 1, 0, 0);
+		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+		RenderMesh(meshList[GEO_FLOOR], false, false, false);
+		modelStack.PopMatrix();
+		break;
 	}
 }
 
@@ -510,10 +469,6 @@ void Level1Scene::Render()
 	RenderPassGPass();
 
 	RenderPassMain();
-
-	//
-	//// Render the crosshair
-	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 
 	//On screen text
 	std::ostringstream ss;

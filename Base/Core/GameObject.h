@@ -24,6 +24,7 @@ public:
 		GO_BULLET,
 		GO_FLOOR,
 		GO_WALL,
+		GO_CEILING,
 		GO_TOTAL,
 	};
 

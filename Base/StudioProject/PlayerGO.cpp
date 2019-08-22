@@ -28,7 +28,7 @@ void PlayerGO::Init()
 {
 	theCurrentPosture = STAND;
 
-	m_fplayerHeight = 40.f;
+	m_fplayerHeight = 35.f;
 	camera.Init(Vector3(transform.position.x, transform.position.y + m_fplayerHeight, transform.position.z), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
@@ -117,26 +117,27 @@ void PlayerGO::Update(double dt)
 		//soundEngine.PlayASound("Jump");
 		SetToJump(true);
 	}
-	if (Application::GetMouseDown(1) && !m_bRBDown)
-	{
-		GameObject* pistol = gun;
-		pistol->m_v3vel.SetZero();
-		//Throwing physics
-		gun = nullptr;
 
-		m_bRBDown = true;
-	}
-	else if (!Application::GetMouseDown(1) && m_bRBDown)
+	if (gun != nullptr)
 	{
-		m_bRBDown = false;
+		if (Application::GetMouseDown(1) && !m_bRBDown)
+		{
+			GameObject* pistol = gun;
+			gun->m_v3vel.SetZero();
+			//Throwing physics
+			gun->m_v3vel = m_v3dir * 200.f;
+			gun = nullptr;
+
+			m_bRBDown = true;
+		}
+		else if (!Application::GetMouseDown(1) && m_bRBDown)
+		{
+			m_bRBDown = false;
+		}
 	}
+
 	UpdateJump(dt);
 	UpdateFall(dt);
-
-
-
-
-
 }
 
 void PlayerGO::UpdateJump(double dt)
