@@ -90,7 +90,7 @@ void EnemyGO::Update(double dt)
 {
 	m_fROF += dt;
 	m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
-	m_v3dir = (m_v3playerPos - transform.position).Normalize();
+	m_v3dir = (m_v3playerPos - transform.position).Normalized();
 
 	if (approachPlayer->GetApproachBool())
 	{
@@ -144,7 +144,7 @@ void EnemyGO::Update(double dt)
 
 		go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
 		go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
-		go->obb.pos = transform.position;
+		go->obb.pos = go->transform.position;
 		go->obb.RotateAxis(0, Vector3(0, 1, 0));
 		m_fROF = Math::RandFloatMinMax(0.f, 1.f);
 	}

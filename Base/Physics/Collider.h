@@ -5,7 +5,6 @@
 class Collider
 {
 private:
-	bool isEnabled;
 
 
 	bool GetSeparatingPlane(Vector3& RPos,Vector3& Plane,Collider& OtherBox);
@@ -15,12 +14,12 @@ public:
 	Collider(Vector3 Pos,Vector3 scale,Vector3 AxisX,Vector3 AxisZ);
 	~Collider();
 
+	bool isEnabled;
 	Vector3 AxisX;
 	Vector3 AxisY;
 	Vector3 AxisZ;
 	Vector3 pos;
 	Vector3 Half_size;
-	void Enable();
 	bool GetCollision( Collider&box2);
 	void UpdateAxis(Vector3 AxisX , Vector3 AxisZ);
 	void UpdatePos(Vector3 pos);

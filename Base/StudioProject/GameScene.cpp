@@ -95,12 +95,17 @@ void GameScene::Init()
 
 	m_parameters[U_ENABLEREFLECT] = glGetUniformLocation(m_programID, "enableReflect");
 	m_parameters[U_CAMERAPOS] = glGetUniformLocation(m_programID, "cameraPos");
+
+	PhysicsEngine.SetEnemyCount(2);
 }
 
 void GameScene::Update(double dt)
 {
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt);
+
+	if (PhysicsEngine.GetEnemyCount() == 0)
+		SceneManager::SetSceneID(2);
 
 	if (cameraID == 0)
 	{
@@ -123,6 +128,8 @@ void GameScene::Update(double dt)
 		{
 			static_cast<PistolGO*>(go)->SetPickUp(true);
 			Player->gun = static_cast<PistolGO*>(go);
+			Player->gun->obb.isEnabled = false;
+			Player->gun->SetStatic(true);
 
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
@@ -137,7 +144,6 @@ void GameScene::Update(double dt)
 			UpdateGO(go, dt);
 		}
 	}
-
 
 	fps = (float)(1.f / dt);
 
@@ -157,7 +163,7 @@ void GameScene::Update(double dt)
 		m_fchRotate -= 10 * dt;
 
 	if (Application::GetKeyDown('0'))
-		SceneManager::SetSceneID(1);
+		SceneManager::SetSceneID(2);
 }
 
 void GameScene::RenderWorld()

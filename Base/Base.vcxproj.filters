@@ -162,6 +162,9 @@
     <ClCompile Include="StudioProject\Level1Scene.cpp">
       <Filter>StudioProject\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="StudioProject\Level2Scene.cpp">
+      <Filter>StudioProject\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -297,6 +300,9 @@
       <Filter>StudioProject</Filter>
     </ClInclude>
     <ClInclude Include="StudioProject\Level1Scene.h">
+      <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\Level2Scene.h">
       <Filter>StudioProject\Scene</Filter>
     </ClInclude>
   </ItemGroup>

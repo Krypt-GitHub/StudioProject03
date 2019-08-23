@@ -2,6 +2,7 @@
 
 Collider::Collider()
 {
+	isEnabled = true;
 }
 
 Collider::Collider(Vector3 Pos, Vector3 scale, Vector3 AxisX, Vector3 AxisZ)
@@ -11,16 +12,12 @@ Collider::Collider(Vector3 Pos, Vector3 scale, Vector3 AxisX, Vector3 AxisZ)
 	this->AxisX = AxisX;
 	this->AxisY = AxisX.Cross(AxisZ);
 	this->AxisZ = AxisZ;
+	isEnabled = true;
 }
 
 
 Collider::~Collider()
 {
-}
-
-void Collider::Enable()
-{
-	isEnabled = true;
 }
 
 bool Collider::GetSeparatingPlane(Vector3& RPos, Vector3& Plane,Collider& OtherBox)

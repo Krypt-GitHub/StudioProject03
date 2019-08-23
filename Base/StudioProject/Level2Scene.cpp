@@ -1,4 +1,4 @@
-﻿#include "Level1Scene.h"
+﻿#include "Level2Scene.h"
 #include "GL\glew.h"
 
 #include "../Source/shader.hpp"
@@ -13,16 +13,16 @@
 #include "../Ray.h"
 
 
-Level1Scene::Level1Scene()
+Level2Scene::Level2Scene()
 {
 	srand(time(NULL));
 }
 
-Level1Scene::~Level1Scene()
+Level2Scene::~Level2Scene()
 {
 }
 
-void Level1Scene::Init()
+void Level2Scene::Init()
 {
 	SceneBase::Init();
 
@@ -34,29 +34,16 @@ void Level1Scene::Init()
 
 	// GAME OBJECT CREATION
 	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 350), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 0), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(120, 5, 800), 0, Vector3(60, 2.5, 400), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -407.5), Vector3(120, 80, 15), 0, Vector3(60, 40, 7.5), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 407.5), Vector3(120, 80, 15), 180, Vector3(60, 40, 7.5), 180, Vector3(0, 1, 0));
-	goFactory.CreateGO("West Wall", GameObject::GO_GLASS, true, 0, Vector3(52.5, 40, 0), Vector3(800, 80, 15), 90, Vector3(400, 40, 7.5), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("East Wall", GameObject::GO_GLASS, true, 0, Vector3(-52.5, 40, 0), Vector3(800, 80, 15), -90, Vector3(400, 40, 7.5), -90, Vector3(0, 1, 0));
-	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 87.5, 0), Vector3(120, 800, 15), 90, Vector3(60, 400, 7.5), 90, Vector3(1, 0, 0));
-
-	GameObject* glass_panel_01[20];
-	for (int x = 0; x < 20; x++)
-	{
-		glass_panel_01[x] = new GameObject;
-		glass_panel_01[x]->name = "glass_" + std::to_string(x);
-		glass_panel_01[x]->type = GameObject::GLASS_01;
-		glass_panel_01[x]->SetActive(false);
-		glass_panel_01[x]->SetStatic(false);
-		glass_panel_01[x]->transform.position.Set(57.5, 40, 0);
-		glass_panel_01[x]->transform.scale.Set(15, 3.5, 1);
-		gl.m_goList.push_back(glass_panel_01[x]);
-	}
+	//goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(600, 5, 600), 0, Vector3(250, 2.5, 250), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -407.5), Vector3(120, 80, 15), 0, Vector3(60, 40, 7.5), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 407.5), Vector3(120, 80, 15), 180, Vector3(60, 40, 7.5), 180, Vector3(0, 1, 0));
+	//goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(52.5, 40, 0), Vector3(800, 80, 15), 90, Vector3(400, 40, 7.5), 90, Vector3(0, 1, 0));
+	//goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-52.5, 40, 0), Vector3(800, 80, 15), -90, Vector3(400, 40, 7.5), -90, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 87.5, 0), Vector3(120, 800, 15), 90, Vector3(60, 400, 7.5), 90, Vector3(1, 0, 0));
 
 	// INIT GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -113,7 +100,7 @@ void Level1Scene::Init()
 	PhysicsEngine.SetEnemyCount(3);
 }
 
-void Level1Scene::Update(double dt)
+void Level2Scene::Update(double dt)
 {
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt);
@@ -181,7 +168,7 @@ void Level1Scene::Update(double dt)
 		SceneManager::SetSceneID(10); // 3
 }
 
-void Level1Scene::RenderWorld()
+void Level2Scene::RenderWorld()
 {
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
 	{
@@ -191,19 +178,9 @@ void Level1Scene::RenderWorld()
 			RenderGO(go);
 		}
 	}
-
-	for (int x = 1; x <= 20; x++)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(57.5, 40, 0);
-		modelStack.Rotate(90, 0, 1, 0);
-		modelStack.Scale(15, 3.5, 1);
-		RenderMesh(meshList[x], false, false, false);
-		modelStack.PopMatrix();
-	}
 }
 
-void Level1Scene::RenderWater()
+void Level2Scene::RenderWater()
 {
 	modelStack.PushMatrix();
 	modelStack.Translate(-300, 70, -630);
@@ -214,7 +191,7 @@ void Level1Scene::RenderWater()
 	modelStack.PopMatrix();
 }
 
-void Level1Scene::RenderPassGPass()
+void Level2Scene::RenderPassGPass()
 {
 	m_renderPass = RENDER_PASS_PRE;
 	m_lightDepthFBO.BindForWriting();
@@ -234,7 +211,7 @@ void Level1Scene::RenderPassGPass()
 	RenderWorld();
 }
 
-void Level1Scene::RenderPassMain()
+void Level2Scene::RenderPassMain()
 {
 	m_renderPass = RENDER_PASS_MAIN;
 
@@ -314,7 +291,7 @@ void Level1Scene::RenderPassMain()
 	//modelStack.PopMatrix();
 }
 
-void Level1Scene::InitGO(GameObject * go)
+void Level2Scene::InitGO(GameObject * go)
 {
 	switch (go->type)
 	{
@@ -330,7 +307,7 @@ void Level1Scene::InitGO(GameObject * go)
 	}
 }
 
-void Level1Scene::UpdateGO(GameObject * go, double dt)
+void Level2Scene::UpdateGO(GameObject * go, double dt)
 {
 	switch (go->type)
 	{
@@ -344,7 +321,7 @@ void Level1Scene::UpdateGO(GameObject * go, double dt)
 	}
 }
 
-void Level1Scene::RenderGO(GameObject* go)
+void Level2Scene::RenderGO(GameObject* go)
 {
 	switch (go->type)
 	{
@@ -512,7 +489,7 @@ void Level1Scene::RenderGO(GameObject* go)
 	}
 }
 
-void Level1Scene::Render()
+void Level2Scene::Render()
 {
 	RenderPassGPass();
 
@@ -525,7 +502,7 @@ void Level1Scene::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
 }
 
-void Level1Scene::Exit()
+void Level2Scene::Exit()
 {
 	SceneBase::Exit();
 	gl.Exit();
