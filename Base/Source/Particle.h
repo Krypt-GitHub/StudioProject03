@@ -10,8 +10,6 @@ struct Particle
 		PA_SPLATTER,
 		PA_SMOKE,
 		PA_SNOW,
-		PA_GUNSMOKE,
-		PA_GUNSHATTER,
 		PA_TOTAL,
 	};
 	PARTICLE_TYPE type;

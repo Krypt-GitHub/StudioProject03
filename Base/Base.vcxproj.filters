@@ -40,6 +40,9 @@
     <Filter Include="StudioProject\AI">
       <UniqueIdentifier>{78854a1f-c557-4890-a925-4103239e5ed7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StudioProject\AI\Pathfinding">
+      <UniqueIdentifier>{82f9b15d-0ab1-4dc3-a21f-e31f459aa5e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -162,8 +165,8 @@
     <ClCompile Include="StudioProject\Level1Scene.cpp">
       <Filter>StudioProject\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleEngine.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="StudioProject\PathNode.cpp">
+      <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +269,6 @@
     <ClInclude Include="Core\Transform.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\AINode.h">
-      <Filter>StudioProject\AI</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\AIBehaviour.h">
       <Filter>StudioProject\AI</Filter>
     </ClInclude>
@@ -302,8 +302,11 @@
     <ClInclude Include="StudioProject\Level1Scene.h">
       <Filter>StudioProject\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleEngine.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="StudioProject\BehaviourNode.h">
+      <Filter>StudioProject\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PathNode.h">
+      <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

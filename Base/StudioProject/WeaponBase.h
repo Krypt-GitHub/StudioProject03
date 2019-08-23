@@ -12,8 +12,6 @@ protected:
 	int m_icurClip;
 	int m_ifireRate;
 	float m_freloadSpeed;
-	Vector3 m_v3storePos;
-	Vector3 m_v3storeDir;
 	GameObject *m_goStorePlayer;
 public:
 	WeaponBase();

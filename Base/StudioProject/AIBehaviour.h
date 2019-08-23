@@ -1,7 +1,7 @@
 #ifndef AI_BEHAVIOUR_H
 #define AI_BEHAVIOUR_H
 
-#include "AINode.h"
+#include "BehaviourNode.h"
 #include "Vector3.h"
 
 class AIBehaviour
@@ -45,6 +45,23 @@ public:
 	}
 };
 
+class IdleTask : public AITree::Node
+{
+private:
+	AIBehaviour *status;
+public:
+	IdleTask(AIBehaviour* status) : status(status) {}
+	virtual bool run() override
+	{
+		if (status->m_fdistanceToPlayer > 1000)
+		{
+			//std::cout << "AI on idle" << std::endl;
+			return true;
+		}
+		return false;
+	}
+};
+
 class ApproachPlayerTask : public AITree::Node
 {
 private:
@@ -54,7 +71,7 @@ public:
 	ApproachPlayerTask(AIBehaviour *status) : status(status), m_bapproachPlayer(false) {}
 	virtual bool run() override
 	{
-		if (status->m_fdistanceToPlayer >= 700)
+		if (status->m_fdistanceToPlayer >= 100)
 		{
 		//	std::cout << "Approaching Player" << std::endl;
 			m_bapproachPlayer = true;
@@ -87,6 +104,11 @@ public:
 //	}
 //};
 
+class ChasePlayerTask : public AITree::Node 
+{
+
+};
+
 class ShootPlayerTask : public AITree::Node
 {
 private:
@@ -114,20 +136,5 @@ public:
 	}
 };
 
-class IdleTask : public AITree::Node
-{
-private:
-	AIBehaviour *status;
-public:
-	IdleTask(AIBehaviour* status) : status(status) {}
-	virtual bool run() override
-	{
-		if (status->m_fdistanceToPlayer > 200)
-		{
-			//std::cout << "AI on idle" << std::endl;
-			return true;
-		}
-		return false;
-	}
-};
+
 #endif

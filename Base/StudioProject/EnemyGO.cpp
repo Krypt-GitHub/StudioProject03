@@ -86,11 +86,36 @@ void EnemyGO::Init()
 	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
 }
 
+bool EnemyGO::Constrain(Vector3 futurepos, Collider box, double dt)
+{
+	GOList &gl = GOList::GetInstance();
+
+	box.UpdatePos(futurepos);
+	//box.SetScale(Vector3( box.Half_size.y));
+	for (auto go : gl.m_goList)
+	{
+		if (go->type == GameObject::GO_ENEMY && static_cast<EnemyGO*>(go) != this)
+		{
+			Collider box2 = go->obb;
+			Vector3 m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
+			Vector3 m_v3dir1 = (m_v3playerPos - go->transform.position).Normalized();
+			box2.UpdatePos((go->transform.position+(Vector3(m_v3dir1.x, 0, m_v3dir1.z) * 20 * dt) * 20));
+			if (box.GetCollision(box2))
+			{
+				return true;
+			}
+		}
+		
+	}
+	return false;
+}
+
 void EnemyGO::Update(double dt)
 {
 	m_fROF += dt;
-	m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
-	m_v3dir = (m_v3playerPos - transform.position).Normalize();
+	Vector3 m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
+	m_v3dir = (m_v3playerPos - transform.position).Normalized();
+	obb.RotateAxis(Math::RadianToDegree(atan2(m_v3dir.x, m_v3dir.z)), Vector3(0, 1, 0));
 
 	if (approachPlayer->GetApproachBool())
 	{
@@ -102,7 +127,10 @@ void EnemyGO::Update(double dt)
 			m_bdoOnce = true;
 		}
 
-		transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+		if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+		else
+			transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
 	}
 	else
 	{

@@ -440,11 +440,11 @@ void Level1Scene::RenderGO(GameObject* go)
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
 			modelStack.PopMatrix();
-			//modelStack.PushMatrix();
-			//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-			//modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-			//RenderMesh(meshList[GEO_CUBE], false, false, false);
-			//modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+			RenderMesh(meshList[GEO_CUBE], false, false, false);
+			modelStack.PopMatrix();
 		}
 		else if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::WALK)
 		{
@@ -456,6 +456,12 @@ void Level1Scene::RenderGO(GameObject* go)
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 				RenderMesh(meshList[GEO_ENEMY_WALK01], false, false, false);
 				modelStack.PopMatrix();
+				modelStack.PushMatrix();
+				modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+				modelStack.Rotate(Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 1, 0);
+				modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
 			}
 			if (static_cast<EnemyGO*>(go)->aiStatus->m_bstartWalk02)
 			{
@@ -464,6 +470,11 @@ void Level1Scene::RenderGO(GameObject* go)
 				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 				RenderMesh(meshList[GEO_ENEMY_WALK02], false, false, false);
+				modelStack.PopMatrix();
+				modelStack.PushMatrix();
+				modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+				modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
 				modelStack.PopMatrix();
 			}
 		}

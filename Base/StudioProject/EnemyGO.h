@@ -18,8 +18,6 @@ public:
 
 	GOList &gl = GOList::GetInstance();
 
-	Vector3 m_v3playerPos;
-
 	AITree::Sequence *root;
 	AITree::Sequence *sequence1;
 	AITree::Selector *selector1;
@@ -35,6 +33,8 @@ public:
 	PistolGO *gunHeld;
 
 	void Init();
+	bool Constrain(Vector3 futurepos, Collider box, double dt);
+	bool Constrain(Vector3 futurepos, Collider box);
 	void Update(double dt);
 };
 
