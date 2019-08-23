@@ -1,5 +1,6 @@
 #pragma once
 #include "../Base/Source/Particle.h"
+#include "Core/GameObject.h"
 class ParticleEngine
 {
 	static ParticleEngine* PEngine;
@@ -16,7 +17,7 @@ public:
 	ParticleEngine();
 	~ParticleEngine();
 
-	void SpawnParticle(Particle::PARTICLE_TYPE type = Particle::PA_NONE)
+	void SpawnParticle(GameObject * go,Particle::PARTICLE_TYPE type = Particle::PA_NONE )
 	{
 		switch (type)
 		{
@@ -31,15 +32,36 @@ public:
 		case Particle::PA_SNOW:
 			break;
 		case Particle::PA_GUNSMOKE:
-			
+			particle = new Particle(type);
+			particle->life = 0.2f;
+			particle->vel = Vector3(Math::RandFloatMinMax(-10.f, 10.f), Math::RandFloatMinMax(-10.f, 10.f), Math::RandFloatMinMax(-10.f, 10.f));
+			particle->pos = go->transform.position;
+			particle->active = true;
+			particle->scale = Vector3(0.4f, 0.4f, 0.4f);
 			break;
 		case Particle::PA_GUNSHATTER:
+			particle = new Particle(type);
+			particle->life = 2.2f;
+			particle->vel = Vector3(Math::RandFloatMinMax(-10.f, 10.f), Math::RandFloatMinMax(-5.f, 15.f), Math::RandFloatMinMax(-20.f, 0));
+			particle->pos = go->transform.position;
+			particle->active = true;
+			particle->scale= Vector3(1.2f, 1.2f, 1.2f);
+			break;
+		case Particle::PA_BULLET:
+			break;
+		case Particle::PA_WALKING:
+			break;
+		case Particle::PA_ENEMYSHATTER:
 			break;
 		case Particle::PA_TOTAL:
 			break;
 		default:
 			break;
 		}
+		
+		
+		
+		
 	}
 };
 
