@@ -36,7 +36,7 @@ public:
 	CheckPlayerInRangeTask(AIBehaviour* status) : status(status) {}
 	virtual bool run() override
 	{
-		if (status->m_fdistanceToPlayer < 200)
+		if (status->m_fdistanceToPlayer < 1000)
 		{
 		//	std::cout << "Player in range" << std::endl;
 			return true;

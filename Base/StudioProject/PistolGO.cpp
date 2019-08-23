@@ -64,6 +64,7 @@ void PistolGO::Update(double dt)
 
 			go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z);
 			go->transform.scale.Set(0.3, 0.3, 0.3);
+			go->m_v3dir = m_v3storeDir;
 			go->m_v3vel = m_v3storeDir * 200.f;
 
 			go->obb.SetScale(Vector3(0.15, 0.15, 0.15));

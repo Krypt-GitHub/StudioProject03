@@ -38,6 +38,28 @@ protected:
 	{
 		// Menu
 		GEO_PLAY,
+		// Window
+		GLASS_01,
+		GLASS_02,
+		GLASS_03,
+		GLASS_04,
+		GLASS_05,
+		GLASS_06,
+		GLASS_07,
+		GLASS_08,
+		GLASS_09,
+		GLASS_10,
+		GLASS_11,
+		GLASS_12,
+		GLASS_13,
+		GLASS_14,
+		GLASS_15,
+		GLASS_16,
+		GLASS_17,
+		GLASS_18,
+		GLASS_19,
+		GLASS_20,
+		// Menu
 		GEO_LOGO,
 		// Misc
 		GEO_AXES,
@@ -54,7 +76,8 @@ protected:
 		GEO_WALL,
 		// GameObjects
 		GEO_PISTOL,
-		GEO_KARAMBIT,
+		GEO_BULLET,
+		GEO_TRACER,
 		// Player
 		GEO_HANDS,
 		GEO_ENEMY_STAND,
