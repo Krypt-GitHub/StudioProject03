@@ -162,6 +162,9 @@
     <ClCompile Include="StudioProject\Level1Scene.cpp">
       <Filter>StudioProject\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -298,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="StudioProject\Level1Scene.h">
       <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEngine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

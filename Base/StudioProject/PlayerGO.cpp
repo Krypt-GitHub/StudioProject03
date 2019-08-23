@@ -310,18 +310,14 @@ bool PlayerGO::contrain(Vector3 futurePos, Collider box)
 	box.SetScale(Vector3(0, 0,0));
 	for (auto go : gl.m_goList)
 	{
-		if (go->type != GameObject::GO_WALL)
-			continue;
-		if (box.GetCollision(go->obb))
+		if (go->type == GameObject::GO_WALL || go->type == GameObject::GO_GLASS)
 		{
-			std::cout << "collidered" << std::endl;
-			return true;
-		}
-		else
-		{
-			std::cout << "not collidered" << std::endl;
 
 		}
+		else
+			continue;
+		if (box.GetCollision(go->obb))
+			return true;
 	}
 	return false;
 }
