@@ -314,13 +314,8 @@ bool PlayerGO::contrain(Vector3 futurePos, Collider box)
 			continue;
 		if (box.GetCollision(go->obb))
 		{
-			std::cout << "collidered" << std::endl;
+			//std::cout << "collidered" << std::endl;
 			return true;
-		}
-		else
-		{
-			std::cout << "not collidered" << std::endl;
-
 		}
 	}
 	return false;

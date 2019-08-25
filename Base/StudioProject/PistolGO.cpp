@@ -40,7 +40,7 @@ void PistolGO::Update(double dt)
 		if (Application::GetMouseDown(0) && !m_bLBDown)
 		{
 			GameObject *go = gl.FetchGO();
-			go->type = GameObject::GO_BULLET;
+			go->type = GameObject::GO_PBULLET;
 			go->SetActive(true);
 			go->m_bGravity = false;
 			
