@@ -168,6 +168,9 @@
     <ClCompile Include="StudioProject\PathNode.cpp">
       <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="StudioProject\PAList.cpp">
+      <Filter>StudioProject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="StudioProject\PathNode.h">
       <Filter>StudioProject\AI\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="StudioProject\PAList.h">
+      <Filter>StudioProject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

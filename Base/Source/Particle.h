@@ -1,8 +1,14 @@
-#pragma once
-#include "Light.h"
+#ifndef PARTICLE_H
+#define PARTICLE_H
 
-struct Particle
+#include "Vector3.h"
+
+class Particle
 {
+private:
+	bool active;
+	float life;
+public:
 	enum PARTICLE_TYPE
 	{
 		PA_NONE = 0,
@@ -16,10 +22,14 @@ struct Particle
 	Vector3 pos;
 	Vector3 vel;
 	Vector3 scale;
-	bool active;
-	float life;
 
 	Particle(PARTICLE_TYPE typeValue = PA_RAINDROP);
 	~Particle();
+
+	void SetActive(bool _active);
+	bool GetActive();
+	void SetLifeSpan(float _life);
+	float GetLifeSpan();
 };
 
+#endif

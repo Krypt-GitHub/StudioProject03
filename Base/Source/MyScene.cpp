@@ -261,7 +261,7 @@ Particle * MyScene::FetchPA()
 	for (std::vector<Particle *>::iterator it = m_paList.begin(); it != m_paList.end(); ++it)
 	{
 		Particle *pa = (Particle *)*it;
-		if (!pa->active)
+		if (!pa->GetActive())
 		{
 			return pa;
 		}
@@ -392,7 +392,7 @@ void MyScene::Update(double dt)
 		for (int g = 0; g < 3; g++)
 		{
 			Particle* snow = FetchPA();
-			snow->active = true;
+			snow->SetActive(true);
 			snow->type = Particle::PA_SNOW;
 			snow->scale = Vector3(0.1f, 0.1f, 0.1f);
 			snow->pos = Vector3(rand() % 800 - 400, rand() % 600 + 550, rand() % 800 - 400);
@@ -406,7 +406,7 @@ void MyScene::Update(double dt)
 		for (int g = 0; g < 5; g++)
 		{
 			Particle* raindrop = FetchPA();
-			raindrop->active = true;
+			raindrop->SetActive(true);
 			raindrop->type = Particle::PA_RAINDROP;
 			raindrop->scale = Vector3(0.1f, 0.1f, 0.1f);
 			raindrop->pos = Vector3(rand() % 800 - 400, rand() % 600 + 550, rand() % 800 - 400);
@@ -419,8 +419,8 @@ void MyScene::Update(double dt)
 	{
 		float size = rand() % 2 + 1;
 		Particle* smoke = FetchPA();
-		smoke->active = true;
-		smoke->life = size;
+		smoke->SetActive(true);
+		smoke->SetLifeSpan(size);
 		smoke->type = Particle::PA_SMOKE;
 		smoke->scale = Vector3(size, size, size);
 		smoke->pos = Vector3(rand() % 25 - 5, 170, rand() % 66 + 60);
@@ -431,13 +431,13 @@ void MyScene::Update(double dt)
 	for (std::vector<Particle *>::iterator it = m_paList.begin(); it != m_paList.end(); ++it)
 	{
 		Particle *pa = (Particle *)*it;
-		if (pa->active)
+		if (pa->GetActive())
 		{
 			if (pa->type == Particle::PA_SNOW)
 			{
 				if (pa->pos.y <= (350.f * ReadHeightMap(m_heightMap, pa->pos.x / 4000, pa->pos.z / 4000)))
 				{
-					pa->active = false;
+					pa->SetActive(false);
 				}
 				else
 				{
@@ -455,13 +455,13 @@ void MyScene::Update(double dt)
 					for (int x = 0; x < 4; x++)
 					{
 						Particle* splatter = FetchPA();
-						splatter->active = true;
+						splatter->SetActive(true);
 						splatter->type = Particle::PA_SPLATTER;
 						splatter->scale = Vector3(0.1f, 0.1f, 0.1f);
 						splatter->vel = Vector3(rand() % 200 - 100, rand() % 200, rand() % 200 - 100);
 						splatter->pos = Vector3(pa->pos.x, (350.f * ReadHeightMap(m_heightMap, pa->pos.x / 4000, pa->pos.z / 4000)) + 2.f, pa->pos.z);
 					}
-					pa->active = false;
+					pa->SetActive(false);
 				}
 				else
 				{
@@ -473,7 +473,7 @@ void MyScene::Update(double dt)
 			{
 				if (pa->pos.y <= (350.f * ReadHeightMap(m_heightMap, pa->pos.x / 4000, pa->pos.z / 4000)))
 				{
-					pa->active = false;
+					pa->SetActive(false);
 				}
 				else
 				{
@@ -484,13 +484,13 @@ void MyScene::Update(double dt)
 
 			if (pa->type == Particle::PA_SMOKE)
 			{
-				if (pa->life <= 0)
+				if (pa->GetLifeSpan() <= 0)
 				{
-					pa->active = false;
+					pa->SetActive(false);
 				}
 				else
 				{
-					pa->life -= 0.4 * dt;
+					//pa->SetLifeSpan( -= 0.4 * dt);
 					pa->pos.x += (rand() % 5 - 7) * dt;
 					pa->pos.y += 20 * dt;
 					pa->pos.z += (rand() % 5 + 5) * dt;
@@ -917,7 +917,7 @@ void MyScene::RenderPA(Particle * pa)
 		modelStack.PushMatrix();
 		modelStack.Translate(pa->pos.x, pa->pos.y, pa->pos.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(camera.position.x - pa->pos.x, camera.position.z - pa->pos.z)), 0, 1, 0);
-		modelStack.Scale(pa->life, pa->life, pa->life);
+		modelStack.Scale(pa->GetLifeSpan(), pa->GetLifeSpan(), pa->GetLifeSpan());
 		RenderMesh(meshList[GEO_SMOKEPA], false, false, false);
 		modelStack.PopMatrix();
 		break;
