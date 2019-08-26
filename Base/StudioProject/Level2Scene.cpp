@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "Level2Scene.h"
 #include "GL\glew.h"
 
 #include "../Source/shader.hpp"
@@ -13,16 +13,16 @@
 #include "../Ray.h"
 
 
-GameScene::GameScene()
+Level2Scene::Level2Scene()
 {
 	srand(time(NULL));
 }
 
-GameScene::~GameScene()
+Level2Scene::~Level2Scene()
 {
 }
 
-void GameScene::Init()
+void Level2Scene::Init()
 {
 	SceneBase::Init();
 
@@ -33,16 +33,39 @@ void GameScene::Init()
 	}
 
 	// GAME OBJECT CREATION
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 100), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 23, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-15, 19, -100), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(15, 19, -100), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(100, 5, 300), 0, Vector3(50, 2.5, 150), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -165), Vector3(100, 80, 30), 0, Vector3(50, 40, 15), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 165), Vector3(100, 80, 30), 180, Vector3(50, 40, 15), 180, Vector3(0, 1, 0));
-	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(65, 40, 0), Vector3(300, 80, 30), 90, Vector3(150, 40, 15), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-65, 40, 0), Vector3(300, 80, 30), -90, Vector3(150, 40, 15), -90, Vector3(0, 1, 0));
-	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 95, 0), Vector3(100, 300, 30), 90, Vector3(50, 150, 15), 90, Vector3(1, 0, 0));
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 1), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 0), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(450, 5, 450), 0, Vector3(225, 2.5, 225), 0, Vector3(0, 1, 0));
+	int pillarX = 112.5;
+	for (int i = 0; i < 4; ++i)
+	{
+		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		goFactory.CreateGO("Pillar3", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar4", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		pillarX -= 75;
+	}
+	int pillarZ = 37.5;
+	for (int i = 0; i < 2; ++i)
+	{
+		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(112.5 , 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		pillarZ -= 75;
+	}
+	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -245), Vector3(450, 80, 40), 0, Vector3(225, 40, 20), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 245), Vector3(450, 80, 40), 180, Vector3(225, 40, 20), 180, Vector3(0, 1, 0));
+	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(245, 40, 0), Vector3(450, 80, 40), 90, Vector3(225, 40, 20), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-245, 40, 0), Vector3(450, 80, 40), -90, Vector3(225, 40, 20), -90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 90, 0), Vector3(450, 450, 40), 90, Vector3(225, 225, 20), 90, Vector3(1, 0, 0));
 
 	// INIT GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -96,16 +119,16 @@ void GameScene::Init()
 	m_parameters[U_ENABLEREFLECT] = glGetUniformLocation(m_programID, "enableReflect");
 	m_parameters[U_CAMERAPOS] = glGetUniformLocation(m_programID, "cameraPos");
 
-	PhysicsEngine.SetEnemyCount(2);
+	PhysicsEngine.SetEnemyCount(3);
 }
 
-void GameScene::Update(double dt)
+void Level2Scene::Update(double dt)
 {
 	SceneBase::Update(dt);
-	PhysicsEngine.UpdateGO(dt, Player);
+	PhysicsEngine.UpdateGO(dt);
 
 	if (PhysicsEngine.GetEnemyCount() == 0)
-		SceneManager::SetSceneID(2);
+		SceneManager::SetSceneID(10);
 
 	if (cameraID == 0)
 	{
@@ -145,6 +168,7 @@ void GameScene::Update(double dt)
 		}
 	}
 
+
 	fps = (float)(1.f / dt);
 
 	static bool m_bRBDown = false;
@@ -163,10 +187,10 @@ void GameScene::Update(double dt)
 		m_fchRotate -= 10 * dt;
 
 	if (Application::GetKeyDown('0'))
-		SceneManager::SetSceneID(2);
+		SceneManager::SetSceneID(10); // 3
 }
 
-void GameScene::RenderWorld()
+void Level2Scene::RenderWorld()
 {
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
 	{
@@ -178,7 +202,7 @@ void GameScene::RenderWorld()
 	}
 }
 
-void GameScene::RenderWater()
+void Level2Scene::RenderWater()
 {
 	modelStack.PushMatrix();
 	modelStack.Translate(-300, 70, -630);
@@ -189,7 +213,7 @@ void GameScene::RenderWater()
 	modelStack.PopMatrix();
 }
 
-void GameScene::RenderPassGPass()
+void Level2Scene::RenderPassGPass()
 {
 	m_renderPass = RENDER_PASS_PRE;
 	m_lightDepthFBO.BindForWriting();
@@ -209,7 +233,7 @@ void GameScene::RenderPassGPass()
 	RenderWorld();
 }
 
-void GameScene::RenderPassMain()
+void Level2Scene::RenderPassMain()
 {
 	m_renderPass = RENDER_PASS_MAIN;
 
@@ -289,7 +313,7 @@ void GameScene::RenderPassMain()
 	//modelStack.PopMatrix();
 }
 
-void GameScene::InitGO(GameObject * go)
+void Level2Scene::InitGO(GameObject * go)
 {
 	switch (go->type)
 	{
@@ -305,7 +329,7 @@ void GameScene::InitGO(GameObject * go)
 	}
 }
 
-void GameScene::UpdateGO(GameObject * go, double dt)
+void Level2Scene::UpdateGO(GameObject * go, double dt)
 {
 	switch (go->type)
 	{
@@ -319,10 +343,20 @@ void GameScene::UpdateGO(GameObject * go, double dt)
 	}
 }
 
-void GameScene::RenderGO(GameObject* go)
+void Level2Scene::RenderGO(GameObject* go)
 {
 	switch (go->type)
 	{
+	case GameObject::GLASS_01:
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(57.5, 40, 0);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(15, 3.5, 1);
+		RenderMesh(meshList[GLASS_01], false, false, false);
+		modelStack.PopMatrix();
+	}
+
 	case GameObject::GO_PISTOL:
 		if (static_cast<PistolGO*>(go)->GetPickUp())
 		{
@@ -367,32 +401,7 @@ void GameScene::RenderGO(GameObject* go)
 			//modelStack.PopMatrix();
 		}
 		break;
-	case GameObject::GO_PBULLET:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
-		modelStack.Rotate(Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 1, 0);
-		modelStack.Rotate(Math::RadianToDegree(-atan2(Player->camera.target.y - Player->camera.position.y, Vector3(Player->camera.target.x - Player->camera.position.x, 0, Player->camera.target.z - Player->camera.position.z).Length())), 1, 0, 0);
-		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-		RenderMesh(meshList[GEO_BULLET], false, false, false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
-		modelStack.Rotate(90, 1, 0, 0);
-		modelStack.Rotate(-Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 0, 1);
-		modelStack.Rotate(Math::RadianToDegree(-atan2(Player->camera.target.y - Player->camera.position.y, Vector3(Player->camera.target.x - Player->camera.position.x, 0, Player->camera.target.z - Player->camera.position.z).Length())), 1, 0, 0);
-		modelStack.Scale(0.1, 5, 0.1);
-		modelStack.PushMatrix();
-		modelStack.Translate(0, -0.6, 0);
-		RenderMesh(meshList[GEO_TRACER], false, false, false);
-		modelStack.PopMatrix();
-		modelStack.PopMatrix();
-		//modelStack.PushMatrix();
-		//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-		//modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-		//RenderMesh(meshList[GEO_CUBE], false, false, false);
-		//modelStack.PopMatrix();
-		break;
-	case GameObject::GO_EBULLET:
+	case GameObject::GO_BULLET:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 1, 0);
@@ -408,6 +417,11 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Translate(0, -0.6, 0);
 		RenderMesh(meshList[GEO_TRACER], false, false, false);
 		modelStack.PopMatrix();
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+		modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+		RenderMesh(meshList[GEO_CUBE], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_PLAYER:
@@ -432,11 +446,11 @@ void GameScene::RenderGO(GameObject* go)
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
 			modelStack.PopMatrix();
-			//modelStack.PushMatrix();
-			//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-			//modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-			//RenderMesh(meshList[GEO_CUBE], false, false, false);
-			//modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+			modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+			RenderMesh(meshList[GEO_CUBE], false, false, false);
+			modelStack.PopMatrix();
 		}
 		else if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::WALK)
 		{
@@ -497,7 +511,7 @@ void GameScene::RenderGO(GameObject* go)
 	}
 }
 
-void GameScene::Render()
+void Level2Scene::Render()
 {
 	RenderPassGPass();
 
@@ -510,7 +524,7 @@ void GameScene::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
 }
 
-void GameScene::Exit()
+void Level2Scene::Exit()
 {
 	SceneBase::Exit();
 	gl.Exit();

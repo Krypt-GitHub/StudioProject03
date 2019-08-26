@@ -107,7 +107,7 @@ void MenuScene::Update(double dt)
 	fps = (float)(1.f / dt);
 
 	if (Application::GetKeyDown('0'))
-		SceneManager::SetSceneID(10);
+		SceneManager::SetSceneID(1);
 	
 	//m_v3mouseRayCast = Vector3
 	

@@ -6,6 +6,8 @@
 
 class Physics
 {
+private:
+	int EnemyCount;
 public:
 	GOList &gl = GOList::GetInstance();
 
@@ -14,6 +16,9 @@ public:
 
 	void UpdateGO(double dt, PlayerGO* _player);
 	void CollisionResponse(GameObject *go1, GameObject *go2);
+
+	int GetEnemyCount();
+	void SetEnemyCount(int _count);
 };
 
 #endif

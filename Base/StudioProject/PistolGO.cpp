@@ -78,20 +78,6 @@ void PistolGO::Update(double dt)
 		{
 			m_bLBDown = false;
 		}
-
-		if (Application::GetMouseDown(1) && !m_bRBDown)
-		{
-			m_bisPickUp = false;
-
-			// Changing it back to a dynamic object
-			SetStatic(false);
-
-			m_bLBDown = true;
-		}
-		else if (!Application::GetMouseDown(1) && m_bRBDown)
-		{
-			m_bLBDown = false;
-		}
 	}
 
 	//std::cout << m_v3vel << std::endl;

@@ -111,6 +111,8 @@ void Level1Scene::Init()
 
 	m_parameters[U_ENABLEREFLECT] = glGetUniformLocation(m_programID, "enableReflect");
 	m_parameters[U_CAMERAPOS] = glGetUniformLocation(m_programID, "cameraPos");
+
+	PhysicsEngine.SetEnemyCount(3);
 }
 
 void Level1Scene::Update(double dt)
@@ -119,6 +121,9 @@ void Level1Scene::Update(double dt)
 
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt, Player);
+
+	if (PhysicsEngine.GetEnemyCount() == 0)
+		SceneManager::SetSceneID(10);
 
 	if (cameraID == 0)
 	{
@@ -140,8 +145,11 @@ void Level1Scene::Update(double dt)
 		if (ray->IntersectionOBB(go->obb) && Application::GetKeyDown('E') && !static_cast<PistolGO*>(go)->GetPickUp() && Player->gun == nullptr)
 		{
 			static_cast<PistolGO*>(go)->SetPickUp(true);
-			Player->gun = static_cast<PistolGO*>(go);
 			static_cast<PistolGO*>(go)->attachedGO = Player;
+			Player->gun = static_cast<PistolGO*>(go);
+			Player->gun->obb.isEnabled = false;
+			Player->gun->SetStatic(true);
+
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
@@ -175,7 +183,7 @@ void Level1Scene::Update(double dt)
 		m_fchRotate -= 10 * dt;
 
 	if (Application::GetKeyDown('0'))
-		SceneManager::SetSceneID(1);
+		SceneManager::SetSceneID(10); // 3
 }
 
 void Level1Scene::RenderWorld()

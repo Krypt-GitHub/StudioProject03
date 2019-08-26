@@ -101,7 +101,7 @@ void EnemyGO::Init()
 
 	selector5->addChild(sequence4);
 	selector5->addChild(ChasePlayerNode);
-	
+
 	sequence4->addChild(SearchGunNode);
 
 	//selector5->addChild(Chase);
@@ -113,7 +113,7 @@ void EnemyGO::Init()
 
 	m_bdoOnce = false;
 	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
-	
+
 	GunOnHand = NULL;
 }
 
@@ -136,7 +136,7 @@ bool EnemyGO::Constrain(Vector3 futurepos, Collider box, double dt)
 				return true;
 			}
 		}
-		
+
 	}
 	return false;
 }
@@ -158,7 +158,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
 		else
 			transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
-	}	
+	}
 	if (ChasePlayerNode->GetApproachBool())
 	{
 		m_v3dir = (_player->transform.position - transform.position).Normalized();
@@ -183,9 +183,9 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 		go->m_v3dir = m_v3dir;
 		go->m_v3vel = go->m_v3dir * 200.f;
 
-		go->obb.pos = transform.position;
 		go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
 		go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
+		go->obb.pos = go->transform.position;
 		go->obb.RotateAxis(0, Vector3(0, 1, 0));
 		m_fROF = Math::RandFloatMinMax(0.f, 1.f);
 	}

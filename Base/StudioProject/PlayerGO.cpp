@@ -166,9 +166,19 @@ void PlayerGO::Update(double dt)
 		if (Application::GetMouseDown(1) && !m_bRBDown)
 		{
 			GameObject* pistol = gun;
-			gun->m_v3vel.SetZero();
+			gun->obb.isEnabled = true;
+
 			//Throwing physics
-			gun->m_v3vel = m_v3dir * 200.f;
+			gun->transform.position = transform.position;
+			gun->transform.position.y += 15;
+			gun->m_v3vel.SetZero();
+			gun->m_v3vel = m_v3dir * 300.f;
+			gun->m_v3vel.y += 50.f;
+
+			// Changing it back to a dynamic object
+			gun->SetStatic(false);
+
+			gun->SetPickUp(false);
 			gun = nullptr;
 
 			m_bRBDown = true;

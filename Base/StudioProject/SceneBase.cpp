@@ -181,7 +181,7 @@ void SceneBase::Init()
 	meshList[GEO_TRACER] = MeshBuilder::GenerateCylinder("tracer", Color(1, 0, 0), 10, 10, 1, 1);
 
 	// Scene Objects
-	if (SceneManager::GetSceneID() == 0 || SceneManager::GetSceneID() == 2)
+	if (SceneManager::GetSceneID() == 1 || SceneManager::GetSceneID() == 2 || SceneManager::GetSceneID() == 3)
 	{
 		meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
 		meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
@@ -213,7 +213,7 @@ void SceneBase::Init()
 		meshList[GEO_ENEMY_SHOOT02]->textureArray[0] = LoadTGA("Image//enemy.tga");
 		meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
 	}
-	else if (SceneManager::GetSceneID() == 1)
+	else if (SceneManager::GetSceneID() == 0)
 	{
 		meshList[GEO_PLAY] = MeshBuilder::GenerateOBJ("menu_play", "OBJ//menu_play.obj");
 		meshList[GEO_LOGO] = MeshBuilder::GenerateQuad("menu logo", Color(1, 1, 1), 1.f);
