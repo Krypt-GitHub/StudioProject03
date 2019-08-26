@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include"../Common/Source/MatrixStack.h"
-#include "../Base/StudioProject/SceneBase.h"
+
 #define MAXPARTICLES  10000
-class ParticleEngine : public SceneBase
+class ParticleEngine 
 {
 	int m_particleCount = 0;
 	Particle* particle = nullptr;
@@ -19,7 +19,6 @@ public:
 
 	ParticleEngine()
 	{
-		SceneBase::Init();
 	};
 	~ParticleEngine() {};
 	
