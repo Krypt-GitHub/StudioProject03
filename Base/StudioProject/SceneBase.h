@@ -34,6 +34,7 @@ protected:
 		RENDER_PASS_PRE,
 		RENDER_PASS_MAIN,
 	};
+public:
 	enum GEOMETRY_TYPE
 	{
 		// Menu
@@ -95,6 +96,7 @@ protected:
 		GEO_LIGHT_DEPTH_QUAD,
 		NUM_GEOMETRY,
 	};
+protected:
 	enum UNIFORM_TYPE
 	{
 		U_MVP = 0,
@@ -174,8 +176,9 @@ protected:
 
 	unsigned m_vertexArrayID;
 	unsigned cubeVAO;
+	public:
 	Mesh* meshList[NUM_GEOMETRY];
-
+	protected:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 

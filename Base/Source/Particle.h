@@ -24,9 +24,10 @@ struct Particle
 	Vector3 vel;
 	Vector3 scale;
 	bool active;
+	bool gotGravity;
 	float life;
 
-	Particle(PARTICLE_TYPE typeValue = PA_RAINDROP);
+	Particle(PARTICLE_TYPE typeValue = PA_NONE);
 	~Particle();
 };
 
