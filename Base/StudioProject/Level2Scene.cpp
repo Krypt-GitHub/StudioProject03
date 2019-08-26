@@ -33,17 +33,39 @@ void Level2Scene::Init()
 	}
 
 	// GAME OBJECT CREATION
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 350), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	//goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 1), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 0), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
 	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(600, 5, 600), 0, Vector3(250, 2.5, 250), 0, Vector3(0, 1, 0));
-	//goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -407.5), Vector3(120, 80, 15), 0, Vector3(60, 40, 7.5), 0, Vector3(0, 1, 0));
-	//goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 407.5), Vector3(120, 80, 15), 180, Vector3(60, 40, 7.5), 180, Vector3(0, 1, 0));
-	//goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(52.5, 40, 0), Vector3(800, 80, 15), 90, Vector3(400, 40, 7.5), 90, Vector3(0, 1, 0));
-	//goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-52.5, 40, 0), Vector3(800, 80, 15), -90, Vector3(400, 40, 7.5), -90, Vector3(0, 1, 0));
-	//goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 87.5, 0), Vector3(120, 800, 15), 90, Vector3(60, 400, 7.5), 90, Vector3(1, 0, 0));
+	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(450, 5, 450), 0, Vector3(225, 2.5, 225), 0, Vector3(0, 1, 0));
+	int pillarX = 112.5;
+	for (int i = 0; i < 4; ++i)
+	{
+		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		goFactory.CreateGO("Pillar3", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar4", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		pillarX -= 75;
+	}
+	int pillarZ = 37.5;
+	for (int i = 0; i < 2; ++i)
+	{
+		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(112.5 , 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+
+		pillarZ -= 75;
+	}
+	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -245), Vector3(450, 80, 40), 0, Vector3(225, 40, 20), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 245), Vector3(450, 80, 40), 180, Vector3(225, 40, 20), 180, Vector3(0, 1, 0));
+	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(245, 40, 0), Vector3(450, 80, 40), 90, Vector3(225, 40, 20), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-245, 40, 0), Vector3(450, 80, 40), -90, Vector3(225, 40, 20), -90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 90, 0), Vector3(450, 450, 40), 90, Vector3(225, 225, 20), 90, Vector3(1, 0, 0));
 
 	// INIT GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
