@@ -148,19 +148,15 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				break;
 			}
 			break;
-		case GameObject::GO_BULLET:
+		case GameObject::GO_PBULLET:
 			switch (go2->type)
 			{
 			case GameObject::GO_PLAYER:
 				go1->SetActive(false);
-				//Game over code
-				//Pseudo - fall over, restart scene
-				SceneManager::SetSceneID(0);
 				break;
 			case GameObject::GO_ENEMY:
-				go1->SetActive(false);
-				go2->SetActive(false);
-				--EnemyCount;
+				//go1->SetActive(false);
+				//go2->SetActive(false);
 				break;
 			case GameObject::GO_WALL:
 				go1->SetActive(false);
@@ -169,44 +165,24 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				go1->SetActive(false);
 				break;
 			}
-			go1->m_v3vel.y += 0.981;
 			break;
-		}
-		break;
-	case GameObject::GO_PBULLET:
-		switch (go2->type)
-		{
-		case GameObject::GO_PLAYER:
-			go1->SetActive(false);
-			break;
-		case GameObject::GO_ENEMY:
-			//go1->SetActive(false);
-			//go2->SetActive(false);
-			break;
-		case GameObject::GO_WALL:
-			go1->SetActive(false);
-			break;
-		case GameObject::GO_FLOOR:
-			go1->SetActive(false);
-			break;
-		}
-		break;
-	case GameObject::GO_EBULLET:
-		switch (go2->type)
-		{
-		case GameObject::GO_PLAYER:
-			go1->SetActive(false);
-			break;
-		case GameObject::GO_ENEMY:
+		case GameObject::GO_EBULLET:
 			switch (go2->type)
 			{
-			case GameObject::GO_FLOOR:
-				go1->m_bGravity = false;
+			case GameObject::GO_PLAYER:
+				go1->SetActive(false);
+				break;
+			case GameObject::GO_ENEMY:
+				switch (go2->type)
+				{
+				case GameObject::GO_FLOOR:
+					go1->m_bGravity = false;
+					break;
+				}
+				break;
+			default:
 				break;
 			}
-			break;
-		default:
-			break;
 		}
 	}
 }

@@ -125,7 +125,7 @@ void Level2Scene::Init()
 void Level2Scene::Update(double dt)
 {
 	SceneBase::Update(dt);
-	PhysicsEngine.UpdateGO(dt);
+	PhysicsEngine.UpdateGO(dt, Player);
 
 	if (PhysicsEngine.GetEnemyCount() == 0)
 		SceneManager::SetSceneID(10);
@@ -401,7 +401,27 @@ void Level2Scene::RenderGO(GameObject* go)
 			//modelStack.PopMatrix();
 		}
 		break;
-	case GameObject::GO_BULLET:
+	case GameObject::GO_PBULLET:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+		modelStack.Rotate(Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 1, 0);
+		modelStack.Rotate(Math::RadianToDegree(-atan2(go->m_v3dir.y, Vector3(go->m_v3dir.x, 0, go->m_v3dir.z).Length())), 1, 0, 0);
+		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+		RenderMesh(meshList[GEO_BULLET], false, false, false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+		modelStack.Rotate(90, 1, 0, 0);
+		modelStack.Rotate(-Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 0, 1);
+		modelStack.Rotate(Math::RadianToDegree(-atan2(go->m_v3dir.y, Vector3(go->m_v3dir.x, 0, go->m_v3dir.z).Length())), 1, 0, 0);
+		modelStack.Scale(0.1, 5, 0.1);
+		modelStack.PushMatrix();
+		modelStack.Translate(0, -0.6, 0);
+		RenderMesh(meshList[GEO_TRACER], false, false, false);
+		modelStack.PopMatrix();
+		modelStack.PopMatrix();
+		break;
+	case GameObject::GO_EBULLET:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->m_v3dir.x, go->m_v3dir.z)), 0, 1, 0);
@@ -417,11 +437,6 @@ void Level2Scene::RenderGO(GameObject* go)
 		modelStack.Translate(0, -0.6, 0);
 		RenderMesh(meshList[GEO_TRACER], false, false, false);
 		modelStack.PopMatrix();
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-		modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-		RenderMesh(meshList[GEO_CUBE], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_PLAYER:
