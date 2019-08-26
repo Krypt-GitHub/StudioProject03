@@ -27,9 +27,10 @@ public:
 	Vector3 pos;
 	Vector3 vel;
 	Vector3 scale;
-	bool gotGravity;
+
 	bool active;
 	float life;
+	bool gotGravity;
 
 	Particle(PARTICLE_TYPE typeValue = PA_RAINDROP);
 	~Particle();
