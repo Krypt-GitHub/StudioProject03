@@ -1,9 +1,7 @@
-#ifndef PARTICLE_H
-#define PARTICLE_H
+#pragma once
+#include "Light.h"
 
-#include "Vector3.h"
-
-class Particle
+struct Particle
 {
 private:
 public:
@@ -20,13 +18,15 @@ public:
 		PA_WALKING,
 		PA_ENEMYSHATTER,
 		//PA_GLASSSHATTER,
-		
+	
 		PA_TOTAL,
 	};
 	PARTICLE_TYPE type;
 	Vector3 pos;
 	Vector3 vel;
 	Vector3 scale;
+	bool active;
+	float life;
 
 	bool active;
 	float life;
@@ -34,11 +34,5 @@ public:
 
 	Particle(PARTICLE_TYPE typeValue = PA_RAINDROP);
 	~Particle();
-
-	void SetActive(bool _active);
-	bool GetActive();
-	void SetLifeSpan(float _life);
-	float GetLifeSpan();
 };
 
-#endif
