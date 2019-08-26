@@ -2,6 +2,7 @@
 #include "../Source/Application.h"
 #include "GOList.h"
 #include "../Ray.h"
+#include "../ParticleEngine.h"
 
 PistolGO::PistolGO()
 {
@@ -66,7 +67,11 @@ void PistolGO::Update(double dt)
 			go->transform.scale.Set(0.3, 0.3, 0.3);
 			go->m_v3dir = m_v3storeDir;
 			go->m_v3vel = m_v3storeDir * 200.f;
+			for (int i = 0; i < 4; ++i)
+			{
 
+			ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_GUNSMOKE);
+			}
 			go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
 			go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 			go->obb.pos = transform.position;
