@@ -10,8 +10,6 @@
 #include "LoadHmap.h"
 #include "DepthFBO.h"
 #include "../StudioProject/FirstPersonCamera.h"
-#include "Light.h"
-
 
 class MyScene : public Scene
 {
