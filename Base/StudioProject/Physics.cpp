@@ -1,6 +1,5 @@
 #include "Physics.h"
 #include "../Source/Application.h"
-#include "PlayerGO.h"
 #include "EnemyGO.h"
 
 Physics::Physics()
@@ -11,7 +10,7 @@ Physics::~Physics()
 {
 }
 
-void Physics::UpdateGO(double dt)
+void Physics::UpdateGO(double dt, PlayerGO* _player)
 {
 	float delta = dt;
 
@@ -27,7 +26,7 @@ void Physics::UpdateGO(double dt)
 		{
 			if (go1->type == GameObject::GO_ENEMY)
 			{
-				static_cast<EnemyGO*>(go1)->Update(delta);
+				static_cast<EnemyGO*>(go1)->Update(delta, _player);
 			}
 
 			//Resetting their velocity if they are static
@@ -124,8 +123,10 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 		}
 			break;
 		case GameObject::GO_ENEMY:
-			go1->SetActive(false);
-			go2->SetActive(false);
+			static_cast<EnemyGO*>(go2)->GunOnHand = static_cast<PistolGO*>(go1);
+			static_cast<PistolGO*>(go1)->attachedGO = go2;
+			//go1->SetActive(false);
+			//go2->SetActive(false);
 			break;
 		case GameObject::GO_FLOOR:
 			if (go1->m_v3vel.y <= 0)
@@ -137,12 +138,29 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			break;
 		}
 		break;
-	case GameObject::GO_BULLET:
+	case GameObject::GO_PBULLET:
 		switch (go2->type)
 		{
 		case GameObject::GO_PLAYER:
 			go1->SetActive(false);
-			go2->SetActive(false);
+			break;
+		case GameObject::GO_ENEMY:
+			//go1->SetActive(false);
+			//go2->SetActive(false);
+			break;
+		case GameObject::GO_WALL:
+			go1->SetActive(false);
+			break;
+		case GameObject::GO_FLOOR:
+			go1->SetActive(false);
+			break;
+		}
+		break;
+	case GameObject::GO_EBULLET:
+		switch (go2->type)
+		{
+		case GameObject::GO_PLAYER:
+			go1->SetActive(false);
 			break;
 		case GameObject::GO_ENEMY:
 			//go1->SetActive(false);

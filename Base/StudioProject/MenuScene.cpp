@@ -318,18 +318,6 @@ void MenuScene::RenderGO(GameObject* go)
 		RenderMesh(meshList[GEO_CUBE], false, false, false);
 		modelStack.PopMatrix();
 		break;
-	case GameObject::GO_BULLET:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
-		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-		RenderMesh(meshList[GEO_LIGHTBALL], false, false, false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-		modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-		RenderMesh(meshList[GEO_CUBE], false, false, false);
-		modelStack.PopMatrix();
-		break;
 	case GameObject::GO_FLOOR:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);

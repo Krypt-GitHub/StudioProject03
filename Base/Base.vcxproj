@@ -18,7 +18,6 @@
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
-    <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="Physics\CharacterController.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
     <ClCompile Include="Physics\Rigidbody.cpp" />
@@ -46,6 +45,8 @@
     <ClCompile Include="StudioProject\Level1Scene.cpp" />
     <ClCompile Include="StudioProject\MenuScene.cpp" />
     <ClCompile Include="StudioProject\MouseRayCast.cpp" />
+    <ClCompile Include="StudioProject\PAList.cpp" />
+    <ClCompile Include="StudioProject\PathNode.cpp" />
     <ClCompile Include="StudioProject\Physics.cpp" />
     <ClCompile Include="StudioProject\PistolGO.cpp" />
     <ClCompile Include="StudioProject\PlayerGO.cpp" />
@@ -62,7 +63,6 @@
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
-    <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="Physics\CharacterController.h" />
     <ClInclude Include="Physics\Collider.h" />
     <ClInclude Include="Physics\Rigidbody.h" />
@@ -85,7 +85,7 @@
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="StudioProject\AIBehaviour.h" />
-    <ClInclude Include="StudioProject\AINode.h" />
+    <ClInclude Include="StudioProject\BehaviourNode.h" />
     <ClInclude Include="StudioProject\EnemyGO.h" />
     <ClInclude Include="StudioProject\FirstPersonCamera.h" />
     <ClInclude Include="StudioProject\GameScene.h" />
@@ -94,6 +94,8 @@
     <ClInclude Include="StudioProject\Level1Scene.h" />
     <ClInclude Include="StudioProject\MenuScene.h" />
     <ClInclude Include="StudioProject\MouseRayCast.h" />
+    <ClInclude Include="StudioProject\PAList.h" />
+    <ClInclude Include="StudioProject\PathNode.h" />
     <ClInclude Include="StudioProject\Physics.h" />
     <ClInclude Include="StudioProject\PistolGO.h" />
     <ClInclude Include="StudioProject\PlayerGO.h" />

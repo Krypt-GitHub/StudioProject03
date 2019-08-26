@@ -29,8 +29,8 @@ void PistolGO::Init()
 
 void PistolGO::Update(double dt)
 {
-	m_v3storeDir = gl.FetchGO(GameObject::GO_PLAYER)->m_v3dir;
-	m_v3storePos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
+	Vector3 m_v3storeDir = gl.FetchGO(GameObject::GO_PLAYER)->m_v3dir;
+	Vector3 m_v3storePos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
 
 	static bool m_bLBDown = false;
 	static bool m_bRBDown = false;
@@ -40,7 +40,7 @@ void PistolGO::Update(double dt)
 		if (Application::GetMouseDown(0) && !m_bLBDown)
 		{
 			GameObject *go = gl.FetchGO();
-			go->type = GameObject::GO_BULLET;
+			go->type = GameObject::GO_PBULLET;
 			go->SetActive(true);
 			go->m_bGravity = false;
 			

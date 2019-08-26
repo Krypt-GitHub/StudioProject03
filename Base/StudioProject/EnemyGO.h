@@ -5,6 +5,8 @@
 #include "GOList.h"
 #include "AIBehaviour.h"
 #include "PistolGO.h"
+#include "PlayerGO.h"
+
 
 class EnemyGO : public GameObject
 {
@@ -18,24 +20,34 @@ public:
 
 	GOList &gl = GOList::GetInstance();
 
-	Vector3 m_v3playerPos;
-
 	AITree::Sequence *root;
 	AITree::Sequence *sequence1;
-	AITree::Selector *selector1;
 	AITree::Sequence *sequence2;
+	AITree::Sequence *sequence3;
+	AITree::Sequence *sequence4;
+	AITree::Selector *selector1;
 	AITree::Selector *selector2;
+	AITree::Selector *selector3;
+	AITree::Selector *selector4;
+	AITree::Selector *selector5;
 
 	AIBehaviour *aiStatus;
-	CheckPlayerInRangeTask *checkRange;
-	ApproachPlayerTask *approachPlayer;
-	ShootPlayerTask *shootPlayer;
+	CheckPlayerInRangeTask *CheckRangeNode;
+	ApproachPlayerTask *ApproachPlayerNode;
+	ShootPlayerTask *ShootPlayerNode;
 	IdleTask *idle;
+	CheckIfGunHeldTask *ifGunHeld;
+	CheckOncomingBulletTask *DetectBulletNode;
+	ChasePlayerTask *ChasePlayerNode;
+	SearchNeabyGunTask *SearchGunNode;
 
-	PistolGO *gunHeld;
+	PistolGO *GunOnHand;
 
 	void Init();
-	void Update(double dt);
+	bool Constrain(Vector3 futurepos, Collider box, double dt);
+	void Update(double dt, PlayerGO * _player);
+	void SetGunOnHand(PistolGO * _gunOnHand);
+	bool Constrain(Vector3 futurepos, Collider box);
 };
 
 #endif

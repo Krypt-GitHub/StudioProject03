@@ -12,6 +12,8 @@ public:
 
 	void Init();
 	void Update(double dt);
+
+	GameObject *attachedGO;
 };
 
 #endif
