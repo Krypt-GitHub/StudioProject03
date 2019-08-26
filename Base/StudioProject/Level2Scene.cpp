@@ -120,10 +120,36 @@ void Level2Scene::Init()
 	m_parameters[U_CAMERAPOS] = glGetUniformLocation(m_programID, "cameraPos");
 
 	PhysicsEngine.SetEnemyCount(3);
+
+	for (int x = 0; x <= 90; x++)
+	{	
+		for (int z = 0; z <= 90; z++)
+		{
+			PathNode *pn = new PathNode;
+			int xAxis = 5;
+			int zAxis = 5;
+			pn->SetTransform(Vector3(-225 + xAxis * x, 2,-225 + zAxis * z), Vector3(5, 5, 5));
+			pn->SetOBB(Vector3(pn->transform.position.x, pn->transform.position.y, pn->transform.position.z), Vector3(2.5, 2.5, 2.5));
+
+			for (auto go : gl.m_goList)
+			{
+				if (go->GetActive() && go->type != GameObject::GO_PLAYER && go->type != GameObject::GO_ENEMY && go->type != GameObject::GO_PISTOL)
+				{
+					if (pn->obb.GetCollision(go->obb))
+						pn->m_bobstructed = true;
+					else
+						pn->m_bobstructed = false;
+				}
+			}
+			m_nodeList.push_back(pn);
+		}
+	}
 }
 
 void Level2Scene::Update(double dt)
 {
+	std::cout << camera[0].position << std::endl;
+
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt, Player);
 
@@ -306,6 +332,12 @@ void Level2Scene::RenderPassMain()
 	modelStack.PushMatrix();
 	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
 	modelStack.PopMatrix();
+
+	//for (auto pn : m_nodeList )
+	//{
+	//	RenderPN(pn);
+	//}
+
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
 	//modelStack.Scale(75, 75, 50);
@@ -343,20 +375,22 @@ void Level2Scene::UpdateGO(GameObject * go, double dt)
 	}
 }
 
+void Level2Scene::RenderPN(PathNode* pn)
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(pn->transform.position.x, pn->transform.position.y, pn->transform.position.z);
+	modelStack.Scale(pn->transform.scale.x, pn->transform.scale.y, pn->transform.scale.z);
+	if (pn->m_bobstructed)
+		RenderMesh(meshList[GEO_OBB_RED], false, false, false);
+	else
+		RenderMesh(meshList[GEO_OBB_GREEN], false, false, false);
+	modelStack.PopMatrix();
+}
+
 void Level2Scene::RenderGO(GameObject* go)
 {
 	switch (go->type)
 	{
-	case GameObject::GLASS_01:
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(57.5, 40, 0);
-		modelStack.Rotate(90, 0, 1, 0);
-		modelStack.Scale(15, 3.5, 1);
-		RenderMesh(meshList[GLASS_01], false, false, false);
-		modelStack.PopMatrix();
-	}
-
 	case GameObject::GO_PISTOL:
 		if (static_cast<PistolGO*>(go)->GetPickUp())
 		{
@@ -500,12 +534,6 @@ void Level2Scene::RenderGO(GameObject* go)
 		modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
 		RenderMesh(meshList[GEO_CUBE], false, false, false);
 		modelStack.PopMatrix();
-		//modelStack.PushMatrix();
-		//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-		//modelStack.Rotate(90, 1, 0, 0);
-		//modelStack.Scale(go->obb.Half_size.x*2, go->obb.Half_size.y*2, go->obb.Half_size.z*2);
-		//RenderMesh(meshList[GEO_CUBE], false, false, false);
-		//modelStack.PopMatrix();
 		break;
 	case GameObject::GO_WALL:
 		modelStack.PushMatrix();
@@ -514,6 +542,11 @@ void Level2Scene::RenderGO(GameObject* go)
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 		RenderMesh(meshList[GEO_WALL], false, false, false);
 		modelStack.PopMatrix();
+		//modelStack.PushMatrix();
+		//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+		//modelStack.Scale(go->obb.Half_size.x*2, go->obb.Half_size.y*2, go->obb.Half_size.z*2);
+		//RenderMesh(meshList[GEO_CUBE], false, false, false);
+		//modelStack.PopMatrix();
 		break;
 	case GameObject::GO_CEILING:
 		modelStack.PushMatrix();
@@ -541,6 +574,12 @@ void Level2Scene::Render()
 
 void Level2Scene::Exit()
 {
+	while (m_nodeList.size() > 0)
+	{
+		PathNode *pn = m_nodeList.back();
+		delete pn;
+		m_nodeList.pop_back();
+	}
 	SceneBase::Exit();
 	gl.Exit();
 }

@@ -162,9 +162,10 @@ void SceneBase::Init()
 		meshList[i] = NULL;
 	}
 
+	meshList[GEO_OBB_GREEN] = MeshBuilder::GenerateOBB("obb", Color(0, 1, 0), 1.f);
+	meshList[GEO_OBB_RED] = MeshBuilder::GenerateOBB("obb", Color(1, 0, 0), 1.f);
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 1), 1.f);
-	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0, 1, 0), 1.f);
-	meshList[GEO_CUBE]->textureArray[0] = LoadTGA("Image//obb.tga");
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 1, 0), 1.f);
 	// UI
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateQuad("crosshair", Color(1, 1, 1), 1.f);

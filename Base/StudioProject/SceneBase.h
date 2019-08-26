@@ -93,6 +93,8 @@ protected:
 		GEO_SPRITE_ANIMATION,
 		// Shadow 
 		GEO_LIGHT_DEPTH_QUAD,
+		GEO_OBB_GREEN,
+		GEO_OBB_RED,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE

@@ -21,6 +21,7 @@ public:
 	static Mesh* GenerateWater(const std::string &meshName, Color color, float lengthX, float lengthY);
 	static Mesh * GenerateQuad(const std::string &meshName, Color color, float length);
 	static Mesh* GenerateCube(const std::string &meshName, Color color, float length = 1.f);
+	static Mesh * GenerateOBB(const std::string & meshName, Color color, float length);
 	static Mesh* GenerateRing(const std::string &meshName, Color color, unsigned numSlice, float outerR = 1.f, float innerR = 0.f);
 	static Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.f);
 	static Mesh* GenerateCone(const std::string &meshName, Color color, unsigned numSlice, float radius, float height);

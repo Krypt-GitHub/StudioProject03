@@ -20,6 +20,8 @@
 #include "PlayerGO.h"
 #include "PistolGO.h"
 
+#include "PathNode.h"
+
 class Level2Scene : public SceneBase
 {
 public:
@@ -33,6 +35,7 @@ public:
 
 	void InitGO(GameObject* go);
 	void UpdateGO(GameObject* go, double dt);
+	void RenderPN(PathNode * pn);
 	void RenderGO(GameObject* go);
 
 	void RenderWorld();
@@ -46,6 +49,7 @@ private:
 	GOFactory goFactory;
 	PlayerGO *Player;
 	Physics PhysicsEngine;
+	std::vector <PathNode *> m_nodeList;
 };
 
 #endif

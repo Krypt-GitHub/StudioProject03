@@ -31,7 +31,7 @@ bool Collider::GetSeparatingPlane(Vector3& RPos, Vector3& Plane,Collider& OtherB
 			fabs((OtherBox.AxisZ*OtherBox.Half_size.z).Dot(Plane))));
 }
 
-bool Collider::GetCollision(Collider & box2)
+bool Collider::GetCollision(Collider& box2)
 {
 	{
 		Vector3 RPos;
