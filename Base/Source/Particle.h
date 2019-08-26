@@ -6,8 +6,6 @@
 class Particle
 {
 private:
-	bool active;
-	float life;
 public:
 	enum PARTICLE_TYPE
 	{
@@ -30,8 +28,10 @@ public:
 	Vector3 vel;
 	Vector3 scale;
 	bool gotGravity;
+	bool active;
+	float life;
 
-	Particle(PARTICLE_TYPE typeValue = PA_NONE);
+	Particle(PARTICLE_TYPE typeValue = PA_RAINDROP);
 	~Particle();
 
 	void SetActive(bool _active);
