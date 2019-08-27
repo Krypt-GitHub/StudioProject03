@@ -1,13 +1,9 @@
-#ifndef PARTICLE_H
-#define PARTICLE_H
+#pragma once
+#include "Light.h"
 
-#include "Vector3.h"
-
-class Particle
+struct Particle
 {
 private:
-	bool active;
-	float life;
 public:
 	enum PARTICLE_TYPE
 	{
@@ -16,6 +12,13 @@ public:
 		PA_SPLATTER,
 		PA_SMOKE,
 		PA_SNOW,
+		PA_GUNSMOKE,
+		PA_GUNSHATTER,
+		PA_BULLET,
+		PA_WALKING,
+		PA_ENEMYSHATTER,
+		//PA_GLASSSHATTER,
+	
 		PA_TOTAL,
 	};
 	PARTICLE_TYPE type;
@@ -23,13 +26,12 @@ public:
 	Vector3 vel;
 	Vector3 scale;
 
+
+	bool active;
+	float life;
+	bool gotGravity;
+
 	Particle(PARTICLE_TYPE typeValue = PA_RAINDROP);
 	~Particle();
-
-	void SetActive(bool _active);
-	bool GetActive();
-	void SetLifeSpan(float _life);
-	float GetLifeSpan();
 };
 
-#endif

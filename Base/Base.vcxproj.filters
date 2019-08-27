@@ -168,8 +168,8 @@
     <ClCompile Include="StudioProject\PathNode.cpp">
       <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="StudioProject\PAList.cpp">
-      <Filter>StudioProject</Filter>
+    <ClCompile Include="ParticleEngine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StudioProject\Level2Scene.cpp">
       <Filter>StudioProject\Scene</Filter>
@@ -314,8 +314,8 @@
     <ClInclude Include="StudioProject\PathNode.h">
       <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="StudioProject\PAList.h">
-      <Filter>StudioProject</Filter>
+    <ClInclude Include="ParticleEngine.h">
+      <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="StudioProject\Level2Scene.h">
       <Filter>StudioProject\Scene</Filter>

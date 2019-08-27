@@ -11,6 +11,7 @@
 #include <vector>
 #include "../Source/DepthFBO.h"
 #include "../Source/Particle.h"
+#include "../ParticleEngine.h"
 
 class SceneBase : public Scene
 {

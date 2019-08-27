@@ -36,6 +36,7 @@ public:
 	void RenderGO(GameObject* go);
 
 	void RenderWorld();
+	void renderParticle();
 	void RenderWater();
 	void RenderPassGPass();
 	void RenderPassMain();

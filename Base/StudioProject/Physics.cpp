@@ -1,6 +1,7 @@
 #include "Physics.h"
 #include "../Source/Application.h"
 #include "EnemyGO.h"
+#include "../ParticleEngine.h"
 #include "SceneManager.h"
 
 Physics::Physics()
@@ -131,6 +132,10 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				{
 					go1->SetActive(false);
 					go2->SetActive(false);
+					for (int i = 0; i < 10; ++i)
+					{
+						ParticleEngine::GetInstance()->SpawnParticle(go1,Particle::PA_GUNSHATTER);
+					}
 				}
 				else
 				{
@@ -157,6 +162,10 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			case GameObject::GO_ENEMY:
 				//go1->SetActive(false);
 				//go2->SetActive(false);
+				for(int i =0;i<5;++i)
+				{
+					ParticleEngine::GetInstance()->SpawnParticle(go2,Particle::PA_ENEMYSHATTER);
+				}
 				break;
 			case GameObject::GO_WALL:
 				go1->SetActive(false);

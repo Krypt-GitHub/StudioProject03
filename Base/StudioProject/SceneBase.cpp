@@ -220,7 +220,7 @@ void SceneBase::Init()
 		meshList[GEO_LOGO] = MeshBuilder::GenerateQuad("menu logo", Color(1, 1, 1), 1.f);
 		meshList[GEO_LOGO]->textureArray[0] = LoadTGA("Image//logo.tga");
 	}
-	
+
 	if (SceneManager::GetSceneID() == 2)
 	{
 		for (int x = 1; x <= 20; x++)

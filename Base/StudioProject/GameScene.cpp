@@ -11,6 +11,7 @@
 #include "../Physics/Collider.h"
 #include "SceneManager.h"
 #include "../Ray.h"
+#include "../ParticleEngine.h"
 
 
 GameScene::GameScene()
@@ -103,6 +104,7 @@ void GameScene::Update(double dt)
 {
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt, Player);
+	ParticleEngine::GetInstance()->updateParticle(dt);
 
 	if (PhysicsEngine.GetEnemyCount() == 0)
 		SceneManager::SetSceneID(2);
@@ -176,8 +178,58 @@ void GameScene::RenderWorld()
 			RenderGO(go);
 		}
 	}
+	renderParticle();
 }
+void GameScene::renderParticle() {
 
+	for (auto go : ParticleEngine::GetInstance()->m_pList)
+	{
+		if (go->active)
+		{
+
+			switch (go->type)
+			{
+			case Particle::PA_NONE:
+				break;
+			case Particle::PA_RAINDROP:
+				break;
+			case Particle::PA_SPLATTER:
+				break;
+			case Particle::PA_SMOKE:
+				break;
+			case Particle::PA_SNOW:
+				break;
+			case Particle::PA_GUNSMOKE:
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
+				break;
+			case Particle::PA_GUNSHATTER:
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
+				break;
+			case Particle::PA_BULLET:
+				break;
+			case Particle::PA_WALKING:
+				break;
+			case Particle::PA_ENEMYSHATTER:
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
 void GameScene::RenderWater()
 {
 	modelStack.PushMatrix();
@@ -282,6 +334,8 @@ void GameScene::RenderPassMain()
 	modelStack.PushMatrix();
 	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
 	modelStack.PopMatrix();
+
+
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
 	//modelStack.Scale(75, 75, 50);
