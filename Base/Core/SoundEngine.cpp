@@ -2,10 +2,9 @@
 #include <iostream>
 
 using namespace std;
-
+ISoundEngine* CSoundEngine::theSoundEngine = NULL;
 // Constructor
 CSoundEngine::CSoundEngine()
-	: theSoundEngine(NULL)
 {
 }
 
@@ -119,14 +118,31 @@ bool CSoundEngine::RemoveSound(const std::string& _soundIndex)
 void CSoundEngine::PlayASound(const std::string& _soundIndex)
 {
 	std::string aSound = GetSound(_soundIndex);
-	if (!theSoundEngine->isCurrentlyPlaying(aSound.c_str()))
-	{
-		// Play a sound
-		theSoundEngine->play2D(aSound.c_str(), false, false);
-	}
+	// Play a sound
+	theSoundEngine->play2D(aSound.c_str(), false, false);
 }
 
 void CSoundEngine::Play3D(const std::string & _soundIndex, vec3df _position)
 {
 	theSoundEngine->play3D(_soundIndex.c_str(), _position, false, false, false);
+}
+bool CSoundEngine::CurentlyPlaying(const std::string & _soundIndex)
+{
+	return theSoundEngine->isCurrentlyPlaying(GetSound(_soundIndex).c_str);
+}
+void CSoundEngine::setSoundVolume(float volume)
+{
+	theSoundEngine->setSoundVolume(volume);
+}
+void CSoundEngine::SetmaxDist3D(float volume)
+{
+	theSoundEngine->setDefault3DSoundMaxDistance(volume);
+}
+void CSoundEngine::SetminDist3D(float volume)
+{
+	theSoundEngine->setDefault3DSoundMinDistance(volume);
+}
+void CSoundEngine::StopSound()
+{
+	theSoundEngine->stopAllSounds();
 }
