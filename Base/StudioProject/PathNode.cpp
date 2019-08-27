@@ -23,4 +23,5 @@ void PathNode::SetOBB(Vector3 _obbposition, Vector3 _oobscale)
 {
 	obb.pos = _obbposition;
 	obb.SetScale(_oobscale);
+	obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 }

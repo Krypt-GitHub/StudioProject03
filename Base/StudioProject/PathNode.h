@@ -7,12 +7,10 @@
 class PathNode
 {
 private:
-	float m_fx;
-	float m_fy;
 public:
+	bool m_bobstructed;
 	Transform transform;
 	Collider obb;
-	bool m_bobstructed;
 
 	PathNode();
 	~PathNode();

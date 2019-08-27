@@ -479,6 +479,57 @@ void SceneBase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float sizeX, float 
 
 }
 
+void SceneBase::RenderParticle() {
+
+	for (auto go : ParticleEngine::GetInstance()->m_pList)
+	{
+		if (go->active)
+		{
+
+			switch (go->type)
+			{
+			case Particle::PA_NONE:
+				break;
+			case Particle::PA_RAINDROP:
+				break;
+			case Particle::PA_SPLATTER:
+				break;
+			case Particle::PA_SMOKE:
+				break;
+			case Particle::PA_SNOW:
+				break;
+			case Particle::PA_GUNSMOKE:
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
+				break;
+			case Particle::PA_GUNSHATTER:
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
+				break;
+			case Particle::PA_BULLET:
+				break;
+			case Particle::PA_WALKING:
+				break;
+			case Particle::PA_ENEMYSHATTER:
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				modelStack.PopMatrix();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+
 void SceneBase::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

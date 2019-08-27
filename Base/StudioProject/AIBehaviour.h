@@ -186,7 +186,7 @@ public:
 		{
 			if (go->GetActive())
 			{
-				if (go->type == GameObject::GO_PISTOL && (status->m_v3aiPosition - go->transform.position).Length() <= 60 /*&& !static_cast<PistolGO*>(go)->GetPickUp()*/)
+				if (go->type == GameObject::GO_PISTOL && (status->m_v3aiPosition - go->transform.position).Length() <= 100 /*&& !static_cast<PistolGO*>(go)->GetPickUp()*/)
 				{
 					//std::cout << "FOUND GUN" << std::endl;
 					pistol = go;

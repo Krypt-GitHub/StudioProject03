@@ -10,8 +10,8 @@
 #include <time.h>
 #include "../Physics/Collider.h"
 #include "SceneManager.h"
-#include "../Ray.h"
-#include "../ParticleEngine.h"
+#include "../Physics/Ray.h"
+#include "../Core/ParticleEngine.h"
 
 
 GameScene::GameScene()
@@ -178,58 +178,9 @@ void GameScene::RenderWorld()
 			RenderGO(go);
 		}
 	}
-	renderParticle();
+	RenderParticle();
 }
-void GameScene::renderParticle() {
 
-	for (auto go : ParticleEngine::GetInstance()->m_pList)
-	{
-		if (go->active)
-		{
-
-			switch (go->type)
-			{
-			case Particle::PA_NONE:
-				break;
-			case Particle::PA_RAINDROP:
-				break;
-			case Particle::PA_SPLATTER:
-				break;
-			case Particle::PA_SMOKE:
-				break;
-			case Particle::PA_SNOW:
-				break;
-			case Particle::PA_GUNSMOKE:
-				modelStack.PushMatrix();
-				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-				RenderMesh(meshList[GEO_CUBE], false, false, false);
-				modelStack.PopMatrix();
-				break;
-			case Particle::PA_GUNSHATTER:
-				modelStack.PushMatrix();
-				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-				RenderMesh(meshList[GEO_CUBE], false, false, false);
-				modelStack.PopMatrix();
-				break;
-			case Particle::PA_BULLET:
-				break;
-			case Particle::PA_WALKING:
-				break;
-			case Particle::PA_ENEMYSHATTER:
-				modelStack.PushMatrix();
-				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-				RenderMesh(meshList[GEO_CUBE], false, false, false);
-				modelStack.PopMatrix();
-				break;
-			default:
-				break;
-			}
-		}
-	}
-}
 void GameScene::RenderWater()
 {
 	modelStack.PushMatrix();

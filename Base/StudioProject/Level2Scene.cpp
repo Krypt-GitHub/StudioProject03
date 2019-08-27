@@ -10,7 +10,7 @@
 #include <time.h>
 #include "../Physics/Collider.h"
 #include "SceneManager.h"
-#include "../Ray.h"
+#include "../Physics/Ray.h"
 
 
 Level2Scene::Level2Scene()
@@ -128,15 +128,18 @@ void Level2Scene::Init()
 			PathNode *pn = new PathNode;
 			int xAxis = 5;
 			int zAxis = 5;
-			pn->SetTransform(Vector3(-225 + xAxis * x, 2,-225 + zAxis * z), Vector3(5, 5, 5));
+			pn->SetTransform(Vector3(-225 + xAxis * x, 6,-225 + zAxis * z), Vector3(5, 5, 5));
 			pn->SetOBB(Vector3(pn->transform.position.x, pn->transform.position.y, pn->transform.position.z), Vector3(2.5, 2.5, 2.5));
 
 			for (auto go : gl.m_goList)
 			{
-				if (go->GetActive() && go->type != GameObject::GO_PLAYER && go->type != GameObject::GO_ENEMY && go->type != GameObject::GO_PISTOL)
+				if (go->GetActive() && (go->type != GameObject::GO_PLAYER || go->type != GameObject::GO_ENEMY || go->type != GameObject::GO_PISTOL))
 				{
 					if (pn->obb.GetCollision(go->obb))
+					{
 						pn->m_bobstructed = true;
+						break;
+					}
 					else
 						pn->m_bobstructed = false;
 				}
@@ -148,10 +151,13 @@ void Level2Scene::Init()
 
 void Level2Scene::Update(double dt)
 {
+
+
 	std::cout << camera[0].position << std::endl;
 
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt, Player);
+	ParticleEngine::GetInstance()->updateParticle(dt);
 
 	if (PhysicsEngine.GetEnemyCount() == 0)
 		SceneManager::SetSceneID(10);
@@ -226,6 +232,7 @@ void Level2Scene::RenderWorld()
 			RenderGO(go);
 		}
 	}
+	RenderParticle();
 }
 
 void Level2Scene::RenderWater()
@@ -327,16 +334,17 @@ void Level2Scene::RenderPassMain()
 
 	RenderMesh(meshList[GEO_AXES], false, false, false);
 
+	//for (auto pn : m_nodeList )
+	//{
+	//	RenderPN(pn);
+	//}
+
 	RenderWorld();
 
 	modelStack.PushMatrix();
 	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
 	modelStack.PopMatrix();
 
-	//for (auto pn : m_nodeList )
-	//{
-	//	RenderPN(pn);
-	//}
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);

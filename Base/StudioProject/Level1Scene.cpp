@@ -10,7 +10,7 @@
 #include <time.h>
 #include "../Physics/Collider.h"
 #include "SceneManager.h"
-#include "../Ray.h"
+#include "../Physics/Ray.h"
 
 
 Level1Scene::Level1Scene()
@@ -121,6 +121,7 @@ void Level1Scene::Update(double dt)
 
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt, Player);
+	ParticleEngine::GetInstance()->updateParticle(dt);
 
 	if (PhysicsEngine.GetEnemyCount() == 0)
 		SceneManager::SetSceneID(10);
@@ -196,6 +197,8 @@ void Level1Scene::RenderWorld()
 			RenderGO(go);
 		}
 	}
+
+	RenderParticle();
 
 	for (int x = 1; x <= 20; x++)
 	{

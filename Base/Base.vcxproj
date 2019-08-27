@@ -17,13 +17,13 @@
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Object.cpp" />
+    <ClCompile Include="Core\ParticleEngine.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
-    <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="Physics\CharacterController.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
+    <ClCompile Include="Physics\Ray.cpp" />
     <ClCompile Include="Physics\Rigidbody.cpp" />
     <ClCompile Include="Physics\SphereCollider.cpp" />
-    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\DepthFBO.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
@@ -62,14 +62,14 @@
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Object.h" />
+    <ClInclude Include="Core\ParticleEngine.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
-    <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="Physics\CharacterController.h" />
     <ClInclude Include="Physics\Collider.h" />
+    <ClInclude Include="Physics\Ray.h" />
     <ClInclude Include="Physics\Rigidbody.h" />
     <ClInclude Include="Physics\SphereCollider.h" />
-    <ClInclude Include="Ray.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\DepthFBO.h" />
     <ClInclude Include="Source\Geometry.h" />
@@ -123,14 +123,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

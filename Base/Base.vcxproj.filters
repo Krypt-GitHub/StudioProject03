@@ -147,9 +147,6 @@
     <ClCompile Include="StudioProject\PlayerGO.cpp">
       <Filter>StudioProject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Ray.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="StudioProject\WeaponBase.cpp">
       <Filter>StudioProject\Weapon</Filter>
     </ClCompile>
@@ -168,11 +165,14 @@
     <ClCompile Include="StudioProject\PathNode.cpp">
       <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StudioProject\Level2Scene.cpp">
       <Filter>StudioProject\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Ray.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ParticleEngine.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +290,6 @@
     <ClInclude Include="StudioProject\PlayerGO.h">
       <Filter>StudioProject\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Ray.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\WeaponBase.h">
       <Filter>StudioProject\Weapon</Filter>
     </ClInclude>
@@ -314,11 +311,14 @@
     <ClInclude Include="StudioProject\PathNode.h">
       <Filter>StudioProject\AI\Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleEngine.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="StudioProject\Level2Scene.h">
       <Filter>StudioProject\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Ray.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ParticleEngine.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

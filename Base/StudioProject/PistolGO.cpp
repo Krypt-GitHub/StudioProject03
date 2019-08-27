@@ -1,8 +1,8 @@
-	#include "PistolGO.h"
+#include "PistolGO.h"
 #include "../Source/Application.h"
 #include "GOList.h"
-#include "../Ray.h"
-#include "../ParticleEngine.h"
+#include "../Physics/Ray.h"
+#include "../Core/ParticleEngine.h"
 
 PistolGO::PistolGO()
 {
@@ -69,8 +69,7 @@ void PistolGO::Update(double dt)
 			go->m_v3vel = m_v3storeDir * 200.f;
 			for (int i = 0; i < 4; ++i)
 			{
-
-			ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_GUNSMOKE);
+				ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_GUNSMOKE);
 			}
 			go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
 			go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));

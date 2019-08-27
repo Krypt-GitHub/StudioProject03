@@ -11,7 +11,7 @@
 #include <vector>
 #include "../Source/DepthFBO.h"
 #include "../Source/Particle.h"
-#include "../ParticleEngine.h"
+#include "../Core/ParticleEngine.h"
 
 class SceneBase : public Scene
 {
@@ -26,6 +26,7 @@ public:
 	void RenderText(Mesh * mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh * mesh, std::string text, Color color, float size, float x, float y);
 	void RenderMeshIn2D(Mesh * mesh, bool enableLight, float sizeX, float sizeY, float x, float y, float rotation, Vector3 rotateAxis);
+	void RenderParticle();
 	virtual void Render();
 	virtual void Exit();
 
