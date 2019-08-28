@@ -175,6 +175,18 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			{
 			case GameObject::GO_PLAYER:
 				go1->SetActive(false);
+				switch (SceneManager::GetSceneID())
+				{
+				case 1:
+					SceneManager::SetSceneID(4);
+					break;
+				case 2:
+					SceneManager::SetSceneID(4);
+					break;
+				case 3:
+					SceneManager::SetSceneID(4);
+					break;
+				}
 				break;
 			case GameObject::GO_WALL:
 			case GameObject::GO_CEILING:

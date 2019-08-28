@@ -29,7 +29,7 @@ void SceneBase::Init()
 	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.mp3");
 	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.mp3");
 	// Black background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(0.9f, 0.9f, 0.9f, 0.0f);
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
@@ -218,6 +218,30 @@ void SceneBase::Init()
 	meshList[GEO_SUPER]->textureArray[0] = LoadTGA("Image//super.tga");
 	meshList[GEO_COOL] = MeshBuilder::GenerateQuad("cool", Color(1, 1, 1), 1.f);
 	meshList[GEO_COOL]->textureArray[0] = LoadTGA("Image//cool.tga");
+	meshList[GEO_1] = MeshBuilder::GenerateQuad("1", Color(1, 1, 1), 1.f);
+	meshList[GEO_1]->textureArray[0] = LoadTGA("Image//1.tga");
+	meshList[GEO_2] = MeshBuilder::GenerateQuad("2", Color(1, 1, 1), 1.f);
+	meshList[GEO_2]->textureArray[0] = LoadTGA("Image//2.tga");
+	meshList[GEO_3] = MeshBuilder::GenerateQuad("3", Color(1, 1, 1), 1.f);
+	meshList[GEO_3]->textureArray[0] = LoadTGA("Image//3.tga");
+	meshList[GEO_4] = MeshBuilder::GenerateQuad("4", Color(1, 1, 1), 1.f);
+	meshList[GEO_4]->textureArray[0] = LoadTGA("Image//4.tga");
+	meshList[GEO_5] = MeshBuilder::GenerateQuad("5", Color(1, 1, 1), 1.f);
+	meshList[GEO_5]->textureArray[0] = LoadTGA("Image//5.tga");
+	meshList[GEO_6] = MeshBuilder::GenerateQuad("6", Color(1, 1, 1), 1.f);
+	meshList[GEO_6]->textureArray[0] = LoadTGA("Image//6.tga");
+	meshList[GEO_7] = MeshBuilder::GenerateQuad("7", Color(1, 1, 1), 1.f);
+	meshList[GEO_7]->textureArray[0] = LoadTGA("Image//7.tga");
+	meshList[GEO_8] = MeshBuilder::GenerateQuad("8", Color(1, 1, 1), 1.f);
+	meshList[GEO_8]->textureArray[0] = LoadTGA("Image//8.tga");
+	meshList[GEO_9] = MeshBuilder::GenerateQuad("9", Color(1, 1, 1), 1.f);
+	meshList[GEO_9]->textureArray[0] = LoadTGA("Image//9.tga");
+	meshList[GEO_10] = MeshBuilder::GenerateQuad("10", Color(1, 1, 1), 1.f);
+	meshList[GEO_10]->textureArray[0] = LoadTGA("Image//10.tga");
+	meshList[GEO_11] = MeshBuilder::GenerateQuad("11", Color(1, 1, 1), 1.f);
+	meshList[GEO_11]->textureArray[0] = LoadTGA("Image//11.tga");
+	meshList[GEO_12] = MeshBuilder::GenerateQuad("12", Color(1, 1, 1), 1.f);
+	meshList[GEO_12]->textureArray[0] = LoadTGA("Image//12.tga");
 
 	// Scene Objects
 	if (SceneManager::GetSceneID() == 1 || SceneManager::GetSceneID() == 2 || SceneManager::GetSceneID() == 3)
@@ -639,6 +663,66 @@ void SceneBase::RenderScreenText(int level, int counter)
 		case 3:
 			modelStack.PushMatrix();
 			RenderMeshIn2D(meshList[GEO_ALL], false, 85, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 4:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_12], false, 50, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 5:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_11], false, 50, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 6:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_10], false, 50, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 7:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_9], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 8:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_8], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 9:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_7], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 10:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_6], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 11:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_5], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 12:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_4], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 13:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_3], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 14:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_2], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 15:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_1], false, 25, 40, 0, 0, 0, Vector3(0, 1, 0));
 			modelStack.PopMatrix();
 			break;
 		case 98:

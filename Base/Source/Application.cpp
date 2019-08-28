@@ -27,6 +27,7 @@ double Application::mouse_last_x = 0.0, Application::mouse_last_y = 0.0,
 	   Application::mouse_diff_x = 0.0, Application::mouse_diff_y = 0.0;
 double Application::camera_yaw = 0.0, Application::camera_pitch = 0.0;
 bool Application::m_bShouldUpdate = false;
+int Application::PreviousScene = 0;
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -271,6 +272,21 @@ void Application::Run()
 			} //Check if the ESC key had been pressed or if the window had been closed
 			scene->Exit();
 			delete scene;
+		}
+		else if (SceneManager::GetSceneID() == 4)
+		{
+			switch (PreviousScene)
+			{
+			case 1:
+				SceneManager::SetSceneID(1);
+				break;
+			case 2:
+				SceneManager::SetSceneID(2);
+				break;
+			case 3:
+				SceneManager::SetSceneID(3);
+				break;
+			}
 		}
 	}
 }

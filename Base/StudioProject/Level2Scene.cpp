@@ -159,7 +159,8 @@ void Level2Scene::Init()
 	m_bRenderScreenText = false;
 	m_iSoundCounter = 0;
 
-	PhysicsEngine.SetEnemyCount(3);
+	Application::PreviousScene = 3;
+	PhysicsEngine.SetEnemyCount(13);
 }
 
 void Level2Scene::Update(double dt)
@@ -297,13 +298,217 @@ void Level2Scene::Update(double dt)
 			if (m_iSoundCounter == 2)
 			{
 				CSoundEngine::Getinstance()->PlayASound("Text");
-				m_iSoundCounter = 100;
+				++m_iSoundCounter;
 			}
 		}
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
 		}
+	}
+
+	if (m_iTextCounter >= 3)
+	{
+		switch (Physics::EnemyCount)
+		{
+		case 12:
+			if (m_iSoundCounter == 3)
+			{
+				m_iTextCounter = 4;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 11:
+			if (m_iSoundCounter == 4)
+			{
+				m_iTextCounter = 5;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 10:
+			if (m_iSoundCounter == 5)
+			{
+				m_iTextCounter = 6;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 9:
+			if (m_iSoundCounter == 6)
+			{
+				m_iTextCounter = 7;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 8:
+			if (m_iSoundCounter == 7)
+			{
+				m_iTextCounter = 8;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 7:
+			if (m_iSoundCounter == 8)
+			{
+				m_iTextCounter = 9;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 6:
+			if (m_iSoundCounter == 9)
+			{
+				m_iTextCounter = 10;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 5:
+			if (m_iSoundCounter == 10)
+			{
+				m_iTextCounter = 11;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 4:
+			if (m_iSoundCounter == 11)
+			{
+				m_iTextCounter = 12;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 3:
+			if (m_iSoundCounter == 12)
+			{
+				m_iTextCounter = 13;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 2:
+			if (m_iSoundCounter == 13)
+			{
+				m_iTextCounter = 14;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		case 1:
+			if (m_iSoundCounter == 14)
+			{
+				m_iTextCounter = 15;
+				m_fTextTimer = 0.5f;
+			}
+			break;
+		}
+	}
+
+	if (m_iTextCounter == 4 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 3)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 5 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 4)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 6 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 5)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 7 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 6)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 8 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 7)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 9 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 8)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 10 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 9)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 11 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 10)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 12 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 11)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 13 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 12)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 14 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 13)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			++m_iSoundCounter;
+		}
+	}
+	else if (m_iTextCounter == 15 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 14)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			m_iSoundCounter = 100;
+		}
+	}
+	else if (m_iTextCounter != 0 && m_iTextCounter != 1 && m_iTextCounter != 2 && m_iTextCounter != 3)
+	{
+		m_bRenderScreenText = false;
 	}
 
 	if (m_iTextCounter == 98 || m_iTextCounter == 99)
@@ -345,7 +550,7 @@ void Level2Scene::Update(double dt)
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
-			SceneManager::SetSceneID(10);
+			endgame = true;
 		}
 	}
 
