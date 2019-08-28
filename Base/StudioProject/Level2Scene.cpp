@@ -27,7 +27,7 @@ Level2Scene::~Level2Scene()
 void Level2Scene::Init()
 {
 	SceneBase::Init();
-
+	endgame = false;
 	//Bullet initialisation
 	for (int i = 0; i < 20; i++)
 	{
@@ -69,7 +69,7 @@ void Level2Scene::Init()
 	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(245, 40, 0), Vector3(450, 80, 40), 90, Vector3(225, 40, 20), 90, Vector3(0, 1, 0));
 	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-245, 40, 0), Vector3(450, 80, 40), -90, Vector3(225, 40, 20), -90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 90, 0), Vector3(450, 450, 40), 90, Vector3(225, 225, 20), 90, Vector3(1, 0, 0));
-
+	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//Credits.tga");
 	// Path Node Initialisation
 	int tempID = 0;
 
@@ -478,31 +478,43 @@ void Level2Scene::RenderPassMain()
 		RenderPN(pn);
 	}
 
-	if (m_bRenderScreenText)
+	if (endgame)
 	{
-		RenderScreenText(2, m_iTextCounter);
+
+	RenderMeshIn2D(meshList[GEO_QUAD], false, Application::GetWindowWidth()/11, Application::GetWindowHeight()/10.5, 0, 0, 0, Vector3(1));
 	}
 	else
 	{
-		if (Player->gun != nullptr)
+		if (m_bRenderScreenText)
 		{
-			modelStack.PushMatrix();
-			RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
-			modelStack.PopMatrix();
+			RenderScreenText(2, m_iTextCounter);
 		}
 		else
 		{
-			modelStack.PushMatrix();
-			float scale = 1;
-			if (Application::GetMouseDown(0))
-				scale = 1.5;
+			if (Player->gun != nullptr)
+			{
+				modelStack.PushMatrix();
+				RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+				modelStack.PopMatrix();
+			}
 			else
-				scale = 1.f;
-			RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0, 180, Vector3(0, 0, 1));
-			modelStack.PopMatrix();
+			{
+				modelStack.PushMatrix();
+				float scale = 1;
+				if (Application::GetMouseDown(0))
+					scale = 1.5;
+				else
+					scale = 1.f;
+				RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0, 180, Vector3(0, 0, 1));
+				modelStack.PopMatrix();
+			}
 		}
 	}
-
+	//modelStack.PushMatrix();
+	//modelStack.Translate(100, 200, 0);
+	//modelStack.Scale(75, 75, 50);
+	//RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map
+	//modelStack.PopMatrix();
 	RenderWorld();
 }
 
@@ -562,7 +574,7 @@ void Level2Scene::RenderGO(GameObject* go)
 
 			modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.target.x - Player->camera.position.x, Player->camera.target.z - Player->camera.position.z)), 0, 1, 0);
 			modelStack.Rotate(Math::RadianToDegree(-atan2(Player->camera.target.y - Player->camera.position.y, Vector3(Player->camera.target.x - Player->camera.position.x, 0, Player->camera.target.z - Player->camera.position.z).Length())), 1, 0, 0);
-			
+
 			modelStack.Translate(-4, -5, 20);
 			Player->gun->transform.position = Vector3(modelStack.Top().a[12], modelStack.Top().a[13], modelStack.Top().a[14]);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);

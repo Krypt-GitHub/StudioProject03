@@ -3,6 +3,7 @@
 #include"..//Core/ParticleEngine.h"
 #include "..//Core/SoundEngine.h"
 #include "Level2Scene.h"
+#include "../StudioProject/Physics.h"
 
 PlayerGO::PlayerGO()
 	: m_bIsJumping(false)
@@ -205,11 +206,13 @@ void PlayerGO::Update(double dt)
 				{
 					Level2Scene::m_ienemyNum--;
 					go->SetActive(false);
+					Physics::EnemyCount--;
 					for (int i = 0; i < 80; ++i)
 					{
 						ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_ENEMYSHATTER);
 					}
 					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
+					break;
 				}
 			}
 			m_bLBDown = true;

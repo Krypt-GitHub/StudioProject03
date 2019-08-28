@@ -7,8 +7,8 @@
 class Physics
 {
 private:
-	int EnemyCount;
 public:
+	static int EnemyCount;
 	GOList &gl = GOList::GetInstance();
 
 	Physics();

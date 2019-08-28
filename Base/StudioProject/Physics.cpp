@@ -6,6 +6,8 @@
 #include "..//Core/SoundEngine.h"
 #include "Level2Scene.h"
 
+int Physics::EnemyCount = 0;
+
 Physics::Physics()
 {
 }
