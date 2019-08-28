@@ -133,8 +133,16 @@ void Level2Scene::Init()
 
 			for (auto go : gl.m_goList)
 			{
-				if (go->GetActive() && (go->type != GameObject::GO_PLAYER || go->type != GameObject::GO_ENEMY || go->type != GameObject::GO_PISTOL))
+				if (go->GetActive() )
 				{
+					if (
+						(go->type == GameObject::GO_PLAYER || go->type == GameObject::GO_ENEMY || go->type == GameObject::GO_PISTOL))
+					{
+						continue;
+					}
+					else
+					{
+
 					if (pn->obb.GetCollision(go->obb))
 					{
 						pn->m_bobstructed = true;
@@ -142,6 +150,7 @@ void Level2Scene::Init()
 					}
 					else
 						pn->m_bobstructed = false;
+					}
 				}
 			}
 			m_nodeList.push_back(pn);
@@ -185,7 +194,7 @@ void Level2Scene::Update(double dt)
 			Player->gun = static_cast<PistolGO*>(go);
 			Player->gun->obb.isEnabled = false;
 			Player->gun->SetStatic(true);
-
+			CSoundEngine::Getinstance()->PlayASound("pickup");
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
@@ -341,11 +350,23 @@ void Level2Scene::RenderPassMain()
 
 	RenderWorld();
 
-	modelStack.PushMatrix();
-	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
-	modelStack.PopMatrix();
+	if (Player->gun != nullptr)
+	{
 
-
+		modelStack.PushMatrix();
+		RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
+	else
+	{
+		modelStack.PushMatrix(); float scale = 1;
+		if (Application::GetMouseDown(0))
+			scale = 1.5;
+		else
+			scale = 1.f;
+		RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0,180, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
 	//modelStack.Scale(75, 75, 50);

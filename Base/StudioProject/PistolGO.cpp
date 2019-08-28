@@ -3,6 +3,7 @@
 #include "GOList.h"
 #include "../Physics/Ray.h"
 #include "../Core/ParticleEngine.h"
+#include "..//Core/SoundEngine.h"
 
 PistolGO::PistolGO()
 {
@@ -63,11 +64,11 @@ void PistolGO::Update(double dt)
 			//	}
 			//}
 
-			go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z);
+			go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z) + Vector3(m_v3storeDir.x*2.25,0,m_v3storeDir.z*2.25f);
 			go->transform.scale.Set(0.3, 0.3, 0.3);
 			go->m_v3dir = m_v3storeDir;
 			go->m_v3vel = m_v3storeDir * 200.f;
-			for (int i = 0; i < 4; ++i)
+			for (int i = 0; i < 15; ++i)
 			{
 				ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_GUNSMOKE);
 			}
@@ -75,7 +76,7 @@ void PistolGO::Update(double dt)
 			go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 			go->obb.pos = transform.position;
 			go->obb.RotateAxis(0, Vector3(0, 1, 0));
-
+			CSoundEngine::Getinstance()->PlayASound("Gunshot");
 			m_bLBDown = true;
 		}
 		else if (!Application::GetMouseDown(0) && m_bLBDown)

@@ -13,16 +13,16 @@ protected:
 	std::map<std::string, std::string> soundMap;
 
 public:
-	static ISoundEngine* theSoundEngine;
+	static CSoundEngine* soundEngine;
+	ISoundEngine* theSoundEngine;
+	static CSoundEngine* Getinstance() {
+		if (soundEngine == nullptr)
+			soundEngine = new CSoundEngine;
+		return soundEngine;
+	};
 	// Constructor
 	CSoundEngine();
 	virtual ~CSoundEngine();
-	static ISoundEngine* Getinstance()
-	{
-		if (theSoundEngine == NULL)
-			theSoundEngine = createIrrKlangDevice();
-		return theSoundEngine;
-	}
 	// Init this class and it will create the Sound Engine
 	bool Init(void);
 

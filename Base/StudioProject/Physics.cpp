@@ -3,6 +3,7 @@
 #include "EnemyGO.h"
 #include "../Core/ParticleEngine.h"
 #include "SceneManager.h"
+#include "..//Core/SoundEngine.h"
 
 Physics::Physics()
 {
@@ -160,12 +161,13 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				go1->SetActive(false);
 				break;
 			case GameObject::GO_ENEMY:
-				//go1->SetActive(false);
-				//go2->SetActive(false);
-				for(int i =0;i<5;++i)
+				go1->SetActive(false);
+				go2->SetActive(false);
+				for (int i = 0; i < 80; ++i)
 				{
-					ParticleEngine::GetInstance()->SpawnParticle(go2,Particle::PA_ENEMYSHATTER);
+					ParticleEngine::GetInstance()->SpawnParticle(go2, Particle::PA_ENEMYSHATTER);
 				}
+				CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				break;
 			case GameObject::GO_WALL:
 				go1->SetActive(false);

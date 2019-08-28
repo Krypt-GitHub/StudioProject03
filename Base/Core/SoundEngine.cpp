@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-ISoundEngine* CSoundEngine::theSoundEngine = NULL;
+CSoundEngine* CSoundEngine::soundEngine = NULL;
 // Constructor
 CSoundEngine::CSoundEngine()
 {
@@ -124,11 +124,11 @@ void CSoundEngine::PlayASound(const std::string& _soundIndex)
 
 void CSoundEngine::Play3D(const std::string & _soundIndex, vec3df _position)
 {
-	theSoundEngine->play3D(_soundIndex.c_str(), _position, false, false, false);
+	theSoundEngine->play3D(GetSound(_soundIndex).c_str(), _position, false, false, false);
 }
 bool CSoundEngine::CurentlyPlaying(const std::string & _soundIndex)
 {
-	return theSoundEngine->isCurrentlyPlaying(GetSound(_soundIndex).c_str);
+	return theSoundEngine->isCurrentlyPlaying(GetSound(_soundIndex).c_str());
 }
 void CSoundEngine::setSoundVolume(float volume)
 {

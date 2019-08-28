@@ -25,7 +25,7 @@ public:
 	Vector3 pos;
 	Vector3 vel;
 	Vector3 scale;
-
+	float angle;
 
 	bool active;
 	float life;
