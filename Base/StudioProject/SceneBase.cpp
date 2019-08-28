@@ -20,6 +20,14 @@ SceneBase::~SceneBase()
 
 void SceneBase::Init()
 {
+	CSoundEngine::Getinstance()->Init();
+	CSoundEngine::Getinstance()->setSoundVolume(0.3f);
+	CSoundEngine::Getinstance()->AddSound("ESHATTER", "Sound//Enemy.ogg");
+	CSoundEngine::Getinstance()->AddSound("Gunshot", "Sound//Gunshot.ogg");
+	CSoundEngine::Getinstance()->AddSound("pickup", "Sound//pickup.ogg");
+	CSoundEngine::Getinstance()->AddSound("Text", "Sound//Text.ogg");
+	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.ogg");
+	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.ogg");
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	// Enable depth test
@@ -150,7 +158,7 @@ void SceneBase::Init()
 
 	m_fchRotate = 0;
 
-	cameraID = 0;
+	cameraID = 1;
 
 	m_fMTElapsedTime = 0.f;
 
@@ -171,6 +179,8 @@ void SceneBase::Init()
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateQuad("crosshair", Color(1, 1, 1), 1.f);
 	meshList[GEO_CROSSHAIR]->textureArray[0] = LoadTGA("Image//crosshair.tga");
+	meshList[GEO_FIST] = MeshBuilder::GenerateQuad("crosshair", Color(1, 1, 1), 1.f);
+	meshList[GEO_FIST]->textureArray[0] = LoadTGA("Image//fist.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureArray[0] = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
@@ -181,7 +191,15 @@ void SceneBase::Init()
 	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("bullet", "OBJ//bullet.obj");
 	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//black.tga");
 	meshList[GEO_TRACER] = MeshBuilder::GenerateCylinder("tracer", Color(1, 0, 0), 10, 10, 1, 1);
-
+	meshList[GEO_PA_GUNSHATTER] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
+	meshList[GEO_PA_GUNSHATTER]->textureArray[0] = LoadTGA("Image//PistolTri.tga");	
+	meshList[GEO_PA_GUNSMOKE] = MeshBuilder::GenerateQuad("gunsmoke", Color(), 1.f);
+	meshList[GEO_PA_GUNSMOKE]->textureArray[0] = LoadTGA("Image//smoke.tga");	
+//	meshList[GEO_PA_GUNSHATTER] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
+	meshList[GEO_PA_ENEMYSHATTER1] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
+	meshList[GEO_PA_ENEMYSHATTER1]->textureArray[0] = LoadTGA("Image//tri1.tga");	
+	meshList[GEO_PA_ENEMYSHATTER2] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
+	meshList[GEO_PA_ENEMYSHATTER2]->textureArray[0] = LoadTGA("Image//tri2.tga");
 	// Scene Objects
 	if (SceneManager::GetSceneID() == 1 || SceneManager::GetSceneID() == 2 || SceneManager::GetSceneID() == 3)
 	{
@@ -503,14 +521,16 @@ void SceneBase::RenderParticle() {
 				modelStack.PushMatrix();
 				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
 				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				RenderMesh(meshList[GEO_PA_GUNSMOKE], false, false, false);
 				modelStack.PopMatrix();
 				break;
 			case Particle::PA_GUNSHATTER:
 				modelStack.PushMatrix();
 				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Rotate(go->angle, 0, 0, 1);
+				modelStack.Rotate(Math::RadianToDegree(atan2(camera[1].position.x - (go->pos.x), camera[1].position.z - (go->pos.z))), 0, 1, 0);
 				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				RenderMesh(meshList[GEO_PA_GUNSHATTER], false, false, false);
 				modelStack.PopMatrix();
 				break;
 			case Particle::PA_BULLET:
@@ -520,8 +540,21 @@ void SceneBase::RenderParticle() {
 			case Particle::PA_ENEMYSHATTER:
 				modelStack.PushMatrix();
 				modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+				modelStack.Rotate(go->angle, 0, 0, 1);
+				modelStack.Rotate(Math::RadianToDegree(atan2(camera[1].position.x - (go->pos.x), camera[1].position.z - (go->pos.z))), 0, 1, 0);
 				modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-				RenderMesh(meshList[GEO_CUBE], false, false, false);
+				{
+				int i = rand() % 2;
+				switch (i)
+				{
+				case 1:
+				RenderMesh(meshList[GEO_PA_ENEMYSHATTER1], false, false, false);
+					break;
+				default:
+				RenderMesh(meshList[GEO_PA_ENEMYSHATTER2], false, false, false);
+					break;
+				}
+				}
 				modelStack.PopMatrix();
 				break;
 			default:

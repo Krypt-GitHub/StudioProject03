@@ -56,7 +56,7 @@ void GameScene::Init()
 	}
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(13, 160, 90);
+	lights[0].position.Set(0, -60, 180);
 	lights[0].color.Set(0.217f, 0.094f, 0.028f);
 	lights[0].power = 20.f;
 	lights[0].kC = 1.f;
@@ -65,7 +65,7 @@ void GameScene::Init()
 	lights[0].cosCutoff = cos(Math::DegreeToRadian(45));
 	lights[0].cosInner = cos(Math::DegreeToRadian(30));
 	lights[0].exponent = 3.f;
-	lights[0].spotDirection.Set(0.f, 1.f, 0.f);
+	lights[0].spotDirection.Set(0.f, 0.f, 1.f);
 
 	camera[0].Init(Vector3(-420, 184, 178), Vector3(0, 185, 0), Vector3(0, 1, 0));
 
@@ -132,7 +132,7 @@ void GameScene::Update(double dt)
 			Player->gun = static_cast<PistolGO*>(go);
 			Player->gun->obb.isEnabled = false;
 			Player->gun->SetStatic(true);
-
+			CSoundEngine::Getinstance()->PlayASound("pickup");
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
@@ -175,6 +175,10 @@ void GameScene::RenderWorld()
 		GameObject *go = (GameObject *)*it;
 		if (go->GetActive())
 		{
+			if (m_renderPass == RENDER_PASS_PRE)
+				if (go->type == GameObject::GO_CEILING)
+					continue;
+
 			RenderGO(go);
 		}
 	}
@@ -203,7 +207,7 @@ void GameScene::RenderPassGPass()
 	//These matrices should change when light position or direction changes
 
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
-		m_lightDepthProj.SetToOrtho(-100, 100, -100, 100, 0.1, 1000);
+		m_lightDepthProj.SetToOrtho(-10000, 10000, -10000, 10000, 0.1, 10000000000);
 	else
 		m_lightDepthProj.SetToPerspective(90, 1.f, 0.1, 200);
 
@@ -281,17 +285,31 @@ void GameScene::RenderPassMain()
 	RenderMesh(meshList[GEO_AXES], false, false, false);
 
 	RenderWorld();
+	if (Player->gun != nullptr)
+	{
+
+		modelStack.PushMatrix();
+		RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
+	else
+	{
+		modelStack.PushMatrix();
+		float scale = 1;
+		if (Application::GetMouseDown(0))
+			scale = 1.5;
+		else
+			scale = 1.f;
+		RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0, 180, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
+
 
 	modelStack.PushMatrix();
-	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+	modelStack.Translate(100, 200, 0);
+	modelStack.Scale(75, 75, 50);
+	RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map
 	modelStack.PopMatrix();
-
-
-	//modelStack.PushMatrix();
-	//modelStack.Translate(100, 200, 0);
-	//modelStack.Scale(75, 75, 50);
-	//RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map
-	//modelStack.PopMatrix();
 }
 
 void GameScene::InitGO(GameObject * go)
@@ -435,7 +453,7 @@ void GameScene::RenderGO(GameObject* go)
 			modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 			//modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
+			RenderMesh(meshList[GEO_ENEMY_STAND], false, true, false);
 			modelStack.PopMatrix();
 			//modelStack.PushMatrix();
 			//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
@@ -451,7 +469,7 @@ void GameScene::RenderGO(GameObject* go)
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-				RenderMesh(meshList[GEO_ENEMY_WALK01], false, false, false);
+				RenderMesh(meshList[GEO_ENEMY_WALK01], false, true, false);
 				modelStack.PopMatrix();
 			}
 			if (static_cast<EnemyGO*>(go)->aiStatus->m_bstartWalk02)
@@ -460,7 +478,7 @@ void GameScene::RenderGO(GameObject* go)
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-				RenderMesh(meshList[GEO_ENEMY_WALK02], false, false, false);
+				RenderMesh(meshList[GEO_ENEMY_WALK02], false, true, false);
 				modelStack.PopMatrix();
 			}
 		}

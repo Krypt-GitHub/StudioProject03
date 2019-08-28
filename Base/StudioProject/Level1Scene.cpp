@@ -150,7 +150,7 @@ void Level1Scene::Update(double dt)
 			Player->gun = static_cast<PistolGO*>(go);
 			Player->gun->obb.isEnabled = false;
 			Player->gun->SetStatic(true);
-
+			CSoundEngine::Getinstance()->PlayASound("pickup");
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
@@ -311,10 +311,24 @@ void Level1Scene::RenderPassMain()
 	RenderMesh(meshList[GEO_AXES], false, false, false);
 
 	RenderWorld();
+	if (Player->gun != nullptr)
+	{
 
-	modelStack.PushMatrix();
-	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
+	else
+	{
+		modelStack.PushMatrix();
+		float scale = 1;
+		if (Application::GetMouseDown(0))
+			scale = 1.5;
+		else
+			scale = 1.f;
+		RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0, 180, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
 	//modelStack.Scale(75, 75, 50);

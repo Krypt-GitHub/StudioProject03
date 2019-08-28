@@ -1,5 +1,7 @@
 #include "PlayerGO.h"
 #include "../Source/Application.h"
+#include"..//Core/ParticleEngine.h"
+#include "..//Core/SoundEngine.h"
 
 
 PlayerGO::PlayerGO()
@@ -203,6 +205,11 @@ void PlayerGO::Update(double dt)
 				if (MeleeCheck.GetCollision(go->obb))
 				{
 					go->SetActive(false);
+					for (int i = 0; i < 80; ++i)
+					{
+						ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_ENEMYSHATTER);
+					}
+					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				}
 			}
 			m_bLBDown = true;
@@ -320,11 +327,14 @@ bool PlayerGO::contrain(Vector3 futurePos, Collider box)
 	box.SetScale(Vector3(0, 0,0));
 	for (auto go : gl.m_goList)
 	{
-		if (go->type != GameObject::GO_WALL)
-			continue;
+		if (go->type == GameObject::GO_WALL || go->type == GameObject::GO_GLASS)
+		{
+
+		}
+		else continue;
 		if (box.GetCollision(go->obb))
 		{
-			//std::cout << "collidered" << std::endl;
+			std::cout << "collidered" << std::endl;
 			return true;
 		}
 	}

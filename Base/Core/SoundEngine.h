@@ -8,16 +8,21 @@ class CSoundEngine
 {
 protected:
 	// Destructor
-	ISoundEngine* theSoundEngine;
 
 	// The library map of all the sounds created
 	std::map<std::string, std::string> soundMap;
 
 public:
+	static CSoundEngine* soundEngine;
+	ISoundEngine* theSoundEngine;
+	static CSoundEngine* Getinstance() {
+		if (soundEngine == nullptr)
+			soundEngine = new CSoundEngine;
+		return soundEngine;
+	};
 	// Constructor
 	CSoundEngine();
 	virtual ~CSoundEngine();
-
 	// Init this class and it will create the Sound Engine
 	bool Init(void);
 
@@ -35,6 +40,17 @@ public:
 	void PlayASound(const std::string& _soundIndex);
 
 	void Play3D(const std::string& _soundIndex, vec3df _position);
+
+	bool CurentlyPlaying(const std::string & _soundIndex);
+
+	void setSoundVolume(float volume);
+
+	void SetmaxDist3D(float volume);
+
+	void SetminDist3D(float volume);
+
+	void StopSound();
+
 		
 };
 

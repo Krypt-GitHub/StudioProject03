@@ -12,6 +12,7 @@
 #include "../Source/DepthFBO.h"
 #include "../Source/Particle.h"
 #include "../Core/ParticleEngine.h"
+#include "..//Core/SoundEngine.h"
 
 class SceneBase : public Scene
 {
@@ -66,6 +67,7 @@ protected:
 		// Misc
 		GEO_AXES,
 		GEO_CROSSHAIR,
+		GEO_FIST,
 		GEO_LIGHTBALL,
 		// Geometry
 		GEO_QUAD,
@@ -93,11 +95,15 @@ protected:
 		GEO_TERRAIN,
 		GEO_WATER,
 		GEO_SPRITE_ANIMATION,
-		// Shadow 
+		// Shadow
 		GEO_LIGHT_DEPTH_QUAD,
 		GEO_OBB_GREEN,
 		GEO_OBB_RED,
 		GEO_OBB_BLUE,
+		GEO_PA_GUNSHATTER,
+		GEO_PA_GUNSMOKE,
+		GEO_PA_ENEMYSHATTER1,
+		GEO_PA_ENEMYSHATTER2,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -198,7 +204,7 @@ protected:
 	float fps;
 
 	float m_fFOV;
-	// Terrain  
+	// Terrain
 	std::vector<unsigned char> m_heightMap;
 
 	float m_fMTElapsedTime;

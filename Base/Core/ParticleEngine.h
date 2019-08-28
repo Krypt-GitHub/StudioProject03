@@ -77,8 +77,9 @@ public:
 				particle = getParticle();
 				particle->type = type;
 				particle->life = 2.2f;
-				particle->vel = Vector3(Math::RandFloatMinMax(-10.f, 10.f), Math::RandFloatMinMax(-5.f, 15.f), Math::RandFloatMinMax(-20.f, 0));
+				particle->vel = Vector3(Math::RandFloatMinMax(-4.f, 4.f), Math::RandFloatMinMax(-4.f, 4.f), Math::RandFloatMinMax(-4.f, 0));
 				particle->pos = go->transform.position;
+				particle->angle = Math::RandFloatMinMax(0, 360);
 				particle->active = true;
 				particle->scale= Vector3(1.2f, 1.2f, 1.2f);
 				break;
@@ -90,9 +91,10 @@ public:
 				particle = getParticle();
 				particle->type = type;
 				particle->life = 1.2f;
-				particle->vel = Vector3(Math::RandFloatMinMax(-10.f, 10.f), Math::RandFloatMinMax(0.f, 25.f), Math::RandFloatMinMax(-20.f, 0));
-				particle->pos = go->transform.position;
+				particle->vel = Vector3(Math::RandFloatMinMax(-4.f, 4.f), Math::RandFloatMinMax(0.f, 4.f), Math::RandFloatMinMax(-4.f, 0));
+				particle->pos = go->transform.position+ Vector3(Math::RandFloatMinMax(-4.f, 4.f), Math::RandFloatMinMax(-20.f, 20.f), Math::RandFloatMinMax(-4.f, 0));
 				particle->active = true;
+				particle->angle= Math::RandFloatMinMax(0, 360);
 				particle->scale = Vector3(1.2f, 1.2f, 1.2f);
 				particle->gotGravity = true;
 				break;
