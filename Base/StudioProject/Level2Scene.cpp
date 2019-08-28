@@ -26,6 +26,8 @@ Level2Scene::~Level2Scene()
 
 void Level2Scene::Init()
 {
+	m_ienemyNum = 0;
+
 	SceneBase::Init();
 	endgame = false;
 	//Bullet initialisation
