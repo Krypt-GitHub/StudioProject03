@@ -25,7 +25,7 @@ Level2Scene::~Level2Scene()
 void Level2Scene::Init()
 {
 	SceneBase::Init();
-
+	endgame = false;
 	//Bullet initialisation
 	for (int i = 0; i < 20; i++)
 	{
@@ -67,7 +67,7 @@ void Level2Scene::Init()
 	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(245, 40, 0), Vector3(450, 80, 40), 90, Vector3(225, 40, 20), 90, Vector3(0, 1, 0));
 	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-245, 40, 0), Vector3(450, 80, 40), -90, Vector3(225, 40, 20), -90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 90, 0), Vector3(450, 450, 40), 90, Vector3(225, 225, 20), 90, Vector3(1, 0, 0));
-
+	meshList[GEO_QUAD]->textureArray[0] = LoadTGA("Image//Credits.tga");
 	// Path Node Initialisation
 	int tempID = 0;
 
@@ -412,6 +412,14 @@ void Level2Scene::RenderPassMain()
 
 	RenderWorld();
 
+
+	if (endgame)
+	{
+
+	RenderMeshIn2D(meshList[GEO_QUAD], false, Application::GetWindowWidth()/11, Application::GetWindowHeight()/10.5, 0, 0, 0, Vector3(1));
+	}
+	else
+	{
 	if (m_bRenderScreenText)
 	{
 		RenderScreenText(2, m_iTextCounter);
@@ -437,6 +445,7 @@ void Level2Scene::RenderPassMain()
 		}
 	}
 
+	}
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);
 	//modelStack.Scale(75, 75, 50);

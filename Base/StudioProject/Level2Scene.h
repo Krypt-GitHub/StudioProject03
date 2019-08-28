@@ -50,6 +50,7 @@ private:
 	PlayerGO *Player;
 	Physics PhysicsEngine;
 	std::vector <PathNode *> m_nodeList;
+	bool endgame;
 };
 
 #endif
