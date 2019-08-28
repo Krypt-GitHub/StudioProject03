@@ -164,6 +164,7 @@ void SceneBase::Init()
 
 	meshList[GEO_OBB_GREEN] = MeshBuilder::GenerateOBB("obb", Color(0, 1, 0), 1.f);
 	meshList[GEO_OBB_RED] = MeshBuilder::GenerateOBB("obb", Color(1, 0, 0), 1.f);
+	meshList[GEO_OBB_BLUE] = MeshBuilder::GenerateOBB("obb", Color(0, 0, 1), 1.f);
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0, 0, 1), 1.f);
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 1, 0), 1.f);
 	// UI

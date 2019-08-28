@@ -188,7 +188,7 @@ public:
 			{
 				if (go->type == GameObject::GO_PISTOL && (status->m_v3aiPosition - go->transform.position).Length() <= 100 /*&& !static_cast<PistolGO*>(go)->GetPickUp()*/)
 				{
-					//std::cout << "FOUND GUN" << std::endl;
+					std::cout << (status->m_v3aiPosition - go->transform.position).Length() << std::endl;
 					pistol = go;
 					m_bgunFound = true;
 					return true;

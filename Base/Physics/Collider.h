@@ -20,6 +20,7 @@ public:
 	Vector3 AxisZ;
 	Vector3 pos;
 	Vector3 Half_size;
+	float rotation;
 	bool GetCollision( Collider&box2);
 	void UpdateAxis(Vector3 AxisX , Vector3 AxisZ);
 	void UpdatePos(Vector3 pos);

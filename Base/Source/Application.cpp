@@ -180,7 +180,7 @@ void Application::Init()
 
 void Application::Run()
 {
-	SceneManager::SetSceneID(1); // temp to set to level1scene
+	SceneManager::SetSceneID(3); // temp to set to level1scene
 	//Main Loop
 	while (SceneManager::GetSceneID() != 10)
 	{

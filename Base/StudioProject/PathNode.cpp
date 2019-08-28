@@ -3,7 +3,7 @@
 
 
 PathNode::PathNode()
-	: m_bobstructed(false)
+	: m_inodeStatus(0)
 {
 }
 

@@ -6,9 +6,9 @@
 
 class PathNode
 {
-private:
 public:
-	bool m_bobstructed;
+	int m_inodeStatus;
+	int id;
 	Transform transform;
 	Collider obb;
 

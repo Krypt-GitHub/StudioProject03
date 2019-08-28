@@ -34,11 +34,12 @@ void PlayerGO::Init()
 
 void PlayerGO::Update(double dt)
 {
-
 	static bool m_bRBDown = false;
 	static bool m_bLBDown = false;
 	bool once = false;
 	m_v3dir = (camera.target - camera.position).Normalized();
+	obb.RotateAxis(Math::RadianToDegree(atan2(camera.target.x - camera.position.x, camera.target.z - camera.position.z)), Vector3(0, 1, 0));
+
 	Collider obbcheck = this->obb;
 
 	if (Application::GetKeyDown(VK_SHIFT))
@@ -57,7 +58,6 @@ void PlayerGO::Update(double dt)
 		Vector3 move = view * m_fplayerSpeed * dt;
 		if (!contrain(transform.position + Vector3(move.x, 0, move.z)*1.15, obbcheck))
 		{
-
 			transform.position += Vector3(move.x, 0, move.z);
 			camera.position += Vector3(move.x, 0, move.z);;
 			camera.target += Vector3(move.x, 0, move.z);

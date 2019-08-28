@@ -6,7 +6,7 @@
 #include "AIBehaviour.h"
 #include "PistolGO.h"
 #include "PlayerGO.h"
-
+#include "PathNode.h"
 
 class EnemyGO : public GameObject
 {
@@ -14,9 +14,18 @@ private:
 	float m_fwalkTime;
 	bool m_bdoOnce;
 	float m_fROF;
+	bool m_bactivatePathFind;
+	std::vector <PathNode*> m_pnList;
+	std::vector <PathNode*> m_pathList;
+	std::vector <PathNode *> m_toPathNodeList;
+	PathNode* parent;
+	PathNode* destination;
+	PathNode *currentNode;
 public:
 	EnemyGO();
 	virtual ~EnemyGO();
+
+
 
 	GOList &gl = GOList::GetInstance();
 
@@ -44,9 +53,11 @@ public:
 	PistolGO *GunOnHand;
 
 	void Init();
+	void Init(std::vector<PathNode*>& _pn);
 	bool Constrain(Vector3 futurepos, Collider box, double dt);
 	void Update(double dt, PlayerGO * _player);
 	void SetGunOnHand(PistolGO * _gunOnHand);
+	void SetPathFind(bool _pathfind);
 	bool Constrain(Vector3 futurepos, Collider box);
 };
 

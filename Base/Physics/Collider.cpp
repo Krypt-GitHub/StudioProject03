@@ -69,6 +69,7 @@ void Collider::UpdatePos(Vector3 pos)
 
 void Collider::RotateAxis(float degree, Vector3 rotateAxis)
 {
+	rotation = degree;
 	Mtx44 rotate;
 	rotate.SetToRotation(degree, rotateAxis.x, rotateAxis.y, rotateAxis.z);
 	AxisX = rotate * AxisX;

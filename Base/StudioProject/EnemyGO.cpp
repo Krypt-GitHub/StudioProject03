@@ -1,7 +1,7 @@
 #include "EnemyGO.h"
 
-
 EnemyGO::EnemyGO()
+	: m_bactivatePathFind(false)
 {
 }
 
@@ -115,6 +115,78 @@ void EnemyGO::Init()
 	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
 
 	GunOnHand = NULL;
+
+	m_bactivatePathFind = false;
+}
+
+
+void EnemyGO::Init(std::vector <PathNode *> &_pn)
+{
+	m_pnList = _pn;
+	parent = NULL;
+	destination = NULL;
+	currentNode = NULL;
+
+	aiStatus = new AIBehaviour(false, 0);
+	aiStatus->state = AIBehaviour::IDLE;
+
+	root = new AITree::Sequence;
+	sequence1 = new AITree::Sequence;
+	sequence2 = new AITree::Sequence;
+	sequence3 = new AITree::Sequence;
+	sequence4 = new AITree::Sequence;
+	selector1 = new AITree::Selector;
+	selector2 = new AITree::Selector;
+	selector3 = new AITree::Selector;
+	selector4 = new AITree::Selector;
+	selector5 = new AITree::Selector;
+	CheckRangeNode = new CheckPlayerInRangeTask(aiStatus);
+	ApproachPlayerNode = new ApproachPlayerTask(aiStatus);
+	ShootPlayerNode = new ShootPlayerTask(aiStatus);
+	ifGunHeld = new CheckIfGunHeldTask(aiStatus, false);
+	DetectBulletNode = new CheckOncomingBulletTask(aiStatus);
+	ChasePlayerNode = new ChasePlayerTask(aiStatus);
+	SearchGunNode = new SearchNeabyGunTask(aiStatus);
+	idle = new IdleTask(aiStatus);
+
+	// If player in range
+	root->addChild(selector1);
+
+
+	selector1->addChild(sequence1);
+	sequence1->addChild(CheckRangeNode);
+	sequence1->addChild(selector2);
+
+	selector2->addChild(DetectBulletNode);
+	selector2->addChild(selector3);
+
+	selector3->addChild(ApproachPlayerNode);
+	selector3->addChild(selector4);
+
+	selector4->addChild(sequence3);
+	selector4->addChild(selector5);
+
+	sequence3->addChild(ifGunHeld);
+	sequence3->addChild(ShootPlayerNode);
+
+	selector5->addChild(sequence4);
+	selector5->addChild(ChasePlayerNode);
+
+	sequence4->addChild(SearchGunNode);
+
+	//selector5->addChild(Chase);
+
+
+	selector1->addChild(sequence2);
+	//sequence4->addChild
+
+
+	m_bdoOnce = false;
+	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
+
+	GunOnHand = NULL;
+
+	m_bactivatePathFind = true;
 }
 
 bool EnemyGO::Constrain(Vector3 futurepos, Collider box, double dt)
@@ -145,34 +217,129 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 {
 	m_fROF += dt;
 	obb.RotateAxis(Math::RadianToDegree(atan2(m_v3dir.x, m_v3dir.z)), Vector3(0, 1, 0));
-
+	aiStatus->m_v3aiPosition = transform.position;
 	aiStatus->m_fdistanceToPlayer = (transform.position - _player->transform.position).Length();
 
-	if (ApproachPlayerNode->GetApproachBool())
+	std::cout << m_pathList.size() << std::endl;
+
+	if (m_bactivatePathFind)
 	{
-		m_v3dir = (_player->transform.position - transform.position).Normalized();
+		if (parent == NULL)
+		{
+			for (auto pn : m_pnList)
+			{
+				if (obb.GetCollision(pn->obb) && (pn->transform.position - transform.position).Length() < 15)
+				{
+					pn->m_inodeStatus = 2;
+					parent = pn;
+					if (currentNode == NULL)
+						currentNode = parent;
+					break;
+				}
+			}
+		}
 
-		aiStatus->state = AIBehaviour::WALK;
+		if (destination == NULL)
+		{
+			for (auto pn : m_pnList)
+			{
+				if (_player->obb.GetCollision(pn->obb) && (pn->transform.position - _player->transform.position).Length() < 15)
+				{
+					if (destination != NULL)
+						destination->m_inodeStatus = 0;
+					destination = pn;
+					break;
+				}
+			}
+		}
 
-		if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
-			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-		else
-			transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+		if (currentNode != NULL && destination != NULL && (destination->transform.position - currentNode->transform.position).Length() > 15)
+		{
+			float shortestDist = 1000;
+			PathNode *storeNode;
+			for (auto pn : m_pnList)
+			{
+				float newDist = (pn->transform.position - destination->transform.position).Length();
+				if (newDist < shortestDist && (pn->transform.position - currentNode->transform.position).Length() < 15 && pn->m_inodeStatus != 1)
+				{
+					storeNode = pn;
+					shortestDist = newDist;
+				}
+			}
+			currentNode = storeNode;
+			currentNode->m_inodeStatus = 2;
+			m_pathList.push_back(currentNode);
+		}
+
+		static int x = 0;
+		if (ChasePlayerNode->GetApproachBool() && !SearchGunNode->ReturnGunFound() && x < m_pathList.size())
+		{
+
+			m_v3dir = (m_pathList[x]->transform.position - transform.position).Normalized();
+
+			aiStatus->state = AIBehaviour::WALK;
+
+			if (!Constrain((transform.position + (Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt) * 20), obb, dt))
+				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			else
+				transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+				
+			if ((transform.position - m_pathList[x]->transform.position).Length() < 15)
+				x++;
+		}
+
+		if (destination != NULL)
+		{
+			if ((_player->transform.position - destination->transform.position).Length() > 25)
+			{
+				for (auto pn : m_pathList)
+				{
+					pn->m_inodeStatus = 0;
+				}
+				parent = NULL;
+				destination = NULL;
+				m_pathList.clear();
+				currentNode = parent;
+				x = 0;
+			}
+		}
 	}
-	if (ChasePlayerNode->GetApproachBool())
+	else
 	{
-		m_v3dir = (_player->transform.position - transform.position).Normalized();
+		if (ApproachPlayerNode->GetApproachBool())
+		{
+			m_v3dir = (_player->transform.position - transform.position).Normalized();
 
-		aiStatus->state = AIBehaviour::WALK;
+			aiStatus->state = AIBehaviour::WALK;
 
-		if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
-			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-		else
-			transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+			if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
+				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			else
+				transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+		}
+		if (ChasePlayerNode->GetApproachBool() && !SearchGunNode->ReturnGunFound())
+		{
+			m_v3dir = (_player->transform.position - transform.position).Normalized();
+
+			aiStatus->state = AIBehaviour::WALK;
+
+			if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
+				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			else
+				transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+		}
+	}
+
+
+	if (GunOnHand != NULL)
+	{
+		ifGunHeld->SetGunHeld(true);
 	}
 
 	if (ShootPlayerNode->GetShootStatus() && m_fROF >= 2)
 	{
+		m_v3dir = (_player->transform.position - transform.position).Normalized();
+
 		GameObject *go = gl.FetchGO();
 		go->SetActive(true);
 		go->SetStatic(false);
@@ -192,7 +359,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 	if (SearchGunNode->ReturnGunFound())
 	{
-		m_v3dir = (SearchGunNode->ReturnPistol()->transform.position - transform.position).Normalized();
+		m_v3dir = (Vector3(SearchGunNode->ReturnPistol()->transform.position.x - transform.position.x, 19, SearchGunNode->ReturnPistol()->transform.position.z - transform.position.z)).Normalized();
 
 		transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
 	}
@@ -226,9 +393,6 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 		//	m_fwalkTime = 0.f;
 		//}
 	}
-
-
-	//ifGunHeld->SetGunHeld(true);
 
 	//if (approachPlayer->GetApproachBool())
 	//{
@@ -273,11 +437,6 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 	//	}
 	//}
 
-	if (GunOnHand != NULL)
-	{
-		ifGunHeld->SetGunHeld(true);
-	}
-
 	//std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
 
 	while (!root->run())
@@ -287,4 +446,9 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 void EnemyGO::SetGunOnHand(PistolGO* _gunOnHand)
 {
 	GunOnHand = _gunOnHand;
+}
+
+void EnemyGO::SetPathFind(bool _pathfind)
+{
+	m_bactivatePathFind = _pathfind;
 }
