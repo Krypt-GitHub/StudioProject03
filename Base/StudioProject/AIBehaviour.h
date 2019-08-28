@@ -170,14 +170,14 @@ public:
 	}
 };
 
-class SearchNeabyGunTask : public AITree::Node
+class SearchNearbyGunTask : public AITree::Node
 {
 private:
 	AIBehaviour* status;	
 	GameObject* pistol;
 	bool m_bgunFound;
 public:
-	SearchNeabyGunTask(AIBehaviour *status) : status(status), m_bgunFound(false) {}
+	SearchNearbyGunTask(AIBehaviour *status) : status(status), m_bgunFound(false) {}
 	virtual bool run() override
 	{
 		GOList &gl = GOList::GetInstance();

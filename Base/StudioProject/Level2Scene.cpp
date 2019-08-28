@@ -494,7 +494,7 @@ void Level2Scene::RenderPassMain()
 			if (Player->gun != nullptr)
 			{
 				modelStack.PushMatrix();
-				RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+				RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, Player->gun->m_frotation, Vector3(0, 0, 1));
 				modelStack.PopMatrix();
 			}
 			else
@@ -541,9 +541,6 @@ void Level2Scene::UpdateGO(GameObject * go, double dt)
 	case GameObject::GO_PLAYER:
 		if (cameraID == 1)
 			static_cast<PlayerGO*>(go)->Update(dt);
-		break;
-	case GameObject::GO_PISTOL:
-		static_cast<PistolGO*>(go)->Update(dt);
 		break;
 	}
 }

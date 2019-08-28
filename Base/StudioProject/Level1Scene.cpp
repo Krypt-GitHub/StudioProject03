@@ -399,7 +399,7 @@ void Level1Scene::RenderPassMain()
 		if (Player->gun != nullptr)
 		{
 			modelStack.PushMatrix();
-			RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+			RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, Player->gun->m_frotation, Vector3(0, 0, 1));
 			modelStack.PopMatrix();
 		}
 		else
@@ -445,9 +445,6 @@ void Level1Scene::UpdateGO(GameObject * go, double dt)
 		if (cameraID == 1)
 			static_cast<PlayerGO*>(go)->Update(dt);
 		break;
-	case GameObject::GO_PISTOL:
-		static_cast<PistolGO*>(go)->Update(dt);
-		break;
 	}
 }
 
@@ -471,7 +468,8 @@ void Level1Scene::RenderGO(GameObject* go)
 			modelStack.Rotate(Math::RadianToDegree(-atan2(static_cast<PistolGO*>(go)->attachedGO->m_v3dir.y, Vector3(static_cast<PistolGO*>(go)->attachedGO->m_v3dir.x, 0, static_cast<PistolGO*>(go)->attachedGO->m_v3dir.z).Length())), 1, 0, 0);
 
 			modelStack.Translate(-4, -5, 20);
-			Player->gun->transform.position = Vector3(modelStack.Top().a[12], modelStack.Top().a[13], modelStack.Top().a[14]);
+			if (static_cast<PistolGO*>(go)->attachedGO == Player)
+				Player->gun->transform.position = Vector3(modelStack.Top().a[12], modelStack.Top().a[13], modelStack.Top().a[14]);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
 			modelStack.PopMatrix();
@@ -489,12 +487,6 @@ void Level1Scene::RenderGO(GameObject* go)
 			modelStack.Rotate(go->transform.rotation, 0, 1, 0);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
-			modelStack.PopMatrix();
-			modelStack.PushMatrix();
-			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-			modelStack.Rotate(Math::RadianToDegree(acosf((go->obb.AxisZ.Dot(Vector3(0, 0, 1)) / go->obb.AxisZ.Length() * Vector3(0, 0, 1).Length()))), 0, 1, 0);
-			modelStack.Scale(go->obb.Half_size.x*2, go->obb.Half_size.y*2, go->obb.Half_size.z*2);
-			RenderMesh(meshList[GEO_CUBE], false, false, false);
 			modelStack.PopMatrix();
 		}
 		break;

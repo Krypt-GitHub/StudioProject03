@@ -76,7 +76,7 @@ void EnemyGO::Init()
 	ifGunHeld = new CheckIfGunHeldTask(aiStatus, false);
 	DetectBulletNode = new CheckOncomingBulletTask(aiStatus);
 	ChasePlayerNode = new ChasePlayerTask(aiStatus);
-	SearchGunNode = new SearchNeabyGunTask(aiStatus);
+	SearchGunNode = new SearchNearbyGunTask(aiStatus);
 	idle = new IdleTask(aiStatus);
 
 	// If player in range
@@ -144,7 +144,7 @@ void EnemyGO::Init(std::vector <PathNode *> &_pn)
 	ifGunHeld = new CheckIfGunHeldTask(aiStatus, false);
 	DetectBulletNode = new CheckOncomingBulletTask(aiStatus);
 	ChasePlayerNode = new ChasePlayerTask(aiStatus);
-	SearchGunNode = new SearchNeabyGunTask(aiStatus);
+	SearchGunNode = new SearchNearbyGunTask(aiStatus);
 	idle = new IdleTask(aiStatus);
 
 	// If player in range

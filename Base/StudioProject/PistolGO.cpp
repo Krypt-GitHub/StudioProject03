@@ -27,6 +27,11 @@ void PistolGO::Init()
 	m_bisPickUp = false;
 
 	m_goStorePlayer = gl.FetchGO(GameObject::GO_PLAYER);
+	m_frotation = 0.f;
+	m_bCanFire = true;
+	m_bRotateCrosshair = false;
+	m_imaxClip = 4;
+	m_icurClip = m_imaxClip;
 }
 
 void PistolGO::Update(double dt)
@@ -39,30 +44,12 @@ void PistolGO::Update(double dt)
 
 	if (m_bisPickUp)
 	{
-		if (Application::GetMouseDown(0) && !m_bLBDown)
+		if (Application::GetMouseDown(0) && !m_bLBDown && m_bCanFire && m_icurClip > 0)
 		{
 			GameObject *go = gl.FetchGO();
 			go->type = GameObject::GO_PBULLET;
 			go->SetActive(true);
 			go->m_bGravity = false;
-			
-			//Ray *rae = new Ray(m_v3storeDir, m_v3storePos);
-			//Vector3 targetPos;
-
-			//for (auto go2 : gl.m_goList)
-			//{
-			//	if (go2->type == GameObject::GO_PISTOL || go == go2 || go2->type == GameObject::GO_NONE || go2->type == GameObject::GO_PLAYER || go2->type == GameObject::GO_BULLET || !go2->GetActive())
-			//		continue;
-
-			//	if (rae->IntersectionOBB(go2->obb, targetPos))
-			//	{
-			//		go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z);
-			//		go->transform.scale.Set(0.3, 0.3, 0.3);
-			//		go->m_v3dir = (targetPos - go->transform.position).Normalized();
-			//		go->m_v3vel = (targetPos - go->transform.position).Normalized() * 200.f;
-			//		break;
-			//	}
-			//}
 
 			go->transform.position = Vector3(transform.position.x, transform.position.y + 1.5, transform.position.z) + Vector3(m_v3storeDir.x*2.25,0,m_v3storeDir.z*2.25f);
 			go->transform.scale.Set(0.3, 0.3, 0.3);
@@ -77,11 +64,36 @@ void PistolGO::Update(double dt)
 			go->obb.pos = transform.position;
 			go->obb.RotateAxis(0, Vector3(0, 1, 0));
 			CSoundEngine::Getinstance()->PlayASound("Gunshot");
+			m_frotation = 0;
+			m_bRotateCrosshair = true;
+			m_bCanFire = false;
 			m_bLBDown = true;
+			m_icurClip--;
 		}
 		else if (!Application::GetMouseDown(0) && m_bLBDown)
 		{
 			m_bLBDown = false;
+		}
+
+		if (Application::GetMouseDown(0) && !m_bLBDown && m_bCanFire && m_icurClip == 0)
+		{
+			m_bLBDown = true;
+			CSoundEngine::Getinstance()->PlayASound("pickup");
+		}
+		else if (!Application::GetMouseDown(0) && m_bLBDown)
+		{
+			m_bLBDown = false;
+		}
+	}
+
+	if (m_bRotateCrosshair)
+	{
+		m_frotation -= 50 * dt;
+		if (m_frotation <= -90)
+		{
+			m_bRotateCrosshair = false;
+			m_bCanFire = true;
+			CSoundEngine::Getinstance()->PlayASound("pickup");
 		}
 	}
 }

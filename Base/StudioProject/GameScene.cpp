@@ -35,7 +35,7 @@ void GameScene::Init()
 
 	// GAME OBJECT CREATION
 	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 100), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	//goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 23, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 23, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(-15, 19, -100), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(15, 19, -100), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(100, 5, 300), 0, Vector3(50, 2.5, 150), 0, Vector3(0, 1, 0));
@@ -136,6 +136,7 @@ void GameScene::Update(double dt)
 
 		if (ray->IntersectionOBB(go->obb) && Application::GetKeyDown('E') && !static_cast<PistolGO*>(go)->GetPickUp() && Player->gun == nullptr)
 		{
+			static_cast<PistolGO*>(go)->attachedGO = Player;
 			static_cast<PistolGO*>(go)->SetPickUp(true);
 			Player->gun = static_cast<PistolGO*>(go);
 			Player->gun->obb.isEnabled = false;
@@ -375,7 +376,7 @@ void GameScene::RenderPassMain()
 		if (Player->gun != nullptr)
 		{
 			modelStack.PushMatrix();
-			RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+			RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, Player->gun->m_frotation, Vector3(0, 0, 1));
 			modelStack.PopMatrix();
 		}
 		else
@@ -423,9 +424,6 @@ void GameScene::UpdateGO(GameObject * go, double dt)
 		if (cameraID == 1)
 			static_cast<PlayerGO*>(go)->Update(dt);
 		break;
-	case GameObject::GO_PISTOL:
-		static_cast<PistolGO*>(go)->Update(dt);
-		break;
 	}
 }
 
@@ -437,12 +435,17 @@ void GameScene::RenderGO(GameObject* go)
 		if (static_cast<PistolGO*>(go)->GetPickUp())
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(Player->camera.position.x, Player->camera.position.y, Player->camera.position.z);
-			modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.target.x - Player->camera.position.x, Player->camera.target.z - Player->camera.position.z)), 0, 1, 0);
-			modelStack.Rotate(Math::RadianToDegree(-atan2(Player->camera.target.y - Player->camera.position.y, Vector3(Player->camera.target.x - Player->camera.position.x, 0, Player->camera.target.z - Player->camera.position.z).Length())), 1, 0, 0);
-
+			if (static_cast<PistolGO*>(go)->attachedGO == Player)
+				modelStack.Translate(Player->camera.position.x, Player->camera.position.y, Player->camera.position.z);
+			else
+				modelStack.Translate(static_cast<PistolGO*>(go)->attachedGO->transform.position.x, static_cast<PistolGO*>(go)->attachedGO->transform.position.y, static_cast<PistolGO*>(go)->attachedGO->transform.position.z);
+			modelStack.Rotate(Math::RadianToDegree(atan2(static_cast<PistolGO*>(go)->attachedGO->m_v3dir.x, static_cast<PistolGO*>(go)->attachedGO->m_v3dir.z)), 0, 1, 0);
+			if (static_cast<PistolGO*>(go)->attachedGO == Player)
+				modelStack.Rotate(Math::RadianToDegree(-atan2(static_cast<PistolGO*>(go)->attachedGO->m_v3dir.y, Vector3(static_cast<PistolGO*>(go)->attachedGO->m_v3dir.x, 0, static_cast<PistolGO*>(go)->attachedGO->m_v3dir.z).Length())), 1, 0, 0);
+			
 			modelStack.Translate(-4, -5, 20);
-			Player->gun->transform.position = Vector3(modelStack.Top().a[12], modelStack.Top().a[13], modelStack.Top().a[14]);
+			if (static_cast<PistolGO*>(go)->attachedGO == Player)
+				Player->gun->transform.position = Vector3(modelStack.Top().a[12], modelStack.Top().a[13], modelStack.Top().a[14]);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 			RenderMesh(meshList[GEO_PISTOL], false, false, false);
 			modelStack.PopMatrix();

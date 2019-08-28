@@ -48,7 +48,7 @@ public:
 	CheckIfGunHeldTask *ifGunHeld;
 	CheckOncomingBulletTask *DetectBulletNode;
 	ChasePlayerTask *ChasePlayerNode;
-	SearchNeabyGunTask *SearchGunNode;
+	SearchNearbyGunTask *SearchGunNode;
 
 	PistolGO *GunOnHand;
 

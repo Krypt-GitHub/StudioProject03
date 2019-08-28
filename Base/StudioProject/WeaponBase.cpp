@@ -4,7 +4,7 @@
 
 WeaponBase::WeaponBase()
 	: //m_bisPickUp(false)
-	 m_ifireRate(10.f)
+	 m_ifireRate(50.f)
 	, m_freloadSpeed(5.f)
 	, m_imaxClip(10)
 {

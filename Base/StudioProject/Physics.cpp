@@ -34,6 +34,10 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 			{
 				static_cast<EnemyGO*>(go1)->Update(delta, _player);
 			}
+			if (go1->type == GameObject::GO_PISTOL)
+			{
+				static_cast<PistolGO*>(go1)->Update(delta);
+			}
 
 			//Resetting their velocity if they are static
 			if (go1->GetStatic())
@@ -61,9 +65,9 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 					{
 						if (go1->obb.GetCollision(go2->obb))
 						{
-							CollisionResponse(go1, go2);
 							if (!go1->GetActive())
 								break;
+							CollisionResponse(go1, go2);
 						}
 					}
 				}
@@ -78,7 +82,7 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 {
 	//GO1 will always be dynamic objects
-	if (go1->obb.isEnabled && go2->obb.isEnabled)
+	if (go1->obb.isEnabled && go2->obb.isEnabled && go2->GetActive())
 	{
 		switch (go1->type)
 		{
@@ -136,6 +140,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				{
 					static_cast<EnemyGO*>(go2)->GunOnHand = static_cast<PistolGO*>(go1);
 					static_cast<PistolGO*>(go1)->attachedGO = go2;
+					static_cast<PistolGO*>(go1)->SetPickUp(true);
 				}
 				break;
 			case GameObject::GO_FLOOR:

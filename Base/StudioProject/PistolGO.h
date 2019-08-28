@@ -14,6 +14,9 @@ public:
 	void Update(double dt);
 
 	GameObject *attachedGO;
+	float m_frotation;
+	bool m_bCanFire;
+	bool m_bRotateCrosshair;
 };
 
 #endif
