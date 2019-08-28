@@ -26,8 +26,8 @@ void SceneBase::Init()
 	CSoundEngine::Getinstance()->AddSound("Gunshot", "Sound//Gunshot.ogg");
 	CSoundEngine::Getinstance()->AddSound("pickup", "Sound//pickup.ogg");
 	CSoundEngine::Getinstance()->AddSound("Text", "Sound//Text.ogg");
-	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.ogg");
-	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.ogg");
+	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.mp3");
+	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.mp3");
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	// Enable depth test
@@ -226,13 +226,9 @@ void SceneBase::Init()
 		meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
 		meshList[GEO_SKYDOME] = MeshBuilder::GenerateSkyPlane("skydome", Color(0.f, 0.f, 1.f), 100, 600, 2000, 2, 2);
 		meshList[GEO_SKYDOME]->textureArray[0] = LoadTGA("Image//sky.tga");
-	//meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
-	//meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
-		meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(0.93, 0.93, 0.93), 1.f);
-		meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.94, 0.94, 0.94), 1.f);
-
-		//meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1, 1, 1), 1.f);
-		//meshList[GEO_FLOOR]->textureArray[0] = LoadTGA("Image//grass.tga");
+		meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(0.87, 0.87, 0.87), 1.f);
+		meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.9, 0.9, 0.9), 1.f);
+		meshList[GEO_PILLAR] = MeshBuilder::GenerateCube("cube", Color(0.92, 0.92, 0.92), 1.f);
 
 		meshList[GEO_PISTOL] = MeshBuilder::GenerateOBJ("pistol", "OBJ//pistol.obj");
 		meshList[GEO_PISTOL]->textureArray[0] = LoadTGA("Image//pistol.tga");
@@ -258,16 +254,6 @@ void SceneBase::Init()
 		meshList[GEO_PLAY] = MeshBuilder::GenerateOBJ("menu_play", "OBJ//menu_play.obj");
 		meshList[GEO_LOGO] = MeshBuilder::GenerateQuad("menu logo", Color(1, 1, 1), 1.f);
 		meshList[GEO_LOGO]->textureArray[0] = LoadTGA("Image//logo.tga");
-	}
-
-	if (SceneManager::GetSceneID() == 2)
-	{
-		for (int x = 1; x <= 20; x++)
-		{
-			std::string stringName = "glass_" + std::to_string(x);
-			std::string filePath = "OBJ//glass_" + std::to_string(x) + ".obj";
-			meshList[x] = MeshBuilder::GenerateOBJ(stringName, filePath);
-		}
 	}
 }
 

@@ -43,22 +43,9 @@ void Level1Scene::Init()
 	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(120, 5, 800), 0, Vector3(60, 2.5, 400), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -407.5), Vector3(120, 80, 15), 0, Vector3(60, 40, 7.5), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 407.5), Vector3(120, 80, 15), 180, Vector3(60, 40, 7.5), 180, Vector3(0, 1, 0));
-	goFactory.CreateGO("West Wall", GameObject::GO_GLASS, true, 0, Vector3(52.5, 40, 0), Vector3(800, 80, 15), 90, Vector3(400, 40, 7.5), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("East Wall", GameObject::GO_GLASS, true, 0, Vector3(-52.5, 40, 0), Vector3(800, 80, 15), -90, Vector3(400, 40, 7.5), -90, Vector3(0, 1, 0));
+	goFactory.CreateGO("West Wall", GameObject::GO_WALL, true, 0, Vector3(52.5, 40, 0), Vector3(800, 80, 15), 90, Vector3(400, 40, 7.5), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("East Wall", GameObject::GO_WALL, true, 0, Vector3(-52.5, 40, 0), Vector3(800, 80, 15), -90, Vector3(400, 40, 7.5), -90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Ceiling", GameObject::GO_CEILING, true, 0, Vector3(0, 87.5, 0), Vector3(120, 800, 15), 90, Vector3(60, 400, 7.5), 90, Vector3(1, 0, 0));
-
-	GameObject* glass_panel_01[20];
-	for (int x = 0; x < 20; x++)
-	{
-		glass_panel_01[x] = new GameObject;
-		glass_panel_01[x]->name = "glass_" + std::to_string(x);
-		glass_panel_01[x]->type = GameObject::GLASS_01;
-		glass_panel_01[x]->SetActive(false);
-		glass_panel_01[x]->SetStatic(false);
-		glass_panel_01[x]->transform.position.Set(57.5, 40, 0);
-		glass_panel_01[x]->transform.scale.Set(15, 3.5, 1);
-		gl.m_goList.push_back(glass_panel_01[x]);
-	}
 
 	// INIT GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -115,6 +102,7 @@ void Level1Scene::Init()
 	m_iTextCounter = 0;
 	m_fTextTimer = 2.5f;
 	m_bRenderScreenText = false;
+	m_iSoundCounter = 0;
 
 	PhysicsEngine.SetEnemyCount(3);
 }
@@ -201,11 +189,32 @@ void Level1Scene::Update(double dt)
 		m_bRenderScreenText = true;
 
 		if (m_fTextTimer >= 1.f && m_fTextTimer <= 1.5f)
+		{
 			m_iTextCounter = 1;
+			if (m_iSoundCounter == 0)
+			{
+				CSoundEngine::Getinstance()->PlayASound("Text");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.5f && m_fTextTimer <= 1.f)
+		{
 			m_iTextCounter = 2;
+			if (m_iSoundCounter == 1)
+			{
+				CSoundEngine::Getinstance()->PlayASound("Text");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 0.5f)
+		{
 			m_iTextCounter = 3;
+			if (m_iSoundCounter == 2)
+			{
+				CSoundEngine::Getinstance()->PlayASound("Text");
+				m_iSoundCounter = 100;
+			}
+		}
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
@@ -215,13 +224,39 @@ void Level1Scene::Update(double dt)
 	if (m_iTextCounter == 98 || m_iTextCounter == 99)
 	{
 		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 100)
+		{
+			CSoundEngine::Getinstance()->PlayASound("super");
+			++m_iSoundCounter;
+		}
 
 		if (m_fTextTimer >= 2.f && m_fTextTimer <= 3.f)
+		{
 			m_iTextCounter = 99;
+			if (m_iSoundCounter == 101)
+			{
+				CSoundEngine::Getinstance()->PlayASound("cool");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 1.f && m_fTextTimer <= 2.f)
+		{
 			m_iTextCounter = 98;
+			if (m_iSoundCounter == 102)
+			{
+				CSoundEngine::Getinstance()->PlayASound("super");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 1.f)
+		{
 			m_iTextCounter = 99;
+			if (m_iSoundCounter == 103)
+			{
+				CSoundEngine::Getinstance()->PlayASound("cool");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
@@ -253,16 +288,6 @@ void Level1Scene::RenderWorld()
 	}
 
 	RenderParticle();
-
-	for (int x = 1; x <= 20; x++)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(57.5, 40, 0);
-		modelStack.Rotate(90, 0, 1, 0);
-		modelStack.Scale(15, 3.5, 1);
-		RenderMesh(meshList[x], false, false, false);
-		modelStack.PopMatrix();
-	}
 }
 
 void Level1Scene::RenderWater()
@@ -430,16 +455,6 @@ void Level1Scene::RenderGO(GameObject* go)
 {
 	switch (go->type)
 	{
-	case GameObject::GLASS_01:
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(57.5, 40, 0);
-		modelStack.Rotate(90, 0, 1, 0);
-		modelStack.Scale(15, 3.5, 1);
-		RenderMesh(meshList[GLASS_01], false, false, false);
-		modelStack.PopMatrix();
-	}
-
 	case GameObject::GO_PISTOL:
 		if (static_cast<PistolGO*>(go)->GetPickUp())
 		{
