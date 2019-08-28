@@ -4,6 +4,7 @@
 #include "../Core/ParticleEngine.h"
 #include "SceneManager.h"
 #include "..//Core/SoundEngine.h"
+int Physics::EnemyCount = 0;
 
 Physics::Physics()
 {
