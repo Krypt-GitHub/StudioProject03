@@ -47,6 +47,10 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 				//Updating position
 				go1->transform.position += go1->m_v3vel * delta;
 
+				//Constraints
+				if (Math::FAbs(go1->transform.position.x) >= 500 || Math::FAbs(go1->transform.position.y) >= 500 || Math::FAbs(go1->transform.position.z) >= 500)
+					go1->SetActive(false);
+
 				//Collision
 				for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != gl.m_goList.end(); ++it2)
 				{
@@ -133,6 +137,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				{
 					go1->SetActive(false);
 					go2->SetActive(false);
+					--EnemyCount;
 					for (int i = 0; i < 10; ++i)
 					{
 						ParticleEngine::GetInstance()->SpawnParticle(go1,Particle::PA_GUNSHATTER);
@@ -163,6 +168,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			case GameObject::GO_ENEMY:
 				go1->SetActive(false);
 				go2->SetActive(false);
+				--EnemyCount;
 				for (int i = 0; i < 80; ++i)
 				{
 					ParticleEngine::GetInstance()->SpawnParticle(go2, Particle::PA_ENEMYSHATTER);
