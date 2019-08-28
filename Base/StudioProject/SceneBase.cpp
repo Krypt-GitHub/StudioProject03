@@ -189,7 +189,7 @@ void SceneBase::Init()
 	meshList[GEO_FLOOR] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
 	meshList[GEO_WALL] = MeshBuilder::GenerateCube("cube", Color(0.45, 0.45, 0.45), 1.f);
 	meshList[GEO_BULLET] = MeshBuilder::GenerateOBJ("bullet", "OBJ//bullet.obj");
-	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//black.tga");
+	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//gun.tga");
 	meshList[GEO_TRACER] = MeshBuilder::GenerateCylinder("tracer", Color(1, 0, 0), 10, 10, 1, 1);
 	meshList[GEO_PA_GUNSHATTER] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
 	meshList[GEO_PA_GUNSHATTER]->textureArray[0] = LoadTGA("Image//PistolTri.tga");
