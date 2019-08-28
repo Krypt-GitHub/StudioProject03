@@ -159,7 +159,6 @@ void PlayerGO::Update(double dt)
 
 	if (Application::GetKeyDown(VK_SPACE) && IsGrounded())
 	{
-		//soundEngine.PlayASound("Jump");
 		SetToJump(true);
 	}
 
@@ -202,7 +201,7 @@ void PlayerGO::Update(double dt)
 			{
 				if (go->type != GameObject::GO_ENEMY)
 					continue;
-				if (MeleeCheck.GetCollision(go->obb))
+				if (MeleeCheck.GetCollision(go->obb) && go->GetActive())
 				{
 					go->SetActive(false);
 					for (int i = 0; i < 80; ++i)
