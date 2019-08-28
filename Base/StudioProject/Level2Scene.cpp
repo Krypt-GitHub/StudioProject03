@@ -550,16 +550,16 @@ void Level2Scene::UpdateGO(GameObject * go, double dt)
 
 void Level2Scene::RenderPN(PathNode* pn)
 {
-	modelStack.PushMatrix();
-	modelStack.Translate(pn->transform.position.x, pn->transform.position.y, pn->transform.position.z);
-	modelStack.Scale(pn->transform.scale.x, pn->transform.scale.y, pn->transform.scale.z);
-	if (pn->m_inodeStatus == 0)
-		RenderMesh(meshList[GEO_OBB_GREEN], false, false, false);
-	else if (pn->m_inodeStatus == 1)
-		RenderMesh(meshList[GEO_OBB_RED], false, false, false);
-	else if(pn->m_inodeStatus == 2)
-		RenderMesh(meshList[GEO_OBB_BLUE], false, false, false);
-	modelStack.PopMatrix();
+	//modelStack.PushMatrix();
+	//modelStack.Translate(pn->transform.position.x, pn->transform.position.y, pn->transform.position.z);
+	//modelStack.Scale(pn->transform.scale.x, pn->transform.scale.y, pn->transform.scale.z);
+	//if (pn->m_inodeStatus == 0)
+	//	RenderMesh(meshList[GEO_OBB_GREEN], false, false, false);
+	//else if (pn->m_inodeStatus == 1)
+	//	RenderMesh(meshList[GEO_OBB_RED], false, false, false);
+	//else if(pn->m_inodeStatus == 2)
+	//	RenderMesh(meshList[GEO_OBB_BLUE], false, false, false);
+	//modelStack.PopMatrix();
 }
 
 void Level2Scene::RenderGO(GameObject* go)
