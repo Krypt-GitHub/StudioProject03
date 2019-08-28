@@ -210,6 +210,7 @@ void PlayerGO::Update(double dt)
 						ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_ENEMYSHATTER);
 					}
 					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
+					break;
 				}
 			}
 			m_bLBDown = true;

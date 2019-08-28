@@ -601,7 +601,7 @@ void Level2Scene::RenderGO(GameObject* go)
 			modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 			//modelStack.Rotate(Math::RadianToDegree(atan2(Player.camera.target.x - Player.camera.position.x, Player.camera.target.z - Player.camera.position.z)), 0, 1, 0);
 			modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-			RenderMesh(meshList[GEO_ENEMY_STAND], false, false, false);
+			RenderMesh(meshList[GEO_ENEMY_STAND], false, true, false);
 			modelStack.PopMatrix();
 			modelStack.PushMatrix();
 			modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
@@ -617,7 +617,7 @@ void Level2Scene::RenderGO(GameObject* go)
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-				RenderMesh(meshList[GEO_ENEMY_WALK01], false, false, false);
+				RenderMesh(meshList[GEO_ENEMY_WALK01], false, true, false);
 				modelStack.PopMatrix();
 			}
 			if (static_cast<EnemyGO*>(go)->aiStatus->m_bstartWalk02)
@@ -626,7 +626,7 @@ void Level2Scene::RenderGO(GameObject* go)
 				modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 				modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.position.x - go->transform.position.x, Player->camera.position.z - go->transform.position.z)), 0, 1, 0);
 				modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-				RenderMesh(meshList[GEO_ENEMY_WALK02], false, false, false);
+				RenderMesh(meshList[GEO_ENEMY_WALK02], false, true, false);
 				modelStack.PopMatrix();
 			}
 		}
