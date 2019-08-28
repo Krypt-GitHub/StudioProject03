@@ -43,22 +43,22 @@ void Level2Scene::Init()
 	int pillarX = 112.5;
 	for (int i = 0; i < 4; ++i)
 	{
-		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
-		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar1", GameObject::GO_PILLAR, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_PILLAR, true, 0, Vector3(pillarX, 40, -112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
 
-		goFactory.CreateGO("Pillar3", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
-		goFactory.CreateGO("Pillar4", GameObject::GO_WALL, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar3", GameObject::GO_PILLAR, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar4", GameObject::GO_PILLAR, true, 0, Vector3(pillarX, 40, 112.5), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
 
 		pillarX -= 75;
 	}
 	int pillarZ = 37.5;
 	for (int i = 0; i < 2; ++i)
 	{
-		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(112.5 , 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
-		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar1", GameObject::GO_PILLAR, true, 0, Vector3(112.5 , 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_PILLAR, true, 0, Vector3(112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
 
-		goFactory.CreateGO("Pillar1", GameObject::GO_WALL, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
-		goFactory.CreateGO("Pillar2", GameObject::GO_WALL, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar1", GameObject::GO_PILLAR, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 0, Vector3(10, 40, 10), 0, Vector3(0, 1, 0));
+		goFactory.CreateGO("Pillar2", GameObject::GO_PILLAR, true, 0, Vector3(-112.5, 40, pillarZ), Vector3(20, 80, 20), 90, Vector3(10, 40, 10), 90, Vector3(0, 1, 0));
 
 		pillarZ -= 75;
 	}
@@ -155,6 +155,7 @@ void Level2Scene::Init()
 	m_iTextCounter = 0;
 	m_fTextTimer = 2.5f;
 	m_bRenderScreenText = false;
+	m_iSoundCounter = 0;
 
 	PhysicsEngine.SetEnemyCount(3);
 
@@ -253,11 +254,32 @@ void Level2Scene::Update(double dt)
 		m_bRenderScreenText = true;
 
 		if (m_fTextTimer >= 1.f && m_fTextTimer <= 1.5f)
+		{
 			m_iTextCounter = 1;
+			if (m_iSoundCounter == 0)
+			{
+				CSoundEngine::Getinstance()->PlayASound("Text");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.5f && m_fTextTimer <= 1.f)
+		{
 			m_iTextCounter = 2;
+			if (m_iSoundCounter == 1)
+			{
+				CSoundEngine::Getinstance()->PlayASound("Text");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 0.5f)
+		{
 			m_iTextCounter = 3;
+			if (m_iSoundCounter == 2)
+			{
+				CSoundEngine::Getinstance()->PlayASound("Text");
+				m_iSoundCounter = 100;
+			}
+		}
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
@@ -267,17 +289,43 @@ void Level2Scene::Update(double dt)
 	if (m_iTextCounter == 98 || m_iTextCounter == 99)
 	{
 		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 100)
+		{
+			CSoundEngine::Getinstance()->PlayASound("super");
+			++m_iSoundCounter;
+		}
 
 		if (m_fTextTimer >= 2.f && m_fTextTimer <= 3.f)
+		{
 			m_iTextCounter = 99;
+			if (m_iSoundCounter == 101)
+			{
+				CSoundEngine::Getinstance()->PlayASound("cool");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 1.f && m_fTextTimer <= 2.f)
+		{
 			m_iTextCounter = 98;
+			if (m_iSoundCounter == 102)
+			{
+				CSoundEngine::Getinstance()->PlayASound("super");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 1.f)
+		{
 			m_iTextCounter = 99;
+			if (m_iSoundCounter == 103)
+			{
+				CSoundEngine::Getinstance()->PlayASound("cool");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
-			SceneManager::SetSceneID(3);
+			SceneManager::SetSceneID(10);
 		}
 	}
 
@@ -662,6 +710,14 @@ void Level2Scene::RenderGO(GameObject* go)
 		modelStack.Rotate(go->transform.rotation, 1, 0, 0);
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
 		RenderMesh(meshList[GEO_FLOOR], false, false, false);
+		modelStack.PopMatrix();
+		break;
+	case GameObject::GO_PILLAR:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+		modelStack.Rotate(go->transform.rotation, 0, 1, 0);
+		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+		RenderMesh(meshList[GEO_PILLAR], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	}

@@ -83,9 +83,6 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 		case GameObject::GO_PLAYER:
 			switch (go2->type)
 			{
-			case GameObject::GO_WALL:
-				//Stop them from going through walls
-				break;
 			case GameObject::GO_FLOOR:
 				go1->m_bGravity = false;
 				go1->transform.position.y = 19;
@@ -96,24 +93,8 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			switch (go2->type)
 			{
 			case GameObject::GO_WALL:
-			{
-				Vector3 N = go2->obb.AxisX.Cross(go2->obb.AxisY);
-				Vector3 w0minusb1 = go2->transform.position - go1->transform.position;
-				if (w0minusb1.Dot(N) < 0)
-					N = -N;
-				if (go1->m_v3vel.Dot(N) < 0)
-					break;
-
-				Vector3 NP(N.y, -N.x);
-				if (w0minusb1.Dot(N) < go1->transform.scale.x + go2->transform.scale.x * 0.5f &&
-					Math::FAbs(w0minusb1.Dot(NP)) < go1->transform.scale.x + go2->transform.scale.y * 0.5f)
-				{
-					go1->m_v3vel -= (2 * go1->m_v3vel.Dot(go2->obb.AxisX.Cross(go2->obb.AxisY))) * go2->obb.AxisX.Cross(go2->obb.AxisY);
-					go1->m_v3vel *= 0.3;
-				}
-			}
-			break;
 			case GameObject::GO_CEILING:
+			case GameObject::GO_PILLAR:
 			{
 				Vector3 N = go2->obb.AxisX.Cross(go2->obb.AxisY);
 				Vector3 w0minusb1 = go2->transform.position - go1->transform.position;
@@ -181,9 +162,9 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				break;
 			case GameObject::GO_WALL:
-				go1->SetActive(false);
-				break;
+			case GameObject::GO_CEILING:
 			case GameObject::GO_FLOOR:
+			case GameObject::GO_PILLAR:
 				go1->SetActive(false);
 				break;
 			}
@@ -202,7 +183,11 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 					break;
 				}
 				break;
-			default:
+			case GameObject::GO_WALL:
+			case GameObject::GO_CEILING:
+			case GameObject::GO_FLOOR:
+			case GameObject::GO_PILLAR:
+				go1->SetActive(false);
 				break;
 			}
 		}

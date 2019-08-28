@@ -100,6 +100,7 @@ void GameScene::Init()
 	m_iTextCounter = 0;
 	m_fTextTimer = 4.f;
 	m_bRenderScreenText = false;
+	m_iSoundCounter = 0;
 
 	PhysicsEngine.SetEnemyCount(2);
 }
@@ -183,6 +184,12 @@ void GameScene::Update(double dt)
 	if (m_iTextCounter == 1 && m_fTextTimer >= 0.f)
 	{
 		m_bRenderScreenText = true;
+
+		if (m_iSoundCounter == 0)
+		{
+			CSoundEngine::Getinstance()->PlayASound("Text");
+			m_iSoundCounter = 100;
+		}
 	}
 	else
 		m_bRenderScreenText = false;
@@ -190,13 +197,39 @@ void GameScene::Update(double dt)
 	if (m_iTextCounter == 98 || m_iTextCounter == 99)
 	{
 		m_bRenderScreenText = true;
+		if (m_iSoundCounter == 100)
+		{
+			CSoundEngine::Getinstance()->PlayASound("super");
+			++m_iSoundCounter;
+		}
 
 		if (m_fTextTimer >= 2.f && m_fTextTimer <= 3.f)
+		{
 			m_iTextCounter = 99;
+			if (m_iSoundCounter == 101)
+			{
+				CSoundEngine::Getinstance()->PlayASound("cool");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 1.f && m_fTextTimer <= 2.f)
+		{
 			m_iTextCounter = 98;
+			if (m_iSoundCounter == 102)
+			{
+				CSoundEngine::Getinstance()->PlayASound("super");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 1.f)
+		{
 			m_iTextCounter = 99;
+			if (m_iSoundCounter == 103)
+			{
+				CSoundEngine::Getinstance()->PlayASound("cool");
+				++m_iSoundCounter;
+			}
+		}
 		else if (m_fTextTimer <= 0.f)
 		{
 			m_bRenderScreenText = false;
