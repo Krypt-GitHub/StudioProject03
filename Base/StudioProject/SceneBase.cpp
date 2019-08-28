@@ -181,6 +181,25 @@ void SceneBase::Init()
 	meshList[GEO_BULLET]->textureArray[0] = LoadTGA("Image//black.tga");
 	meshList[GEO_TRACER] = MeshBuilder::GenerateCylinder("tracer", Color(1, 0, 0), 10, 10, 1, 1);
 
+	meshList[GEO_TIME] = MeshBuilder::GenerateQuad("time", Color(1, 1, 1), 1.f);
+	meshList[GEO_TIME]->textureArray[0] = LoadTGA("Image//time.tga");
+	meshList[GEO_KILL] = MeshBuilder::GenerateQuad("kill", Color(1, 1, 1), 1.f);
+	meshList[GEO_KILL]->textureArray[0] = LoadTGA("Image//kill.tga");
+	meshList[GEO_THEM] = MeshBuilder::GenerateQuad("them", Color(1, 1, 1), 1.f);
+	meshList[GEO_THEM]->textureArray[0] = LoadTGA("Image//them.tga");
+	meshList[GEO_ALL] = MeshBuilder::GenerateQuad("all", Color(1, 1, 1), 1.f);
+	meshList[GEO_ALL]->textureArray[0] = LoadTGA("Image//all.tga");
+	meshList[GEO_GRAB] = MeshBuilder::GenerateQuad("grab", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRAB]->textureArray[0] = LoadTGA("Image//grab.tga");
+	meshList[GEO_THE] = MeshBuilder::GenerateQuad("the", Color(1, 1, 1), 1.f);
+	meshList[GEO_THE]->textureArray[0] = LoadTGA("Image//the.tga");
+	meshList[GEO_GUN] = MeshBuilder::GenerateQuad("gun", Color(1, 1, 1), 1.f);
+	meshList[GEO_GUN]->textureArray[0] = LoadTGA("Image//gun.tga");
+	meshList[GEO_SUPER] = MeshBuilder::GenerateQuad("super", Color(1, 1, 1), 1.f);
+	meshList[GEO_SUPER]->textureArray[0] = LoadTGA("Image//super.tga");
+	meshList[GEO_COOL] = MeshBuilder::GenerateQuad("cool", Color(1, 1, 1), 1.f);
+	meshList[GEO_COOL]->textureArray[0] = LoadTGA("Image//cool.tga");
+
 	// Scene Objects
 	if (SceneManager::GetSceneID() == 1 || SceneManager::GetSceneID() == 2 || SceneManager::GetSceneID() == 3)
 	{
@@ -527,6 +546,93 @@ void SceneBase::RenderParticle() {
 				break;
 			}
 		}
+	}
+}
+
+void SceneBase::RenderScreenText(int level, int counter)
+{
+	switch (level)
+	{
+	case 0:
+		switch (counter)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_TIME], false, 95, 50, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 98:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_SUPER], false, 125, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 99:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_COOL], false, 135, 60, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		}
+		break;
+	case 1:
+		switch (counter)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_GRAB], false, 95, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 2:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_THE], false, 85, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 3:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_GUN], false, 85, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 98:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_SUPER], false, 125, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 99:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_COOL], false, 135, 60, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		}
+		break;
+	case 2:
+		switch (counter)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_KILL], false, 85, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 2:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_THEM], false, 95, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 3:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_ALL], false, 85, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 98:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_SUPER], false, 125, 40, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		case 99:
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_COOL], false, 135, 60, 0, 0, 0, Vector3(0, 1, 0));
+			modelStack.PopMatrix();
+			break;
+		}
+		break;
 	}
 }
 

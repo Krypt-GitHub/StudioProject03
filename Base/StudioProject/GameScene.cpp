@@ -97,6 +97,10 @@ void GameScene::Init()
 	m_parameters[U_ENABLEREFLECT] = glGetUniformLocation(m_programID, "enableReflect");
 	m_parameters[U_CAMERAPOS] = glGetUniformLocation(m_programID, "cameraPos");
 
+	m_iTextCounter = 0;
+	m_fTextTimer = 4.f;
+	m_bRenderScreenText = false;
+
 	PhysicsEngine.SetEnemyCount(2);
 }
 
@@ -106,8 +110,11 @@ void GameScene::Update(double dt)
 	PhysicsEngine.UpdateGO(dt, Player);
 	ParticleEngine::GetInstance()->updateParticle(dt);
 
-	if (PhysicsEngine.GetEnemyCount() == 0)
-		SceneManager::SetSceneID(2);
+	if (PhysicsEngine.GetEnemyCount() == 0 && m_iTextCounter != 98 && m_iTextCounter != 99)
+	{
+		m_iTextCounter = 98;
+		m_fTextTimer = 4.f;
+	}
 
 	if (cameraID == 0)
 	{
@@ -166,6 +173,47 @@ void GameScene::Update(double dt)
 
 	if (Application::GetKeyDown('0'))
 		SceneManager::SetSceneID(2);
+
+	// Text on screen
+	m_fTextTimer -= dt;
+
+	if (m_iTextCounter == 0 && m_fTextTimer <= 3.f)
+		++m_iTextCounter;
+
+	if (m_iTextCounter == 1 && m_fTextTimer >= 0.f)
+	{
+		m_bRenderScreenText = true;
+	}
+	else
+		m_bRenderScreenText = false;
+
+	if (m_iTextCounter == 98 || m_iTextCounter == 99)
+	{
+		m_bRenderScreenText = true;
+
+		if (m_fTextTimer >= 2.f && m_fTextTimer <= 3.f)
+			m_iTextCounter = 99;
+		else if (m_fTextTimer >= 1.f && m_fTextTimer <= 2.f)
+			m_iTextCounter = 98;
+		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 1.f)
+			m_iTextCounter = 99;
+		else if (m_fTextTimer <= 0.f)
+		{
+			m_bRenderScreenText = false;
+			SceneManager::SetSceneID(2);
+		}
+	}
+
+	static bool m_bYDown = false;
+	if (Application::GetKeyDown('Y') && !m_bYDown)
+	{
+		m_iTextCounter = 98;
+		m_fTextTimer = 4.f;
+
+		m_bYDown = true;
+	}
+	if (!Application::GetKeyDown('Y') && m_bYDown)
+		m_bYDown = false;
 }
 
 void GameScene::RenderWorld()
@@ -282,10 +330,16 @@ void GameScene::RenderPassMain()
 
 	RenderWorld();
 
-	modelStack.PushMatrix();
-	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
-	modelStack.PopMatrix();
-
+	if (m_bRenderScreenText)
+	{
+		RenderScreenText(0, m_iTextCounter);
+	}
+	else
+	{
+		modelStack.PushMatrix();
+		RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);

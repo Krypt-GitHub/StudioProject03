@@ -119,6 +119,10 @@ void Level2Scene::Init()
 	m_parameters[U_ENABLEREFLECT] = glGetUniformLocation(m_programID, "enableReflect");
 	m_parameters[U_CAMERAPOS] = glGetUniformLocation(m_programID, "cameraPos");
 
+	m_iTextCounter = 0;
+	m_fTextTimer = 2.5f;
+	m_bRenderScreenText = false;
+
 	PhysicsEngine.SetEnemyCount(3);
 
 	for (int x = 0; x <= 90; x++)
@@ -159,8 +163,11 @@ void Level2Scene::Update(double dt)
 	PhysicsEngine.UpdateGO(dt, Player);
 	ParticleEngine::GetInstance()->updateParticle(dt);
 
-	if (PhysicsEngine.GetEnemyCount() == 0)
-		SceneManager::SetSceneID(10);
+	if (PhysicsEngine.GetEnemyCount() == 0 && m_iTextCounter != 98 && m_iTextCounter != 99)
+	{
+		m_iTextCounter = 98;
+		m_fTextTimer = 4.f;
+	}
 
 	if (cameraID == 0)
 	{
@@ -219,7 +226,57 @@ void Level2Scene::Update(double dt)
 		m_fchRotate -= 10 * dt;
 
 	if (Application::GetKeyDown('0'))
-		SceneManager::SetSceneID(10); // 3
+		SceneManager::SetSceneID(10);
+
+	// Text on screen
+	m_fTextTimer -= dt;
+
+	if (m_iTextCounter == 0 && m_fTextTimer <= 1.5f)
+		++m_iTextCounter;
+
+	if (m_iTextCounter == 1 || m_iTextCounter == 2 || m_iTextCounter == 3)
+	{
+		m_bRenderScreenText = true;
+
+		if (m_fTextTimer >= 1.f && m_fTextTimer <= 1.5f)
+			m_iTextCounter = 1;
+		else if (m_fTextTimer >= 0.5f && m_fTextTimer <= 1.f)
+			m_iTextCounter = 2;
+		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 0.5f)
+			m_iTextCounter = 3;
+		else if (m_fTextTimer <= 0.f)
+		{
+			m_bRenderScreenText = false;
+		}
+	}
+
+	if (m_iTextCounter == 98 || m_iTextCounter == 99)
+	{
+		m_bRenderScreenText = true;
+
+		if (m_fTextTimer >= 2.f && m_fTextTimer <= 3.f)
+			m_iTextCounter = 99;
+		else if (m_fTextTimer >= 1.f && m_fTextTimer <= 2.f)
+			m_iTextCounter = 98;
+		else if (m_fTextTimer >= 0.f && m_fTextTimer <= 1.f)
+			m_iTextCounter = 99;
+		else if (m_fTextTimer <= 0.f)
+		{
+			m_bRenderScreenText = false;
+			SceneManager::SetSceneID(3);
+		}
+	}
+
+	static bool m_bYDown = false;
+	if (Application::GetKeyDown('Y') && !m_bYDown)
+	{
+		m_iTextCounter = 98;
+		m_fTextTimer = 4.f;
+
+		m_bYDown = true;
+	}
+	if (!Application::GetKeyDown('Y') && m_bYDown)
+		m_bYDown = false;
 }
 
 void Level2Scene::RenderWorld()
@@ -341,10 +398,16 @@ void Level2Scene::RenderPassMain()
 
 	RenderWorld();
 
-	modelStack.PushMatrix();
-	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
-	modelStack.PopMatrix();
-
+	if (m_bRenderScreenText)
+	{
+		RenderScreenText(2, m_iTextCounter);
+	}
+	else
+	{
+		modelStack.PushMatrix();
+		RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, m_fchRotate, Vector3(0, 0, 1));
+		modelStack.PopMatrix();
+	}
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100, 200, 0);

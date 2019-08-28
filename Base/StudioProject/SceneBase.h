@@ -27,6 +27,7 @@ public:
 	void RenderTextOnScreen(Mesh * mesh, std::string text, Color color, float size, float x, float y);
 	void RenderMeshIn2D(Mesh * mesh, bool enableLight, float sizeX, float sizeY, float x, float y, float rotation, Vector3 rotateAxis);
 	void RenderParticle();
+	void RenderScreenText(int level, int counter);
 	virtual void Render();
 	virtual void Exit();
 
@@ -97,6 +98,16 @@ protected:
 		GEO_LIGHT_DEPTH_QUAD,
 		GEO_OBB_GREEN,
 		GEO_OBB_RED,
+		// Text
+		GEO_TIME,
+		GEO_KILL,
+		GEO_THEM,
+		GEO_ALL,
+		GEO_GRAB,
+		GEO_THE,
+		GEO_GUN,
+		GEO_SUPER,
+		GEO_COOL,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -203,8 +214,12 @@ protected:
 	float m_fMTElapsedTime;
 
 	// Scene Objects
-
 	float m_fchRotate;
+
+	// Screen Text
+	int m_iTextCounter;
+	float m_fTextTimer;
+	bool m_bRenderScreenText;
 };
 
 #endif
