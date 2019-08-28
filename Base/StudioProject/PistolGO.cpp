@@ -84,6 +84,4 @@ void PistolGO::Update(double dt)
 			m_bLBDown = false;
 		}
 	}
-
-	//std::cout << m_v3vel << std::endl;
 }

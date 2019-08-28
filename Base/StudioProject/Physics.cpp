@@ -4,6 +4,7 @@
 #include "../Core/ParticleEngine.h"
 #include "SceneManager.h"
 #include "..//Core/SoundEngine.h"
+#include "Level2Scene.h"
 
 Physics::Physics()
 {
@@ -43,7 +44,6 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 				//Gravity
 				if (go1->m_bGravity)
 					go1->m_v3vel.y += -0.981;
-
 				//Updating position
 				go1->transform.position += go1->m_v3vel * delta;
 
@@ -138,9 +138,10 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 					go1->SetActive(false);
 					go2->SetActive(false);
 					--EnemyCount;
+					Level2Scene::m_ienemyNum--;
 					for (int i = 0; i < 10; ++i)
 					{
-						ParticleEngine::GetInstance()->SpawnParticle(go1,Particle::PA_GUNSHATTER);
+						ParticleEngine::GetInstance()->SpawnParticle(go1, Particle::PA_GUNSHATTER);
 					}
 					for (int i = 0; i < 80; ++i)
 					{
@@ -174,6 +175,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				go1->SetActive(false);
 				go2->SetActive(false);
 				--EnemyCount;
+				Level2Scene::m_ienemyNum--;
 				for (int i = 0; i < 80; ++i)
 				{
 					ParticleEngine::GetInstance()->SpawnParticle(go2, Particle::PA_ENEMYSHATTER);
@@ -194,17 +196,26 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			case GameObject::GO_PLAYER:
 				go1->SetActive(false);
 				break;
-			case GameObject::GO_ENEMY:
-				switch (go2->type)
-				{
-				case GameObject::GO_FLOOR:
-					go1->m_bGravity = false;
-					break;
-				}
+			case GameObject::GO_WALL:
+				go1->SetActive(false);
 				break;
-			default:
+			case GameObject::GO_FLOOR:
+				go1->SetActive(false);
 				break;
 			}
+			break;
+		case GameObject::GO_ENEMY:
+			switch (go2->type)
+			{
+			case GameObject::GO_FLOOR:
+				go1->m_bGravity = false;
+				go1->m_v3vel.y = 0;
+				break;
+			case GameObject::GO_ENEMY:
+				static_cast<EnemyGO*>(go2)->m_bstartwalk = false;
+				break;
+			}
+			break;
 		}
 	}
 }

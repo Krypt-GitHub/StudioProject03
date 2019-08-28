@@ -104,11 +104,9 @@ void EnemyGO::Init()
 
 	sequence4->addChild(SearchGunNode);
 
-	//selector5->addChild(Chase);
 
 
 	selector1->addChild(sequence2);
-	//sequence4->addChild
 
 
 	m_bdoOnce = false;
@@ -174,11 +172,7 @@ void EnemyGO::Init(std::vector <PathNode *> &_pn)
 
 	sequence4->addChild(SearchGunNode);
 
-	//selector5->addChild(Chase);
-
-
 	selector1->addChild(sequence2);
-	//sequence4->addChild
 
 
 	m_bdoOnce = false;
@@ -189,20 +183,18 @@ void EnemyGO::Init(std::vector <PathNode *> &_pn)
 	m_bactivatePathFind = true;
 }
 
-bool EnemyGO::Constrain(Vector3 futurepos, Collider box, double dt)
+bool EnemyGO::Constrain(Collider box, double dt)
 {
 	GOList &gl = GOList::GetInstance();
 
-	box.UpdatePos(futurepos);
-	//box.SetScale(Vector3( box.Half_size.y));
 	for (auto go : gl.m_goList)
 	{
 		if (go->type == GameObject::GO_ENEMY && static_cast<EnemyGO*>(go) != this)
 		{
 			Collider box2 = go->obb;
-			Vector3 m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
-			Vector3 m_v3dir1 = (m_v3playerPos - go->transform.position).Normalized();
-			box2.UpdatePos((go->transform.position+(Vector3(m_v3dir1.x, 0, m_v3dir1.z) * 20 * dt) * 20));
+			//Vector3 m_v3playerPos = gl.FetchGO(GameObject::GO_PLAYER)->transform.position;
+			//Vector3 m_v3dir1 = (m_v3playerPos - go->transform.position).Normalized();
+			//box2.UpdatePos((go->transform.position+(Vector3(m_v3dir1.x, 0, m_v3dir1.z) * 20 * dt) * 20));
 			if (box.GetCollision(box2))
 			{
 				return true;
@@ -219,8 +211,6 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 	obb.RotateAxis(Math::RadianToDegree(atan2(m_v3dir.x, m_v3dir.z)), Vector3(0, 1, 0));
 	aiStatus->m_v3aiPosition = transform.position;
 	aiStatus->m_fdistanceToPlayer = (transform.position - _player->transform.position).Length();
-
-	std::cout << m_pathList.size() << std::endl;
 
 	if (m_bactivatePathFind)
 	{
@@ -279,10 +269,13 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			if (!Constrain((transform.position + (Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt) * 20), obb, dt))
+			if (m_bstartwalk)
 				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-			else
-				transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+
+			//if (!Constrain((transform.position + (Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt) * 20), obb, dt))
+			//	transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			//else
+			//	transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
 				
 			if ((transform.position - m_pathList[x]->transform.position).Length() < 15)
 				x++;
@@ -312,10 +305,17 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
+			for (auto go : gl.m_goList)
+			{
+				if (go->type == GameObject::GO_ENEMY && static_cast<EnemyGO*>(go) != this)
+				{
+					static_cast<EnemyGO*>(go)->m_bstartwalk = false;
+				}
+			}
+
+			if (m_bstartwalk)
 				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-			else
-				transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+
 		}
 		if (ChasePlayerNode->GetApproachBool() && !SearchGunNode->ReturnGunFound())
 		{
@@ -323,10 +323,20 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
+			for (auto go : gl.m_goList)
+			{
+				if (go->type == GameObject::GO_ENEMY && static_cast<EnemyGO*>(go) != this)
+					if (obb.GetCollision(go->obb))
+					{
+						static_cast<EnemyGO*>(go)->m_bstartwalk = false;
+						break;
+					}
+					else
+						static_cast<EnemyGO*>(go)->m_bstartwalk = true;
+			}
+
+			if (m_bstartwalk)
 				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-			else
-				transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
 		}
 	}
 

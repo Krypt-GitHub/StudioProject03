@@ -45,6 +45,7 @@ public:
 	//void RenderTerrain();
 
 	GOList &gl = GOList::GetInstance();
+	static int m_ienemyNum;
 private:
 	GOFactory goFactory;
 	PlayerGO *Player;

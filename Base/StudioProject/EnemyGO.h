@@ -17,15 +17,15 @@ private:
 	bool m_bactivatePathFind;
 	std::vector <PathNode*> m_pnList;
 	std::vector <PathNode*> m_pathList;
-	std::vector <PathNode *> m_toPathNodeList;
 	PathNode* parent;
 	PathNode* destination;
 	PathNode *currentNode;
 public:
+
+	bool m_bstartwalk;
+
 	EnemyGO();
 	virtual ~EnemyGO();
-
-
 
 	GOList &gl = GOList::GetInstance();
 
@@ -54,11 +54,10 @@ public:
 
 	void Init();
 	void Init(std::vector<PathNode*>& _pn);
-	bool Constrain(Vector3 futurepos, Collider box, double dt);
+	bool Constrain(Collider box, double dt);
 	void Update(double dt, PlayerGO * _player);
 	void SetGunOnHand(PistolGO * _gunOnHand);
 	void SetPathFind(bool _pathfind);
-	bool Constrain(Vector3 futurepos, Collider box);
 };
 
 #endif

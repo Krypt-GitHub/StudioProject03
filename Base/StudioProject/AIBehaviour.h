@@ -107,7 +107,6 @@ public:
 			{
 				if (go->type == GameObject::GO_PBULLET && (status->m_v3aiPosition - go->transform.position).Length() <= 40)
 				{
-					//std::cout << "DODGING" << std::endl;
 					status->m_bdodge = true;
 					bullet = go;
 					return true;
@@ -188,7 +187,6 @@ public:
 			{
 				if (go->type == GameObject::GO_PISTOL && (status->m_v3aiPosition - go->transform.position).Length() <= 100 /*&& !static_cast<PistolGO*>(go)->GetPickUp()*/)
 				{
-					std::cout << (status->m_v3aiPosition - go->transform.position).Length() << std::endl;
 					pistol = go;
 					m_bgunFound = true;
 					return true;
@@ -219,7 +217,6 @@ public:
 	{
 		if (status->m_fdistanceToPlayer <= 700)
 		{
-			//std::cout << "SHOOTING" << std::endl;
 			m_bstartShooting = true;
 			return true;
 		}

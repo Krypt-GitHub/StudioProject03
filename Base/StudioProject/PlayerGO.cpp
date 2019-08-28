@@ -2,7 +2,7 @@
 #include "../Source/Application.h"
 #include"..//Core/ParticleEngine.h"
 #include "..//Core/SoundEngine.h"
-
+#include "Level2Scene.h"
 
 PlayerGO::PlayerGO()
 	: m_bIsJumping(false)
@@ -203,6 +203,7 @@ void PlayerGO::Update(double dt)
 					continue;
 				if (MeleeCheck.GetCollision(go->obb) && go->GetActive())
 				{
+					Level2Scene::m_ienemyNum--;
 					go->SetActive(false);
 					for (int i = 0; i < 80; ++i)
 					{
@@ -333,7 +334,6 @@ bool PlayerGO::contrain(Vector3 futurePos, Collider box)
 		else continue;
 		if (box.GetCollision(go->obb))
 		{
-			std::cout << "collidered" << std::endl;
 			return true;
 		}
 	}
