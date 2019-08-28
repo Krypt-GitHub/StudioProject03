@@ -142,6 +142,11 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 					{
 						ParticleEngine::GetInstance()->SpawnParticle(go1,Particle::PA_GUNSHATTER);
 					}
+					for (int i = 0; i < 80; ++i)
+					{
+						ParticleEngine::GetInstance()->SpawnParticle(go2, Particle::PA_ENEMYSHATTER);
+					}
+					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				}
 				else
 				{

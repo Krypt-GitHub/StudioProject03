@@ -260,7 +260,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 			for (auto pn : m_pnList)
 			{
 				float newDist = (pn->transform.position - destination->transform.position).Length();
-				if (newDist < shortestDist && (pn->transform.position - currentNode->transform.position).Length() < 15 && pn->m_inodeStatus != 1)
+				if (newDist < shortestDist && (pn->transform.position - currentNode->transform.position).Length() < 15 && pn->m_inodeStatus != 1 && pn != currentNode)
 				{
 					storeNode = pn;
 					shortestDist = newDist;
