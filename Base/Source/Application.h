@@ -30,6 +30,8 @@ public:
 	static bool GetShouldUpdate();
 	static void SetShouldUpdate(bool update);
 
+	static int PreviousScene;
+
 private:
 	Application();
 	~Application();

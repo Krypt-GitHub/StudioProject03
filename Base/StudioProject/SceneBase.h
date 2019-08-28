@@ -95,6 +95,18 @@ protected:
 		GEO_GUN,
 		GEO_SUPER,
 		GEO_COOL,
+		GEO_1,
+		GEO_2,
+		GEO_3,
+		GEO_4,
+		GEO_5,
+		GEO_6,
+		GEO_7,
+		GEO_8,
+		GEO_9,
+		GEO_10,
+		GEO_11,
+		GEO_12,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE

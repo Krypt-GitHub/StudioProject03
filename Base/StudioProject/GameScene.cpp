@@ -102,6 +102,7 @@ void GameScene::Init()
 	m_bRenderScreenText = false;
 	m_iSoundCounter = 0;
 
+	Application::PreviousScene = 1;
 	PhysicsEngine.SetEnemyCount(2);
 }
 
