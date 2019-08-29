@@ -139,6 +139,10 @@ void MenuScene::Update(double dt)
 					go->m_bGravity = false;
 					go->transform.position.z -= 100 * dt;
 				}
+				if (go->transform.position.z < -1100)
+					go->m_bGravity = true;
+				if(go->transform.position.y <= -80)
+					SceneManager::SetSceneID(1);
 			}
 		}
 
