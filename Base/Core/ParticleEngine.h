@@ -125,5 +125,15 @@ public:
 			}
 		}
 	}
+
+	void Exit()
+	{
+		while (m_pList.size() > 0)
+		{
+			Particle *p = m_pList.back();
+			delete p;
+			m_pList.pop_back();
+		}
+	}
 };
 

@@ -7,9 +7,11 @@
 #include "Level2Scene.h"
 
 int Physics::EnemyCount = 0;
+bool Physics::dead = false;
 
 Physics::Physics()
 {
+	bounceTime = 0.2;
 }
 
 Physics::~Physics()
@@ -19,6 +21,8 @@ Physics::~Physics()
 void Physics::UpdateGO(double dt, PlayerGO* _player)
 {
 	float delta = dt;
+	if (dead)
+		bounceTime -= dt;
 
 	if (Application::GetShouldUpdate())
 		delta *= 1.0f;
@@ -78,6 +82,12 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 			//Updating OBB position
 			go1->obb.UpdatePos(go1->transform.position);
 		}
+	}
+	if (bounceTime < 0)
+	{
+
+		SceneManager::SetSceneID(4);
+		bounceTime = 0.2;
 	}
 }
 
@@ -185,8 +195,8 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			switch (go2->type)
 			{
 			case GameObject::GO_PLAYER:
+				dead = true;
 				go1->SetActive(false);
-				SceneManager::SetSceneID(4);
 				break;
 			case GameObject::GO_WALL:
 			case GameObject::GO_CEILING:

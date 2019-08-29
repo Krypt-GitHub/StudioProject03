@@ -11,7 +11,7 @@
 #include "../Physics/Collider.h"
 #include "SceneManager.h"
 #include "../Physics/Ray.h"
-
+bool Level1Scene::m_bdoOnce = false;
 
 Level1Scene::Level1Scene()
 {
@@ -104,11 +104,12 @@ void Level1Scene::Init()
 
 	Application::PreviousScene = 2;
 	PhysicsEngine.SetEnemyCount(3);
+	m_bdoOnce = false;
 }
 
 void Level1Scene::Update(double dt)
 {
-	static bool m_bdoOnce = false;
+	
 
 	if (!m_bdoOnce)
 	{
@@ -186,6 +187,8 @@ void Level1Scene::Update(double dt)
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
+	delete ray;
+	ray = NULL;
 
 	// UPDATE GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -450,6 +453,12 @@ void Level1Scene::RenderPassMain()
 			else
 				scale = 1.f;
 			RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0, 180, Vector3(0, 0, 1));
+			modelStack.PopMatrix();
+		}
+		if (Physics::dead)
+		{
+			modelStack.PushMatrix();
+			RenderMeshIn2D(meshList[GEO_D], false, 250, 150, 0, 0, 0, Vector3(0, 0, 1));
 			modelStack.PopMatrix();
 		}
 	}

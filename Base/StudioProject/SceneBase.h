@@ -48,6 +48,7 @@ protected:
 		GEO_AXES,
 		GEO_CROSSHAIR,
 		GEO_FIST,
+		GEO_D,
 		GEO_LIGHTBALL,
 		// Geometry
 		GEO_QUAD,

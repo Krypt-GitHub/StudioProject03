@@ -239,6 +239,8 @@ void Level2Scene::Update(double dt)
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
+	delete ray;
+	ray = NULL;
 
 	// UPDATE GAME OBJECT
 	for (std::vector<GameObject *>::iterator it = gl.m_goList.begin(); it != gl.m_goList.end(); ++it)
@@ -719,6 +721,12 @@ void Level2Scene::RenderPassMain()
 				else
 					scale = 1.f;
 				RenderMeshIn2D(meshList[GEO_FIST], false, 4*scale, 5*scale, 0, 0, 180, Vector3(0, 0, 1));
+				modelStack.PopMatrix();
+			}
+			if (Physics::dead)
+			{
+				modelStack.PushMatrix();
+				RenderMeshIn2D(meshList[GEO_D], false, 250, 150, 0, 0, 0, Vector3(0, 0, 1));
 				modelStack.PopMatrix();
 			}
 		}

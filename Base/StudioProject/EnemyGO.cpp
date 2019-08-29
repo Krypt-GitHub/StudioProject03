@@ -23,6 +23,16 @@ EnemyGO::~EnemyGO()
 		delete sequence2;
 		sequence2 == NULL;
 	}
+	if (sequence3 != NULL)
+	{
+		delete sequence3;
+		sequence3 == NULL;
+	}
+	if (sequence4 != NULL)
+	{
+		delete sequence4;
+		sequence4 == NULL;
+	}
 	if (selector1 != NULL)
 	{
 		delete selector1;
@@ -32,6 +42,21 @@ EnemyGO::~EnemyGO()
 	{
 		delete selector2;
 		selector2 == NULL;
+	}
+	if (selector3 != NULL)
+	{
+		delete selector3;
+		selector3 == NULL;
+	}
+	if (selector4 != NULL)
+	{
+		delete selector4;
+		selector4 == NULL;
+	}
+	if (selector5 != NULL)
+	{
+		delete selector5;
+		selector5 == NULL;
 	}
 	if (aiStatus != NULL)
 	{
@@ -47,6 +72,31 @@ EnemyGO::~EnemyGO()
 	{
 		delete ApproachPlayerNode;
 		ApproachPlayerNode == NULL;
+	}
+	if (ShootPlayerNode != NULL)
+	{
+		delete ShootPlayerNode;
+		ShootPlayerNode = NULL;
+	}
+	if (ifGunHeld != NULL)
+	{
+		delete ifGunHeld;
+		ifGunHeld = NULL;
+	}
+	if (DetectBulletNode != NULL)
+	{
+		delete DetectBulletNode;
+		DetectBulletNode = NULL;
+	}
+	if (ChasePlayerNode != NULL)
+	{
+		delete ChasePlayerNode;
+		ChasePlayerNode = NULL;
+	}	
+	if (SearchGunNode != NULL)
+	{
+		delete SearchGunNode;
+		SearchGunNode = NULL;
 	}
 	if (idle != NULL)
 	{

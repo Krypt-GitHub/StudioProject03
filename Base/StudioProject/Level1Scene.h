@@ -46,6 +46,7 @@ private:
 	GOFactory goFactory;
 	PlayerGO *Player;
 	Physics PhysicsEngine;
+	static bool m_bdoOnce;
 };
 
 #endif

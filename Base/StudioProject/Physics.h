@@ -19,6 +19,8 @@ public:
 
 	int GetEnemyCount();
 	void SetEnemyCount(int _count);
+	static bool dead;
+	double bounceTime;
 };
 
 #endif

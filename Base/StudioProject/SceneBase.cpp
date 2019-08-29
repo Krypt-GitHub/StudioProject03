@@ -8,6 +8,7 @@
 #include "../Source/LoadTGA.h"
 #include <sstream>
 #include "SceneManager.h"
+#include "Physics.h"
 
 SceneBase::SceneBase()
 {
@@ -28,6 +29,7 @@ void SceneBase::Init()
 	CSoundEngine::Getinstance()->AddSound("Text", "Sound//Text.ogg");
 	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.mp3");
 	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.mp3");
+	Physics::dead = false;
 	// Black background
 	glClearColor(0.9f, 0.9f, 0.9f, 0.0f);
 	// Enable depth test
@@ -195,6 +197,8 @@ void SceneBase::Init()
 	meshList[GEO_PA_GUNSHATTER]->textureArray[0] = LoadTGA("Image//PistolTri.tga");
 	meshList[GEO_PA_GUNSMOKE] = MeshBuilder::GenerateQuad("gunsmoke", Color(), 1.f);
 	meshList[GEO_PA_GUNSMOKE]->textureArray[0] = LoadTGA("Image//smoke.tga");
+	meshList[GEO_D] = MeshBuilder::GenerateQuad("gunsmoke", Color(), 1.f);
+	meshList[GEO_D]->textureArray[0] = LoadTGA("Image//png.tga");
 	meshList[GEO_PA_ENEMYSHATTER1] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
 	meshList[GEO_PA_ENEMYSHATTER1]->textureArray[0] = LoadTGA("Image//tri1.tga");
 	meshList[GEO_PA_ENEMYSHATTER2] = MeshBuilder::GenerateQuad("gunshatter", Color(), 1.f);
@@ -744,6 +748,8 @@ void SceneBase::Render()
 
 void SceneBase::Exit()
 {
+	ParticleEngine::GetInstance()->Exit();
+
 	// Cleanup VBO
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
