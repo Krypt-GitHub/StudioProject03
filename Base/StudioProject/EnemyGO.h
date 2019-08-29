@@ -12,7 +12,6 @@ class EnemyGO : public GameObject
 {
 private:
 	float m_fwalkTime;
-	bool m_bdoOnce;
 	float m_fROF;
 	bool m_bactivatePathFind;
 	std::vector <PathNode*> m_pnList;

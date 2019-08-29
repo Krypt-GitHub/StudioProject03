@@ -120,7 +120,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			break;
 			case GameObject::GO_ENEMY:
 				//Checking if pistol has enough velocity to consider collision
-				if (go1->m_v3vel.Length() >= 10.f)
+				if (go1->m_v3vel.Length() >= 10.f && !static_cast<PistolGO*>(go1)->GetPickUp())
 				{
 					go1->SetActive(false);
 					go2->SetActive(false);
@@ -136,7 +136,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 					}
 					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				}
-				else
+				else if (!static_cast<PistolGO*>(go1)->GetPickUp())
 				{
 					static_cast<EnemyGO*>(go2)->GunOnHand = static_cast<PistolGO*>(go1);
 					static_cast<PistolGO*>(go1)->attachedGO = go2;

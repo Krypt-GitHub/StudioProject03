@@ -23,8 +23,6 @@ public:
 	AIBehaviour(bool _playerInSight, float _distanceToPlayer);
 
 	AI_STATE state;
-	//bool m_bplayerInSight;
-	//bool m_bstartShooting;
 	float m_fdistanceToPlayer;
 	bool m_bstartWalk01;
 	bool m_bstartWalk02;
@@ -185,7 +183,7 @@ public:
 		{
 			if (go->GetActive())
 			{
-				if (go->type == GameObject::GO_PISTOL && (status->m_v3aiPosition - go->transform.position).Length() <= 100 /*&& !static_cast<PistolGO*>(go)->GetPickUp()*/)
+				if (go->type == GameObject::GO_PISTOL && (status->m_v3aiPosition - go->transform.position).Length() <= 100 && !static_cast<PistolGO*>(go)->GetPickUp())
 				{
 					pistol = go;
 					m_bgunFound = true;
@@ -203,6 +201,10 @@ public:
 	bool ReturnGunFound()
 	{
 		return m_bgunFound;
+	}
+	void SetGunFound(bool _gunFound)
+	{
+		m_bgunFound = _gunFound;
 	}
 };
 

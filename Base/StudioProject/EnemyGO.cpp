@@ -109,12 +109,15 @@ void EnemyGO::Init()
 	selector1->addChild(sequence2);
 
 
-	m_bdoOnce = false;
 	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
 
 	GunOnHand = NULL;
 
 	m_bactivatePathFind = false;
+
+	aiStatus->m_bstartWalk01 = false;
+	aiStatus->m_bstartWalk02 = true;
+	m_fwalkTime = 0.f;
 }
 
 
@@ -175,12 +178,15 @@ void EnemyGO::Init(std::vector <PathNode *> &_pn)
 	selector1->addChild(sequence2);
 
 
-	m_bdoOnce = false;
 	m_fROF = Math::RandFloatMinMax(0.f, 2.f);
 
 	GunOnHand = NULL;
 
 	m_bactivatePathFind = true;
+	
+	aiStatus->m_bstartWalk01 = false;
+	aiStatus->m_bstartWalk02 = true;
+	m_fwalkTime = 0.f;
 }
 
 bool EnemyGO::Constrain(Collider box, double dt)
@@ -269,13 +275,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			if (m_bstartwalk)
-				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-
-			//if (!Constrain((transform.position + (Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt) * 20), obb, dt))
-			//	transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-			//else
-			//	transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
 				
 			if ((transform.position - m_pathList[x]->transform.position).Length() < 15)
 				x++;
@@ -305,16 +305,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			for (auto go : gl.m_goList)
-			{
-				if (go->type == GameObject::GO_ENEMY && static_cast<EnemyGO*>(go) != this)
-				{
-					static_cast<EnemyGO*>(go)->m_bstartwalk = false;
-				}
-			}
-
-			if (m_bstartwalk)
-				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
 
 		}
 		if (ChasePlayerNode->GetApproachBool() && !SearchGunNode->ReturnGunFound())
@@ -323,20 +314,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			for (auto go : gl.m_goList)
-			{
-				if (go->type == GameObject::GO_ENEMY && static_cast<EnemyGO*>(go) != this)
-					if (obb.GetCollision(go->obb))
-					{
-						static_cast<EnemyGO*>(go)->m_bstartwalk = false;
-						break;
-					}
-					else
-						static_cast<EnemyGO*>(go)->m_bstartwalk = true;
-			}
-
-			if (m_bstartwalk)
-				transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
 		}
 	}
 
@@ -359,7 +337,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 		go->transform.scale.Set(0.3, 0.3, 0.3);
 		go->m_v3dir = m_v3dir;
 		go->m_v3vel = go->m_v3dir * 200.f;
-
+		aiStatus->state = AIBehaviour::SHOOT;
 		go->obb.SetScale(Vector3(0.15, 0.15, 0.15));
 		go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 		go->obb.pos = go->transform.position;
@@ -369,9 +347,13 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 	if (SearchGunNode->ReturnGunFound())
 	{
-		m_v3dir = (Vector3(SearchGunNode->ReturnPistol()->transform.position.x - transform.position.x, 19, SearchGunNode->ReturnPistol()->transform.position.z - transform.position.z)).Normalized();
-
-		transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+		if (!static_cast<PistolGO*>(SearchGunNode->ReturnPistol())->GetPickUp())
+		{
+			m_v3dir = (Vector3(SearchGunNode->ReturnPistol()->transform.position.x - transform.position.x, 25, SearchGunNode->ReturnPistol()->transform.position.z - transform.position.z)).Normalized();
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+		}
+		else if (static_cast<PistolGO*>(SearchGunNode->ReturnPistol())->GetPickUp() && GunOnHand == NULL)
+			SearchGunNode->SetGunFound(false);
 	}
 
 	if (aiStatus->m_bdodge)
@@ -387,67 +369,19 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 	{
 		m_fwalkTime += dt;
 
-		aiStatus->m_bstartWalk01 = false;
-		aiStatus->m_bstartWalk02 = true;
-
-		//if (m_fwalkTime >= 4.f && aiStatus->m_bstartWalk01)
-		//{
-		//	aiStatus->m_bstartWalk01 = false;
-		//	aiStatus->m_bstartWalk02 = true;
-		//	m_fwalkTime = 0.f;
-		//}
-		//else if (m_fwalkTime >= 4.f && aiStatus->m_bstartWalk02)
-		//{
-		//	aiStatus->m_bstartWalk01 = true;
-		//	aiStatus->m_bstartWalk02 = false;
-		//	m_fwalkTime = 0.f;
-		//}
+		if (m_fwalkTime >= 2.f && aiStatus->m_bstartWalk01)
+		{
+			aiStatus->m_bstartWalk01 = false;
+			aiStatus->m_bstartWalk02 = true;
+			m_fwalkTime = 0.f;
+		}
+		if (m_fwalkTime >= 2.f && !aiStatus->m_bstartWalk01)
+		{
+			aiStatus->m_bstartWalk01 = true;
+			aiStatus->m_bstartWalk02 = false;
+			m_fwalkTime = 0.f;
+		}
 	}
-
-	//if (approachPlayer->GetApproachBool())
-	//{
-
-	//	aiStatus->state = AIBehaviour::WALK;
-
-	//	if (!m_bdoOnce)
-	//	{
-	//		aiStatus->m_bstartWalk01 = true;
-	//		m_bdoOnce = true;
-	//	}
-
-	//	if (!Constrain((transform.position+(Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt)* 20), obb, dt))
-	//		transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
-	//	else
-	//		transform.position += Vector3(Vector3(-m_v3dir.x, 0, m_v3dir.z) * 20 * dt);
-	//}
-	//else
-	//{
-	//	aiStatus->state = AIBehaviour::IDLE;
-	//}
-
-	//if (aiStatus->m_bstartWalk01)
-	//{
-	//	m_fwalkTime += dt;
-	//	if (m_fwalkTime >= 0.4f)
-	//	{
-	//		aiStatus->m_bstartWalk01 = false;
-	//		aiStatus->m_bstartWalk02 = true;
-	//		m_fwalkTime = 0.f;
-	//	}
-	//}
-
-	//if (aiStatus->m_bstartWalk02)
-	//{
-	//	m_fwalkTime += dt;
-	//	if (m_fwalkTime >= 0.4f)
-	//	{
-	//		aiStatus->m_bstartWalk02 = false;
-	//		aiStatus->m_bstartWalk01 = true;
-	//		m_fwalkTime = 0.f;
-	//	}
-	//}
-
-	//std::cout << aiStatus->m_fdistanceToPlayer << std::endl;
 
 	while (!root->run())
 		std::cout << "======Break======" << std::endl;

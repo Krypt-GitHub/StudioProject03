@@ -167,7 +167,7 @@ void PlayerGO::Update(double dt)
 	{
 		if (Application::GetMouseDown(1) && !m_bRBDown)
 		{
-			GameObject* pistol = gun;
+			//GameObject* pistol = gun;
 			gun->obb.isEnabled = true;
 
 			//Throwing physics
@@ -178,8 +178,8 @@ void PlayerGO::Update(double dt)
 			gun->m_v3vel.y += 50.f;
 
 			// Changing it back to a dynamic object
+			gun->attachedGO = NULL;
 			gun->SetStatic(false);
-
 			gun->SetPickUp(false);
 			gun = nullptr;
 
