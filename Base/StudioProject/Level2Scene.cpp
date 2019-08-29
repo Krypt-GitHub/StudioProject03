@@ -38,7 +38,7 @@ void Level2Scene::Init()
 
 	// GAME OBJECT CREATION
 	//goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(5, 19, 5), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(175, 19, 175), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, false, 70, Vector3(175, 19, 175), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	//goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 0), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
 	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(-175, 19, -175), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, true, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));

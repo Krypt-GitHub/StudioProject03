@@ -29,7 +29,7 @@ void SceneBase::Init()
 	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.mp3");
 	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.mp3");
 	// Black background
-	glClearColor(0.9f, 0.9f, 0.9f, 0.0f);
+	glClearColor(0.f, 0.f, 0.f, 0.0f);
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one

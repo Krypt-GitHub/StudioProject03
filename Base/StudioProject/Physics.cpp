@@ -54,7 +54,7 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 				go1->transform.position += go1->m_v3vel * delta;
 
 				//Constraints
-				if (Math::FAbs(go1->transform.position.x) >= 500 || Math::FAbs(go1->transform.position.y) >= 500 || Math::FAbs(go1->transform.position.z) >= 500)
+				if (Math::FAbs(go1->transform.position.x) >= 1000 || Math::FAbs(go1->transform.position.y) >= 1000 || Math::FAbs(go1->transform.position.z) >= 1000)
 					go1->SetActive(false);
 
 				//Collision
@@ -92,6 +92,10 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			case GameObject::GO_FLOOR:
 				go1->m_bGravity = false;
 				go1->transform.position.y = 19;
+				break;
+			case GameObject::GO_ENEMY:
+				go2->SetActive(false);
+				SceneManager::SetSceneID(4);
 				break;
 			}
 			break;
@@ -180,18 +184,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			{
 			case GameObject::GO_PLAYER:
 				go1->SetActive(false);
-				switch (SceneManager::GetSceneID())
-				{
-				case 1:
-					SceneManager::SetSceneID(4);
-					break;
-				case 2:
-					SceneManager::SetSceneID(4);
-					break;
-				case 3:
-					SceneManager::SetSceneID(4);
-					break;
-				}
+				SceneManager::SetSceneID(4);
 				break;
 			case GameObject::GO_WALL:
 			case GameObject::GO_CEILING:
