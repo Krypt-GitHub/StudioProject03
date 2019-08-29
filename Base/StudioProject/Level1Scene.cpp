@@ -124,18 +124,21 @@ void Level1Scene::Update(double dt)
 
 
 		GameObject *pistol01 = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(-25, 19, -350), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+		static_cast<PistolGO*>(pistol01)->Init();
 		static_cast<PistolGO*>(pistol01)->attachedGO = enemy01;
 		static_cast<PistolGO*>(pistol01)->SetPickUp(true);
 		static_cast<EnemyGO*> (enemy01)->GunOnHand = static_cast<PistolGO*>(pistol01);
 		gl.m_goList.push_back(pistol01);
 
 		GameObject *pistol02 = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(0, 19, -350), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+		static_cast<PistolGO*>(pistol02)->Init();
 		static_cast<PistolGO*>(pistol02)->attachedGO = enemy02;
 		static_cast<PistolGO*>(pistol02)->SetPickUp(true);
 		static_cast<EnemyGO*> (enemy02)->GunOnHand = static_cast<PistolGO*>(pistol02);
 		gl.m_goList.push_back(pistol02);
 
 		GameObject *pistol03 = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(25, 19, -350), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+		static_cast<PistolGO*>(pistol03)->Init();
 		static_cast<PistolGO*>(pistol03)->attachedGO = enemy03;
 		static_cast<PistolGO*>(pistol03)->SetPickUp(true);
 		static_cast<EnemyGO*> (enemy03)->GunOnHand = static_cast<PistolGO*>(pistol03);
