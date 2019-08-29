@@ -266,11 +266,8 @@ void SceneBase::Init()
 		meshList[GEO_ENEMY_WALK01]->textureArray[0] = LoadTGA("Image//enemy.tga");
 		meshList[GEO_ENEMY_WALK02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_walk02.obj");
 		meshList[GEO_ENEMY_WALK02]->textureArray[0] = LoadTGA("Image//enemy.tga");
-		meshList[GEO_ENEMY_SHOOT01] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot01.obj");
-		meshList[GEO_ENEMY_SHOOT01]->textureArray[0] = LoadTGA("Image//enemy.tga");
 		meshList[GEO_ENEMY_SHOOT02] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_shoot02.obj");
 		meshList[GEO_ENEMY_SHOOT02]->textureArray[0] = LoadTGA("Image//enemy.tga");
-		meshList[GEO_ENEMY_BONUS] = MeshBuilder::GenerateOBJ("enemy", "OBJ//enemy_bonus.obj");
 	}
 	else if (SceneManager::GetSceneID() == 0)
 	{

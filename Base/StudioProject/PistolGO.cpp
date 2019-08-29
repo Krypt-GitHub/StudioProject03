@@ -3,7 +3,8 @@
 #include "GOList.h"
 #include "../Physics/Ray.h"
 #include "../Core/ParticleEngine.h"
-#include "..//Core/SoundEngine.h"
+#include "../Core/SoundEngine.h"
+#include "EnemyGO.h"
 
 PistolGO::PistolGO()
 {
@@ -32,6 +33,7 @@ void PistolGO::Init()
 	m_bRotateCrosshair = false;
 	m_imaxClip = 4;
 	m_icurClip = m_imaxClip;
+	attachedGO = NULL;
 }
 
 void PistolGO::Update(double dt)
@@ -94,6 +96,17 @@ void PistolGO::Update(double dt)
 			m_bRotateCrosshair = false;
 			m_bCanFire = true;
 			CSoundEngine::Getinstance()->PlayASound("pickup");
+		}
+	}
+
+	if (attachedGO != NULL)
+	{
+		if (!attachedGO->GetActive())
+		{
+			this->SetStatic(false);
+			attachedGO == NULL;
+			static_cast<EnemyGO*>(attachedGO)->GunOnHand = NULL;
+			m_bisPickUp = false;
 		}
 	}
 }

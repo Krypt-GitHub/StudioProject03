@@ -191,7 +191,7 @@ void Level2Scene::Update(double dt)
 		if (gun == 1)
 		{
 			//static_cast<EnemyGO*> (newEnemy)->ifGunHeld->SetGunHeld(true);
-			GameObject *newPistol = goFactory.GameObjectFactory("Enemy", GameObject::GO_PISTOL, true, 70, Vector3(m_nodeList[x]->transform.position.x, 19, m_nodeList[x]->transform.position.z), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+			GameObject *newPistol = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(m_nodeList[x]->transform.position.x, 19, m_nodeList[x]->transform.position.z), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
 			static_cast<PistolGO*>(newPistol)->attachedGO = newEnemy;
 			static_cast<PistolGO*>(newPistol)->SetPickUp(true);
 			static_cast<EnemyGO*> (newEnemy)->GunOnHand = static_cast<PistolGO*>(newPistol);

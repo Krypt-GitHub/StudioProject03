@@ -58,12 +58,14 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 					go1->SetActive(false);
 
 				//Collision
-				for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != gl.m_goList.end(); ++it2)
+				//for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != gl.m_goList.end(); ++it2)
+				//{
+				//	GameObject *go2 = (GameObject *)*it2;
+				for (auto go2 : gl.m_goList)
 				{
-					GameObject *go2 = (GameObject *)*it2;
 					if (go2->GetActive())
 					{
-						if (go1->obb.GetCollision(go2->obb))
+						if (go1->obb.GetCollision(go2->obb) && go1 != go2)
 						{
 							if (!go1->GetActive())
 								break;

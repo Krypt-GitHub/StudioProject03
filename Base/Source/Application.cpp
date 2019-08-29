@@ -147,7 +147,7 @@ void Application::Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
 
-	//glfwWindowHint(GLFW_DECORATED, false);
+	glfwWindowHint(GLFW_DECORATED, false);
 
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "SUPERCOOL", NULL, NULL);
@@ -181,7 +181,7 @@ void Application::Init()
 
 void Application::Run()
 {
-	SceneManager::SetSceneID(3); // temp to set to level1scene
+	SceneManager::SetSceneID(0); // temp to set to level1scene
 	//Main Loop
 	while (SceneManager::GetSceneID() != 10)
 	{

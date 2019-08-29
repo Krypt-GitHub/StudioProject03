@@ -35,9 +35,9 @@ void Level1Scene::Init()
 	// GAME OBJECT CREATION
 	goFactory.CreateGO("Player", GameObject::GO_PLAYER, false, 70, Vector3(0, 19, 350), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 0), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	//goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(120, 5, 800), 0, Vector3(60, 2.5, 400), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("North Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, -420), Vector3(120, 80, 40), 0, Vector3(60, 40, 20), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("South Wall", GameObject::GO_WALL, true, 0, Vector3(0, 40, 420), Vector3(120, 80, 40), 180, Vector3(60, 40, 20), 180, Vector3(0, 1, 0));
@@ -108,6 +108,43 @@ void Level1Scene::Init()
 
 void Level1Scene::Update(double dt)
 {
+	static bool m_bdoOnce = false;
+
+	if (!m_bdoOnce)
+	{
+		GameObject *enemy01 = goFactory.GameObjectFactory("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(-25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+		static_cast<EnemyGO*> (enemy01)->Init();
+		gl.m_goList.push_back(enemy01);
+		GameObject *enemy02 = goFactory.GameObjectFactory("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(0, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+		static_cast<EnemyGO*> (enemy02)->Init();
+		gl.m_goList.push_back(enemy02);
+		GameObject *enemy03 = goFactory.GameObjectFactory("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(25, 19, -350), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+		static_cast<EnemyGO*> (enemy03)->Init();
+		gl.m_goList.push_back(enemy03);
+
+
+		GameObject *pistol01 = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(-25, 19, -350), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+		static_cast<PistolGO*>(pistol01)->attachedGO = enemy01;
+		static_cast<PistolGO*>(pistol01)->SetPickUp(true);
+		static_cast<EnemyGO*> (enemy01)->GunOnHand = static_cast<PistolGO*>(pistol01);
+		gl.m_goList.push_back(pistol01);
+
+		GameObject *pistol02 = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(0, 19, -350), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+		static_cast<PistolGO*>(pistol02)->attachedGO = enemy02;
+		static_cast<PistolGO*>(pistol02)->SetPickUp(true);
+		static_cast<EnemyGO*> (enemy02)->GunOnHand = static_cast<PistolGO*>(pistol02);
+		gl.m_goList.push_back(pistol02);
+
+		GameObject *pistol03 = goFactory.GameObjectFactory("Pistol", GameObject::GO_PISTOL, true, 70, Vector3(25, 19, -350), Vector3(0.3, 0.3, 0.3), 0, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 0, Vector3(0, 1, 0));
+		static_cast<PistolGO*>(pistol03)->attachedGO = enemy03;
+		static_cast<PistolGO*>(pistol03)->SetPickUp(true);
+		static_cast<EnemyGO*> (enemy03)->GunOnHand = static_cast<PistolGO*>(pistol03);
+		gl.m_goList.push_back(pistol03);
+
+		m_bdoOnce = true;
+	}
+
+
 	SceneBase::Update(dt);
 	PhysicsEngine.UpdateGO(dt, Player);
 	ParticleEngine::GetInstance()->updateParticle(dt);

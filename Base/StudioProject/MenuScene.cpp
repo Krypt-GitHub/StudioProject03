@@ -261,31 +261,21 @@ void MenuScene::RenderPassMain()
 	RenderMesh(meshList[GEO_WATER], false, true, true);
 	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 200, 0);
-	modelStack.Scale(75, 75, 50);
-	RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map
-	modelStack.PopMatrix();
+	//modelStack.PushMatrix();
+	//modelStack.Translate(0, 200, 0);
+	//modelStack.Scale(75, 75, 50);
+	//RenderMesh(meshList[GEO_LIGHT_DEPTH_QUAD], false, false, false); // Red color quad for the shadow map
+	//modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(lights[0].position.x, lights[0].position.y, lights[0].position.z);
-	RenderMesh(meshList[GEO_CUBE], false, false, false);
-	modelStack.PopMatrix();
+	//std::ostringstream ss;
+	//ss.precision(5);
+	//ss << "CursorRayX: " << cursorRay->getCurrentRay().x;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
 
-	modelStack.PushMatrix();
-	modelStack.Translate(cursorRay->getCurrentRay().x, 0, cursorRay->getCurrentRay().z);
-	RenderMesh(meshList[GEO_CUBE], false, false, false);
-	modelStack.PopMatrix();
-
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << "CursorRayX: " << cursorRay->getCurrentRay().x;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
-
-	std::ostringstream ss1;
-	ss1.precision(5);
-	ss1 << "CursorRayZ: " << cursorRay->getCurrentRay().y;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 1, 0), 3, 0, 3);
+	//std::ostringstream ss1;
+	//ss1.precision(5);
+	//ss1 << "CursorRayZ: " << cursorRay->getCurrentRay().y;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 1, 0), 3, 0, 3);
 }
 
 void MenuScene::InitGO(GameObject * go)
@@ -326,7 +316,7 @@ void MenuScene::RenderGO(GameObject* go)
 		modelStack.PushMatrix();
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Scale(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
-		RenderMesh(meshList[GEO_FLOOR], true, false, false);
+		RenderMesh(meshList[GEO_FLOOR], false, false, false);
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_WALL:
