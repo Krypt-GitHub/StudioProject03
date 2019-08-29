@@ -38,7 +38,7 @@ void Level2Scene::Init()
 
 	// GAME OBJECT CREATION
 	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(5, 19, 5), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
-	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 40, 0), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
+	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(-5, 40, -5), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Floor", GameObject::GO_FLOOR, true, 0, Vector3(0, -2.5, 0), Vector3(450, 5, 450), 0, Vector3(225, 2.5, 225), 0, Vector3(0, 1, 0));
 	int pillarX = 112.5;
 	for (int i = 0; i < 4; ++i)
@@ -125,7 +125,7 @@ void Level2Scene::Init()
 	camera[0].Init(Vector3(-420, 184, 178), Vector3(0, 185, 0), Vector3(0, 1, 0));
 
 	Player = static_cast<PlayerGO*>(gl.FetchGO(GameObject::GO_PLAYER));
-	Player->camera.target.Set(0, 10, 10);
+	Player->camera.target.Set(-5, 25, -5);
 	Player->camera.up.Set(0, 1, 0);
 	camera[1] = Player->camera;
 
