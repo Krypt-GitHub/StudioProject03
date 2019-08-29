@@ -54,7 +54,7 @@ void Physics::UpdateGO(double dt, PlayerGO* _player)
 				go1->transform.position += go1->m_v3vel * delta;
 
 				//Constraints
-				if (Math::FAbs(go1->transform.position.x) >= 500 || Math::FAbs(go1->transform.position.y) >= 500 || Math::FAbs(go1->transform.position.z) >= 500)
+				if (Math::FAbs(go1->transform.position.x) >= 1000 || Math::FAbs(go1->transform.position.y) >= 1000 || Math::FAbs(go1->transform.position.z) >= 1000)
 					go1->SetActive(false);
 
 				//Collision
