@@ -275,7 +275,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 35 * dt;
 				
 			if ((transform.position - m_pathList[x]->transform.position).Length() < 15)
 				x++;
@@ -305,7 +305,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 35 * dt;
 
 		}
 		if (ChasePlayerNode->GetApproachBool() && !SearchGunNode->ReturnGunFound())
@@ -314,7 +314,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 
 			aiStatus->state = AIBehaviour::WALK;
 
-			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 35 * dt;
 		}
 	}
 
@@ -350,7 +350,7 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 		if (!static_cast<PistolGO*>(SearchGunNode->ReturnPistol())->GetPickUp())
 		{
 			m_v3dir = (Vector3(SearchGunNode->ReturnPistol()->transform.position.x - transform.position.x, 25, SearchGunNode->ReturnPistol()->transform.position.z - transform.position.z)).Normalized();
-			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 20 * dt;
+			transform.position += Vector3(m_v3dir.x, 0, m_v3dir.z) * 35 * dt;
 		}
 		else if (static_cast<PistolGO*>(SearchGunNode->ReturnPistol())->GetPickUp() && GunOnHand == NULL)
 			SearchGunNode->SetGunFound(false);
@@ -360,9 +360,9 @@ void EnemyGO::Update(double dt, PlayerGO* _player)
 	{
 		int decision = rand() % 3;
 		if (decision == 1)
-			transform.position += DetectBulletNode->ReturnBullet()->m_v3dir.Cross(Vector3(0, 1, 0)) * 30 * dt;
+			transform.position += DetectBulletNode->ReturnBullet()->m_v3dir.Cross(Vector3(0, 1, 0)) * 35 * dt;
 		if (decision == 2)
-			transform.position -= DetectBulletNode->ReturnBullet()->m_v3dir.Cross(Vector3(0, 1, 0)) * 30 * dt;
+			transform.position -= DetectBulletNode->ReturnBullet()->m_v3dir.Cross(Vector3(0, 1, 0)) * 35 * dt;
 	}
 
 	if (aiStatus->state == AIBehaviour::WALK)

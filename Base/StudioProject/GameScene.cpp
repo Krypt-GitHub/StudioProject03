@@ -365,7 +365,7 @@ void GameScene::RenderPassMain()
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 	}
 
-	RenderMesh(meshList[GEO_AXES], false, false, false);
+	//RenderMesh(meshList[GEO_AXES], false, false, false);
 
 	RenderWorld();
 	if (m_bRenderScreenText)
@@ -508,13 +508,7 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Translate(go->transform.position.x, go->transform.position.y, go->transform.position.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(Player->camera.target.x - Player->camera.position.x, Player->camera.target.z - Player->camera.position.z)), 0, 1, 0);
 		modelStack.Scale(10, 10, 10);
-		//RenderMesh(meshList[GEO_HANDS], false, false, false);
 		modelStack.PopMatrix();
-		//modelStack.PushMatrix();
-		//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-		//modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-		//RenderMesh(meshList[GEO_CUBE], false, false, false);
-		//modelStack.PopMatrix();
 		break;
 	case GameObject::GO_ENEMY:
 		if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::IDLE)
