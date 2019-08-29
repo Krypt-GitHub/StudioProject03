@@ -34,7 +34,7 @@ void GameScene::Init()
 	}
 
 	// GAME OBJECT CREATION
-	goFactory.CreateGO("Player", GameObject::GO_PLAYER, true, 70, Vector3(0, 19, 100), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
+	goFactory.CreateGO("Player", GameObject::GO_PLAYER, false, 70, Vector3(0, 19, 100), Vector3(1, 1, 1), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Pistol", GameObject::GO_PISTOL, false, 1.1, Vector3(0, 23, 60), Vector3(0.3, 0.3, 0.3), 90, Vector3(1.5 * 0.3, 6.5 * 0.3, 10 * 0.3), 90, Vector3(0, 1, 0));
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(-15, 19, -100), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
 	goFactory.CreateGO("Enemy", GameObject::GO_ENEMY, false, 70, Vector3(15, 19, -100), Vector3(2, 2, 2), 0, Vector3(6, 19, 2), 0, Vector3(0, 1, 0));
@@ -506,11 +506,11 @@ void GameScene::RenderGO(GameObject* go)
 		modelStack.Scale(10, 10, 10);
 		//RenderMesh(meshList[GEO_HANDS], false, false, false);
 		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
-		modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
-		RenderMesh(meshList[GEO_CUBE], false, false, false);
-		modelStack.PopMatrix();
+		//modelStack.PushMatrix();
+		//modelStack.Translate(go->obb.pos.x, go->obb.pos.y, go->obb.pos.z);
+		//modelStack.Scale(go->obb.Half_size.x * 2, go->obb.Half_size.y * 2, go->obb.Half_size.z * 2);
+		//RenderMesh(meshList[GEO_CUBE], false, false, false);
+		//modelStack.PopMatrix();
 		break;
 	case GameObject::GO_ENEMY:
 		if (static_cast<EnemyGO*>(go)->aiStatus->state == AIBehaviour::IDLE)

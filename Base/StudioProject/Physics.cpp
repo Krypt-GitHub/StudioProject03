@@ -93,6 +93,10 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				go1->m_bGravity = false;
 				go1->transform.position.y = 19;
 				break;
+			case GameObject::GO_ENEMY:
+				go2->SetActive(false);
+				SceneManager::SetSceneID(4);
+				break;
 			}
 			break;
 		case GameObject::GO_PISTOL:
@@ -180,18 +184,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 			{
 			case GameObject::GO_PLAYER:
 				go1->SetActive(false);
-				switch (SceneManager::GetSceneID())
-				{
-				case 1:
-					SceneManager::SetSceneID(4);
-					break;
-				case 2:
-					SceneManager::SetSceneID(4);
-					break;
-				case 3:
-					SceneManager::SetSceneID(4);
-					break;
-				}
+				SceneManager::SetSceneID(4);
 				break;
 			case GameObject::GO_WALL:
 			case GameObject::GO_CEILING:
