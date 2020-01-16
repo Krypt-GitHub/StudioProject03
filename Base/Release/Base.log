@@ -1,7 +1,5 @@
-﻿  GOList.cpp
-  Generating code
-  5 of 1634 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+﻿  Generating code
+d:\users\irwen yap\documents\github\studioproject03\base\studioproject\golist.cpp(43): warning C4715: 'GOList::FetchGO': not all control paths return a value
+  All 1634 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Base.vcxproj -> D:\Users\Irwen Yap\Documents\GitHub\StudioProject03\Release\Base.exe
