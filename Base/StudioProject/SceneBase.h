@@ -12,7 +12,6 @@
 #include "../Source/DepthFBO.h"
 #include "../Source/Particle.h"
 #include "../Core/ParticleEngine.h"
-#include "..//Core/SoundEngine.h"
 
 class SceneBase : public Scene
 {

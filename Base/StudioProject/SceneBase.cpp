@@ -21,14 +21,14 @@ SceneBase::~SceneBase()
 
 void SceneBase::Init()
 {
-	CSoundEngine::Getinstance()->Init();
-	CSoundEngine::Getinstance()->setSoundVolume(0.3f);
-	CSoundEngine::Getinstance()->AddSound("ESHATTER", "Sound//Enemy.ogg");
-	CSoundEngine::Getinstance()->AddSound("Gunshot", "Sound//Gunshot.ogg");
-	CSoundEngine::Getinstance()->AddSound("pickup", "Sound//pickup.ogg");
-	CSoundEngine::Getinstance()->AddSound("Text", "Sound//Text.ogg");
-	CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.mp3");
-	CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.mp3");
+	//CSoundEngine::Getinstance()->Init();
+	//CSoundEngine::Getinstance()->setSoundVolume(0.3f);
+	//CSoundEngine::Getinstance()->AddSound("ESHATTER", "Sound//Enemy.ogg");
+	//CSoundEngine::Getinstance()->AddSound("Gunshot", "Sound//Gunshot.ogg");
+	//CSoundEngine::Getinstance()->AddSound("pickup", "Sound//pickup.ogg");
+	//CSoundEngine::Getinstance()->AddSound("Text", "Sound//Text.ogg");
+	//CSoundEngine::Getinstance()->AddSound("super", "Sound//Super.mp3");
+	//CSoundEngine::Getinstance()->AddSound("cool", "Sound//Cool1.mp3");
 	Physics::dead = false;
 	// Black background
 	glClearColor(0.9f, 0.9f, 0.9f, 0.0f);

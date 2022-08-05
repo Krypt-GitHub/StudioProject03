@@ -174,9 +174,6 @@
     <ClCompile Include="Core\ParticleEngine.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SoundEngine.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -321,9 +318,6 @@
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="Core\ParticleEngine.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SoundEngine.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

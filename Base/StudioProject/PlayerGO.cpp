@@ -1,7 +1,6 @@
 #include "PlayerGO.h"
 #include "../Source/Application.h"
 #include"..//Core/ParticleEngine.h"
-#include "..//Core/SoundEngine.h"
 #include "Level2Scene.h"
 #include "../StudioProject/Physics.h"
 
@@ -211,7 +210,7 @@ void PlayerGO::Update(double dt)
 					{
 						ParticleEngine::GetInstance()->SpawnParticle(go, Particle::PA_ENEMYSHATTER);
 					}
-					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
+					//CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 					break;
 				}
 			}

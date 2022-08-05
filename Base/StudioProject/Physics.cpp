@@ -3,7 +3,6 @@
 #include "EnemyGO.h"
 #include "../Core/ParticleEngine.h"
 #include "SceneManager.h"
-#include "..//Core/SoundEngine.h"
 #include "Level2Scene.h"
 
 int Physics::EnemyCount = 0;
@@ -150,7 +149,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 					{
 						ParticleEngine::GetInstance()->SpawnParticle(go2, Particle::PA_ENEMYSHATTER);
 					}
-					CSoundEngine::Getinstance()->PlayASound("ESHATTER");
+					//CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				}
 				else if (!static_cast<PistolGO*>(go1)->GetPickUp())
 				{
@@ -181,7 +180,7 @@ void Physics::CollisionResponse(GameObject *go1, GameObject *go2)
 				{
 					ParticleEngine::GetInstance()->SpawnParticle(go2, Particle::PA_ENEMYSHATTER);
 				}
-				CSoundEngine::Getinstance()->PlayASound("ESHATTER");
+				//CSoundEngine::Getinstance()->PlayASound("ESHATTER");
 				break;
 			case GameObject::GO_WALL:
 			case GameObject::GO_CEILING:

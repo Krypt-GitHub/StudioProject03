@@ -183,7 +183,7 @@ void Level1Scene::Update(double dt)
 			Player->gun = static_cast<PistolGO*>(go);
 			Player->gun->obb.isEnabled = false;
 			Player->gun->SetStatic(true);
-			CSoundEngine::Getinstance()->PlayASound("pickup");
+			//CSoundEngine::Getinstance()->PlayASound("pickup");
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
@@ -235,7 +235,7 @@ void Level1Scene::Update(double dt)
 			m_iTextCounter = 1;
 			if (m_iSoundCounter == 0)
 			{
-				CSoundEngine::Getinstance()->PlayASound("Text");
+				//CSoundEngine::Getinstance()->PlayASound("Text");
 				++m_iSoundCounter;
 			}
 		}
@@ -244,7 +244,7 @@ void Level1Scene::Update(double dt)
 			m_iTextCounter = 2;
 			if (m_iSoundCounter == 1)
 			{
-				CSoundEngine::Getinstance()->PlayASound("Text");
+				//CSoundEngine::Getinstance()->PlayASound("Text");
 				++m_iSoundCounter;
 			}
 		}
@@ -253,7 +253,7 @@ void Level1Scene::Update(double dt)
 			m_iTextCounter = 3;
 			if (m_iSoundCounter == 2)
 			{
-				CSoundEngine::Getinstance()->PlayASound("Text");
+				//CSoundEngine::Getinstance()->PlayASound("Text");
 				m_iSoundCounter = 100;
 			}
 		}
@@ -268,7 +268,7 @@ void Level1Scene::Update(double dt)
 		m_bRenderScreenText = true;
 		if (m_iSoundCounter == 100)
 		{
-			CSoundEngine::Getinstance()->PlayASound("super");
+			//CSoundEngine::Getinstance()->PlayASound("super");
 			++m_iSoundCounter;
 		}
 
@@ -277,7 +277,7 @@ void Level1Scene::Update(double dt)
 			m_iTextCounter = 99;
 			if (m_iSoundCounter == 101)
 			{
-				CSoundEngine::Getinstance()->PlayASound("cool");
+				//CSoundEngine::Getinstance()->PlayASound("cool");
 				++m_iSoundCounter;
 			}
 		}
@@ -286,7 +286,7 @@ void Level1Scene::Update(double dt)
 			m_iTextCounter = 98;
 			if (m_iSoundCounter == 102)
 			{
-				CSoundEngine::Getinstance()->PlayASound("super");
+				//CSoundEngine::Getinstance()->PlayASound("super");
 				++m_iSoundCounter;
 			}
 		}
@@ -295,7 +295,7 @@ void Level1Scene::Update(double dt)
 			m_iTextCounter = 99;
 			if (m_iSoundCounter == 103)
 			{
-				CSoundEngine::Getinstance()->PlayASound("cool");
+				//CSoundEngine::Getinstance()->PlayASound("cool");
 				++m_iSoundCounter;
 			}
 		}

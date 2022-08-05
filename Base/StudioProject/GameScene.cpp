@@ -25,6 +25,8 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
+	cameraID = 1;
+
 	SceneBase::Init();
 
 	//Bullet initialisation
@@ -142,7 +144,7 @@ void GameScene::Update(double dt)
 			Player->gun = static_cast<PistolGO*>(go);
 			Player->gun->obb.isEnabled = false;
 			Player->gun->SetStatic(true);
-			CSoundEngine::Getinstance()->PlayASound("pickup");
+			//CSoundEngine::Getinstance()->PlayASound("pickup");
 			Player->gun->transform.position = Player->transform.position + Vector3(-8, -14, 40);
 		}
 	}
@@ -191,7 +193,7 @@ void GameScene::Update(double dt)
 
 		if (m_iSoundCounter == 0)
 		{
-			CSoundEngine::Getinstance()->PlayASound("Text");
+			//CSoundEngine::Getinstance()->PlayASound("Text");
 			m_iSoundCounter = 100;
 		}
 	}
@@ -203,7 +205,7 @@ void GameScene::Update(double dt)
 		m_bRenderScreenText = true;
 		if (m_iSoundCounter == 100)
 		{
-			CSoundEngine::Getinstance()->PlayASound("super");
+			//CSoundEngine::Getinstance()->PlayASound("super");
 			++m_iSoundCounter;
 		}
 
@@ -212,7 +214,7 @@ void GameScene::Update(double dt)
 			m_iTextCounter = 99;
 			if (m_iSoundCounter == 101)
 			{
-				CSoundEngine::Getinstance()->PlayASound("cool");
+				//CSoundEngine::Getinstance()->PlayASound("cool");
 				++m_iSoundCounter;
 			}
 		}
@@ -221,7 +223,7 @@ void GameScene::Update(double dt)
 			m_iTextCounter = 98;
 			if (m_iSoundCounter == 102)
 			{
-				CSoundEngine::Getinstance()->PlayASound("super");
+				//CSoundEngine::Getinstance()->PlayASound("super");
 				++m_iSoundCounter;
 			}
 		}
@@ -230,7 +232,8 @@ void GameScene::Update(double dt)
 			m_iTextCounter = 99;
 			if (m_iSoundCounter == 103)
 			{
-				CSoundEngine::Getinstance()->PlayASound("cool");
+				//CSoundEngine::Getinstance()->
+				("cool");
 				++m_iSoundCounter;
 			}
 		}
@@ -379,7 +382,7 @@ void GameScene::RenderPassMain()
 		if (Player->gun != nullptr)
 		{
 			modelStack.PushMatrix();
-			RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, Player->gun->m_frotation, Vector3(0, 0, 1));
+			//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 4, 5, 0, 0, Player->gun->m_frotation, Vector3(0, 0, 1));
 			modelStack.PopMatrix();
 		}
 		else

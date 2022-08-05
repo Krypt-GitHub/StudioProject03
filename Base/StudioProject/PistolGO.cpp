@@ -3,7 +3,6 @@
 #include "GOList.h"
 #include "../Physics/Ray.h"
 #include "../Core/ParticleEngine.h"
-#include "../Core/SoundEngine.h"
 #include "EnemyGO.h"
 
 PistolGO::PistolGO()
@@ -65,7 +64,7 @@ void PistolGO::Update(double dt)
 			go->obb.UpdateAxis(Vector3(1, 0, 0), Vector3(0, 0, 1));
 			go->obb.pos = transform.position;
 			go->obb.RotateAxis(0, Vector3(0, 1, 0));
-			CSoundEngine::Getinstance()->PlayASound("Gunshot");
+			//CSoundEngine::Getinstance()->PlayASound("Gunshot");
 			m_frotation = 0;
 			m_bRotateCrosshair = true;
 			m_bCanFire = false;
@@ -80,7 +79,7 @@ void PistolGO::Update(double dt)
 		if (Application::GetMouseDown(0) && !m_bLBDown && m_bCanFire && m_icurClip == 0)
 		{
 			m_bLBDown = true;
-			CSoundEngine::Getinstance()->PlayASound("pickup");
+			//CSoundEngine::Getinstance()->PlayASound("pickup");
 		}
 		else if (!Application::GetMouseDown(0) && m_bLBDown)
 		{
@@ -95,7 +94,7 @@ void PistolGO::Update(double dt)
 		{
 			m_bRotateCrosshair = false;
 			m_bCanFire = true;
-			CSoundEngine::Getinstance()->PlayASound("pickup");
+			//CSoundEngine::Getinstance()->PlayASound("pickup");
 		}
 	}
 
